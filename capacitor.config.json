@@ -1,0 +1,6 @@
+{
+  "appId": "com.oustrobday.app",
+  "appName": "oustrobday",
+  "webDir": "out",
+  "bundledWebRuntime": false
+}
