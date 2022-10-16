@@ -4,6 +4,7 @@ import userbase from 'userbase-js'
 function LoginModal({ toggle, modalType, setUser }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
   const [loading, setLoading] = useState()
   const [error, setError] = useState()
 
@@ -18,7 +19,8 @@ function LoginModal({ toggle, modalType, setUser }) {
       const user = await userbase.signUp({
         username,
         password,
-        rememberMe: 'none',
+        profile: { 'name': name },
+        rememberMe: 'local',
       })
       setUser(user)
       setLoading(false)
@@ -36,7 +38,7 @@ function LoginModal({ toggle, modalType, setUser }) {
       const user = await userbase.signIn({
         username,
         password,
-        rememberMe: 'none',
+        rememberMe: 'local',
       })
       setUser(user)
       setLoading(false)
@@ -48,7 +50,7 @@ function LoginModal({ toggle, modalType, setUser }) {
   }
 
   return (
-    <form className="bg-white shadow-md rounded p-8">
+    <form className="bg-white shadow-md rounded-xl p-8">
       <div className="mb-4">
         <label
           className="block text-purple-700 text-sm font-bold mb-2"
@@ -65,6 +67,24 @@ function LoginModal({ toggle, modalType, setUser }) {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
+      {modalType !== 'logIn' && (
+        <div className="mb-4">
+          <label
+            className="block text-purple-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+      )}
       <div className="mb-4">
         <label
           className="block text-purple-700 text-sm font-bold mb-2"
@@ -106,7 +126,7 @@ function LoginModal({ toggle, modalType, setUser }) {
           </button>
         )}
       </div>
-      <p className="text-red-500 font-bold">{error}</p>
+      <p className="text-red-500 pt-10 font-bold">{error}</p>
     </form>
   )
 }
