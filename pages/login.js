@@ -1,35 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useContext } from 'react';
+import { UserContext } from '../lib/UserContext';
+import Router from 'next/router';
 import userbase from 'userbase-js'
+import Link from 'next/link'
 
-function LoginModal({ toggle, modalType, setUser }) {
+function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
   const [loading, setLoading] = useState()
   const [error, setError] = useState()
+  const [, setUser] = useContext(UserContext);
 
-  useEffect(() => {
-    setError('')
-  }, [modalType])
 
-  async function handleSignUp(e) {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      const user = await userbase.signUp({
-        username,
-        password,
-        profile: { 'name': name },
-        rememberMe: 'local',
-      })
-      setUser(user)
-      setLoading(false)
-      toggle(false)
-    } catch (e) {
-      setLoading(false)
-      setError(e.message)
-    }
-  }
 
   async function handleLogIn(e) {
     e.preventDefault()
@@ -42,7 +24,7 @@ function LoginModal({ toggle, modalType, setUser }) {
       })
       setUser(user)
       setLoading(false)
-      toggle(false)
+      Router.push('/');
     } catch (e) {
       setLoading(false)
       setError(e.message)
@@ -67,24 +49,6 @@ function LoginModal({ toggle, modalType, setUser }) {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
-      {modalType !== 'logIn' && (
-        <div className="mb-4">
-          <label
-            className="block text-purple-700 text-sm font-bold mb-2"
-            htmlFor="name"
-          >
-            Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name"
-            type="text"
-            placeholder="Your Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-      )}
       <div className="mb-4">
         <label
           className="block text-purple-700 text-sm font-bold mb-2"
@@ -102,33 +66,22 @@ function LoginModal({ toggle, modalType, setUser }) {
         />
       </div>
       <div className="flex items-center justify-between">
-        <span
-          className="font-bold cursor-pointer"
-          onClick={() => toggle(false)}
+        <Link href="/">
+          <span className="font-bold cursor-pointer">
+            Cancel
+          </span>
+        </Link>
+        <button
+          disabled={loading}
+          className="btn-yellow"
+          onClick={handleLogIn}
         >
-          Cancel
-        </span>
-        {modalType === 'logIn' ? (
-          <button
-            disabled={loading}
-            className="btn-yellow"
-            onClick={handleLogIn}
-          >
-            {loading ? 'Logging In ...' : 'Log In'}
-          </button>
-        ) : (
-          <button
-            disabled={loading}
-            className="btn-yellow"
-            onClick={handleSignUp}
-          >
-            {loading ? 'Signing up ...' : 'Sign Up'}
-          </button>
-        )}
+          {loading ? 'Logging In ...' : 'Log In'}
+        </button>
       </div>
       <p className="text-red-500 pt-10 font-bold">{error}</p>
     </form>
   )
 }
 
-export default LoginModal
+export default Login;

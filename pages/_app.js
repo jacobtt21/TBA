@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { UserContext } from '../lib/UserContext';
 import userbase from 'userbase-js'
 import Layout from '../components/layout'
 
@@ -12,9 +13,12 @@ function MyApp({ Component, pageProps }) {
   }, [])
 
   return (
-    <Layout user={user} setUser={setUser}>
-      <Component user={user} {...pageProps} />
-    </Layout>
+    <UserContext.Provider value={[user, setUser]}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </UserContext.Provider>
+
   )
 }
 

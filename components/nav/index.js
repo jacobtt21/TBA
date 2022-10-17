@@ -1,21 +1,18 @@
-import { useState } from 'react'
-import LoginModal from '../modal'
-
+import React, { useContext} from 'react';
+import { UserContext } from '../../lib/UserContext';
+import Router from 'next/router';
 import userbase from 'userbase-js'
+import Link from 'next/link'
 
-export default function Nav({ user, setUser }) {
-  const [open, setOpen] = useState()
-  const [modalType, setModalType] = useState()
 
-  function openModal(type) {
-    setOpen(true)
-    setModalType(type)
-  }
+export default function Nav() {
+  const [user, setUser] = useContext(UserContext);
 
   async function logOut() {
     try {
       await userbase.signOut()
-      setUser(null)
+      setUser();
+      Router.push('/');
     } catch (e) {
       console.error(e.message)
     }
@@ -27,39 +24,28 @@ export default function Nav({ user, setUser }) {
         {!user ? (
           <>
             <li>
-              <button
-                className="font-bold mx-2"
-                onClick={() => openModal('logIn')}
-              >
-                Log In
-              </button>
+              <Link href="/login">
+                <button className="font-bold mx-2" >
+                  Log In
+                </button>
+              </Link>
             </li>
             <li>
-              <button
-                className="btn-yellow mx-2"
-                onClick={() => openModal('signUp')}
-              >
-                Sign Up
-              </button>
+              <Link href="/signup">
+                <button className="btn-yellow mx-2" >
+                  Sign Up
+                </button>
+              </Link>
             </li>
           </>
         ) : (
           <li>
-            <button className="font-bold" onClick={logOut}>
+            <button className="btn-yellow mx-2" onClick={logOut}>
               Log Out
             </button>
           </li>
         )}
       </ul>
-      {open && (
-        <div className="w-4/5 md:w-1/2 mx-auto">
-          <LoginModal
-            toggle={setOpen}
-            modalType={modalType}
-            setUser={setUser}
-          />
-        </div>
-      )}
     </nav>
   )
 }
