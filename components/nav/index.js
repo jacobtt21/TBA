@@ -21,30 +21,11 @@ export default function Nav() {
   return (
     <nav className="container pt-10 mx-auto flex justify-center">
       <ul className="flex justify-end items-center p-8">
-        {!user ? (
-          <>
-            <li>
-              <Link href="/login">
-                <button className="font-bold mx-2 text-2xl" >
-                  Log In
-                </button>
-              </Link>
-            </li>
-            <li>
-              <Link href="/signup">
-                <button className="btn-yellow mx-2 text-2xl" >
-                  Sign Up
-                </button>
-              </Link>
-            </li>
-          </>
-        ) : (
-          <li>
-            <button className="btn-yellow mx-2" onClick={logOut}>
-              Log Out
-            </button>
-          </li>
-        )}
+        <li>
+          <button className="btn-yellow mx-2" onClick={logOut}>
+            Log Out
+          </button>
+        </li>
       </ul>
     </nav>
   )

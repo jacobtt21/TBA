@@ -7,9 +7,6 @@ export default function Layout({ user, setUser, children }) {
         <Nav user={user} setUser={setUser} />
       )}
       {children}
-      {!user && (
-        <Nav user={user} setUser={setUser} />
-      )}
     </div>
   )
 }
