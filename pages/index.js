@@ -14,9 +14,18 @@ function Index() {
     </div>
   ) : (
     <div className="w-4/5 md:w-1/2 mx-auto">
-      <h3 className="font-bold text-4xl">
-        Welcome to The Birthday App
-      </h3>
+      <div class="flex flex-wrap justify-center">
+        <img
+        src="https://www.oustro.xyz/oustro_logo_b.svg"
+        className="pt-20 w-28"
+        alt="..."
+        />
+      </div>
+      <div className="container pt-44 flex justify-center">
+        <h3 className="font-bold flex flex-wrap justify-center text-7xl">
+          The Birthday App
+        </h3>
+      </div>
     </div>
   )
 }
