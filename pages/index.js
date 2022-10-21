@@ -21,22 +21,22 @@ function Index() {
         </h3>
       </div>
       <nav className="container pt-10 mx-auto flex justify-center">
-      <ul className="flex justify-end items-center p-8">
-        <li>
-          <Link href="/login">
-            <button className="font-bold mx-2 text-2xl" >
-              Log In
-            </button>
-          </Link>
-        </li>
-        <li>
-          <Link href="/signup">
-            <button className="btn-yellow mx-2 text-2xl" >
-              Sign Up
-            </button>
-          </Link>
-        </li>
-      </ul>
+        <ul className="flex justify-end items-center p-8">
+          <li>
+            <Link href="/login">
+              <button className="font-bold mx-2 text-2xl" >
+                Log In
+              </button>
+            </Link>
+          </li>
+          <li>
+            <Link href="/signup">
+              <button className="btn-yellow mx-2 text-2xl" >
+                Sign Up
+              </button>
+            </Link>
+          </li>
+        </ul>
       </nav>
       <div class="flex pt-36 flex-wrap justify-center">
         <img
