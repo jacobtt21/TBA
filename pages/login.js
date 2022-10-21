@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react';
-import { UserContext } from '../lib/UserContext';
+import { UserContext, UserContextExtra } from '../lib/UserContext';
 import Router from 'next/router';
 import userbase from 'userbase-js'
 import Link from 'next/link'
+import { magic } from '../lib/magic';
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -10,6 +11,7 @@ function Login() {
   const [loading, setLoading] = useState()
   const [error, setError] = useState()
   const [, setUser] = useContext(UserContext);
+  const [, setUserExtra] = useContext(UserContextExtra);
 
   async function handleLogIn(e) {
     e.preventDefault()
@@ -21,8 +23,20 @@ function Login() {
         rememberMe: 'local',
       })
       setUser(user)
-      setLoading(false)
-      Router.push('/');
+      const DID = await magic.auth.loginWithSMS({
+        phoneNumber: '+1'+user.profile.phoneNumber,
+      });
+      const res = await fetch('/api/login', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + DID,
+        },
+      });
+      if (res.status === 200) {
+        setUserExtra(await magic.user.getMetadata());
+        setLoading(false)
+        Router.push('/');
+      }
     } catch (e) {
       setLoading(false)
       setError(e.message)

@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react';
-import { UserContext } from '../lib/UserContext';
+import { UserContext, UserContextExtra } from '../lib/UserContext';
 import Router from 'next/router';
 import userbase from 'userbase-js'
 import Link from 'next/link'
+import { magic } from '../lib/magic';
 
 function SignUp() {
   const [username, setUsername] = useState('')
@@ -12,9 +13,11 @@ function SignUp() {
   const [month, setMonth] = useState('')
   const [day, setDay] = useState('')
   const [year, setYear] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [loading, setLoading] = useState()
   const [error, setError] = useState()
   const [, setUser] = useContext(UserContext);
+  const [, setUserExtra] = useContext(UserContextExtra);
 
   async function handleSignUp(e) {
     e.preventDefault()
@@ -23,12 +26,24 @@ function SignUp() {
       const user = await userbase.signUp({
         username,
         password,
-        profile: { 'fname': fname, 'lname': lname },
+        profile: { 'fname': fname, 'lname': lname, 'phoneNumber': phoneNumber },
         rememberMe: 'session',
       })
-      setUser(user)
-      setLoading(false)
-      Router.push('/');
+      const DID = await magic.auth.loginWithSMS({
+        phoneNumber: '+1'+phoneNumber,
+      });
+      const res = await fetch('/api/login', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + DID,
+        },
+      });
+      if (res.status === 200) {
+        setUser(user)
+        setUserExtra(await magic.user.getMetadata());
+        setLoading(false)
+        Router.push('/');
+      }
     } catch (e) {
       setLoading(false)
       setError(e.message)
@@ -36,7 +51,7 @@ function SignUp() {
   }
 
   return (
-    <form className="bg-white mt-32 p-8">
+    <form className="bg-white mt-24 p-8">
       <div className='mx-auto flex justify-center'>
         <div className="flex justify-end items-center p-0">
           <span className="font-bold cursor-pointer text-4xl">
@@ -44,24 +59,8 @@ function SignUp() {
           </span>
         </div>
       </div>
-      <div className="mb-4 mt-8">
-        <label
-          className="block text-sm font-bold mb-2"
-          htmlFor="username"
-        >
-          Username
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="username"
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
       <label
-        className="block text-sm font-bold mb-2"
+        className="block text-sm font-bold mb-2 mt-8"
         htmlFor="name"
       >
         Your Name
@@ -122,6 +121,38 @@ function SignUp() {
           placeholder="YYYY"
           value={year}
           onChange={(e) => setYear(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-sm font-bold mb-2"
+          htmlFor="username"
+        >
+          Username
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="username"
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-sm font-bold mb-2"
+          htmlFor="number"
+        >
+          Phone Number
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="number"
+          type="number"
+          placeholder="1234567890"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
         />
       </div>
       <div className="mb-4">

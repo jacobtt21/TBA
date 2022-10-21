@@ -38,7 +38,7 @@ function Index() {
           </li>
         </ul>
       </nav>
-      <div class="flex pt-36 flex-wrap justify-center">
+      <div className="flex pt-36 flex-wrap justify-center">
         <img
         src="https://www.oustro.xyz/oustro_logo_b.svg"
         className="pt-20 w-28"

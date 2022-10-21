@@ -1,16 +1,20 @@
 import React, { useContext} from 'react';
-import { UserContext } from '../../lib/UserContext';
+import { UserContext, UserContextExtra } from '../../lib/UserContext';
 import Router from 'next/router';
 import userbase from 'userbase-js'
 import Link from 'next/link'
+import { magic } from '../../lib/magic';
 
 export default function Nav() {
   const [user, setUser] = useContext(UserContext);
+  const [userExtra, setUserExtra] = useContext(UserContextExtra);
 
   async function logOut() {
     try {
       await userbase.signOut()
-      setUser();
+      setUser()
+      await magic.user.logout()
+      setUserExtra()
       Router.push('/');
     } catch (e) {
       console.error(e.message)
