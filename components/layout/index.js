@@ -1,12 +1,15 @@
 import Nav from '../nav'
+import { useState, useContext } from 'react';
+import { UserContext } from '../../lib/UserContext';
 
-export default function Layout({ user, setUser, children }) {
+export default function Layout({ children }) {
+  const [user] = useContext(UserContext);
   return (
     <div>
-      {user && (
-        <Nav user={user} setUser={setUser} />
-      )}
       {children}
+      {user && (
+        <Nav />
+      )}
     </div>
   )
 }

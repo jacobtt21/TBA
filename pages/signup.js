@@ -7,7 +7,8 @@ import Link from 'next/link'
 function SignUp() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
+  const [fname, setFName] = useState('')
+  const [lname, setLName] = useState('')
   const [month, setMonth] = useState('')
   const [day, setDay] = useState('')
   const [year, setYear] = useState('')
@@ -22,7 +23,7 @@ function SignUp() {
       const user = await userbase.signUp({
         username,
         password,
-        profile: { 'name': name },
+        profile: { 'fname': fname, 'lname': lname },
         rememberMe: 'session',
       })
       setUser(user)
@@ -59,20 +60,28 @@ function SignUp() {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
-      <div className="mb-4">
-        <label
-          className="block text-sm font-bold mb-2"
-          htmlFor="name"
-        >
-          Name
-        </label>
+      <label
+        className="block text-sm font-bold mb-2"
+        htmlFor="name"
+      >
+        Your Name
+      </label>
+      <div className="mb-4 inline-flex space-x-2">
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="name"
           type="text"
-          placeholder="Your Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="First Name"
+          value={fname}
+          onChange={(e) => setFName(e.target.value)}
+        />
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="name"
+          type="text"
+          placeholder="Last Name"
+          value={lname}
+          onChange={(e) => setLName(e.target.value)}
         />
       </div>
       <label

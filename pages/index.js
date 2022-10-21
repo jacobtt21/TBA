@@ -9,7 +9,7 @@ function Index() {
   return user ? (
     <div className="w-4/5 md:w-1/2 mx-auto">
       <h3 className="font-bold text-4xl">
-        Welcome, <span className="bg-yellow-400">{user.profile.name}</span>!
+        Welcome, <span className="bg-yellow-400">{user.profile.fname}</span>!
       </h3>
       <TodoForm />
     </div>

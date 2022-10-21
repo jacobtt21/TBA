@@ -11,8 +11,6 @@ function Login() {
   const [error, setError] = useState()
   const [, setUser] = useContext(UserContext);
 
-
-
   async function handleLogIn(e) {
     e.preventDefault()
     setLoading(true)
@@ -32,10 +30,17 @@ function Login() {
   }
 
   return (
-    <form className="bg-white shadow-md rounded-xl p-8">
-      <div className="mb-4">
+    <form className="bg-white mt-32 p-8">
+      <div className='mx-auto flex justify-center'>
+        <div className="flex justify-end items-center p-0">
+          <span className="font-bold cursor-pointer text-4xl">
+            Welcome Back
+          </span>
+        </div>
+      </div>
+      <div className="mb-4 mt-8">
         <label
-          className="block text-purple-700 text-sm font-bold mb-2"
+          className="block text-sm font-bold mb-2"
           htmlFor="username"
         >
           Username
@@ -51,7 +56,7 @@ function Login() {
       </div>
       <div className="mb-4">
         <label
-          className="block text-purple-700 text-sm font-bold mb-2"
+          className="block text-sm font-bold mb-2"
           htmlFor="password"
         >
           Password
@@ -65,21 +70,31 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <div className="flex items-center justify-between">
-        <Link href="/">
-          <span className="font-bold cursor-pointer">
-            Cancel
-          </span>
-        </Link>
-        <button
-          disabled={loading}
-          className="btn-yellow"
-          onClick={handleLogIn}
-        >
-          {loading ? 'Logging In ...' : 'Log In'}
-        </button>
+      <div className='mx-auto flex justify-center'>
+        <div className="flex justify-end items-center pt-8">
+          <button
+            disabled={loading}
+            className="btn-yellow text-2xl"
+            onClick={handleLogIn}
+          >
+            {loading ? 'Logging In ...' : 'Log In'}
+          </button>
+        </div>
       </div>
-      <p className="text-red-500 pt-10 font-bold">{error}</p>
+      <div className='mx-auto flex justify-center'>
+        <div className="flex justify-end items-center p-0">
+          <p className="text-red-500 pt-10 font-bold">{error}</p>
+        </div>
+      </div>
+      <div className='mx-auto flex justify-center'>
+        <div className="flex justify-end items-center p-8">
+          <Link href="/">
+            <span className="font-bold cursor-pointer text-2xl">
+              &larr; Back
+            </span>
+        </Link>
+        </div>
+      </div>
     </form>
   )
 }

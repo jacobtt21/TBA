@@ -4,7 +4,6 @@ import Router from 'next/router';
 import userbase from 'userbase-js'
 import Link from 'next/link'
 
-
 export default function Nav() {
   const [user, setUser] = useContext(UserContext);
 
@@ -23,7 +22,7 @@ export default function Nav() {
       <ul className="flex justify-end items-center p-8">
         <li>
           <button className="btn-yellow mx-2" onClick={logOut}>
-            Log Out
+            Log Out!
           </button>
         </li>
       </ul>
