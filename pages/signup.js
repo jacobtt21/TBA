@@ -27,7 +27,7 @@ function SignUp() {
         username,
         password,
         profile: { 'fname': fname, 'lname': lname, 'phoneNumber': phoneNumber },
-        rememberMe: 'session',
+        rememberMe: 'local',
       })
       const DID = await magic.auth.loginWithSMS({
         phoneNumber: '+1'+phoneNumber,
