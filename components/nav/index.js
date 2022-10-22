@@ -13,8 +13,10 @@ export default function Nav() {
     try {
       await userbase.signOut()
       setUser()
-      await magic.user.logout()
-      setUserExtra()
+      if (magic.user.isLoggedIn()) {
+        await magic.user.logout()
+        setUserExtra()
+      }
       Router.push('/');
     } catch (e) {
       console.error(e.message)

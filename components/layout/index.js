@@ -9,11 +9,7 @@ export default function Layout({ children }) {
     <div>
       {children}
       {user && (
-        <>
-          {userExtra && (
-            <Nav />
-          )}
-        </>
+        <Nav />
       )}
     </div>
   )

@@ -7,11 +7,10 @@ function Index() {
   const [user] = useContext(UserContext);
   const [userExtra] = useContext(UserContextExtra);
   
-  return user && userExtra ? (
+  return user ? (
     <div className="w-4/5 md:w-1/2 mx-auto">
       <h3 className="font-bold text-4xl">
         Welcome, <span className="bg-yellow-400">{user.profile.fname}</span>!
-        Polygon Wallet <span className="bg-yellow-400">{userExtra.publicAddress}</span>!
       </h3>
       <TodoForm />
     </div>

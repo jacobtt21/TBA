@@ -94,8 +94,8 @@ function SignUp() {
           className="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="month"
           type="number"
-          min="1" 
-          max="12"
+          pattern="[0-9]*" 
+          maxLength="2"
           placeholder="MM"
           value={month}
           onChange={(e) => setMonth(e.target.value)}
@@ -105,8 +105,8 @@ function SignUp() {
           className="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="day"
           type="number"
-          min="1" 
-          max="31"
+          pattern="[0-9]*" 
+          maxLength="2"
           placeholder="DD"
           value={day}
           onChange={(e) => setDay(e.target.value)}
@@ -116,8 +116,8 @@ function SignUp() {
           className="shadow appearance-none border rounded w-28 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="year"
           type="number"
-          min="1970" 
-          max="2022"
+          pattern="[0-9]*" 
+          maxLength="4"
           placeholder="YYYY"
           value={year}
           onChange={(e) => setYear(e.target.value)}
@@ -150,6 +150,8 @@ function SignUp() {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="number"
           type="number"
+          pattern="[0-9]*" 
+          maxLength="10"
           placeholder="1234567890"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
