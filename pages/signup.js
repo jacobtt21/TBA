@@ -42,7 +42,7 @@ function SignUp() {
         setUser(user)
         setUserExtra(await magic.user.getMetadata());
         setLoading(false)
-        Router.push('/');
+        Router.push('/onboard');
       }
     } catch (e) {
       setLoading(false)

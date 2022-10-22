@@ -29,7 +29,7 @@ function Index() {
         />
       </div>
       <nav className="container mx-auto flex justify-center">
-        <ul className="flex justify-end items-center p-8">
+        <ul className="flex justify-end items-center p-1">
           <li>
             <Link href="/login">
               <button className="font-bold mx-2 text-2xl" >
@@ -46,10 +46,10 @@ function Index() {
           </li>
         </ul>
       </nav>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex mt-28 flex-wrap justify-center">
         <img
         src="https://www.oustro.xyz/oustro_logo_b.svg"
-        className="pt-20 w-28"
+        className="w-28"
         alt="..."
         />
       </div>
