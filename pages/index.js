@@ -1,4 +1,3 @@
-import TodoForm from '../components/todo-form'
 import React, { useEffect, useContext, useState } from 'react';
 import { UserContext, UserContextExtra } from '../lib/UserContext';
 import Link from 'next/link'
@@ -9,10 +8,20 @@ function Index() {
   
   return user ? (
     <div className="w-4/5 md:w-1/2 mx-auto">
-      <h3 className="font-bold text-4xl">
-        Welcome, <span className="bg-yellow-400">{user.profile.fname}</span>!
-      </h3>
-      <TodoForm />
+      <div className="container mt-16 flex justify-center">
+        <h3 className="font-bold text-4xl">
+          Welcome, <span className="bg-yellow-400">{user.profile.fname}</span>!
+          {userExtra ? (
+            <>
+              <h3 className="text-2xl">Crypto Capabilties Active</h3>
+            </>
+          ) : (
+            <>
+              <h3 className="text-2xl">Crypto Capabilties Not Active</h3>
+            </>
+          )}
+        </h3>
+      </div>
     </div>
   ) : (
     <div className="w-4/5 md:w-1/2 mx-auto">

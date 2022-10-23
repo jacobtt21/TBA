@@ -1,35 +1,28 @@
-import React, { useContext} from 'react';
-import { UserContext, UserContextExtra } from '../../lib/UserContext';
-import Router from 'next/router';
-import userbase from 'userbase-js'
+import React from 'react';
 import Link from 'next/link'
-import { magic } from '../../lib/magic';
 
 export default function Nav() {
-  const [user, setUser] = useContext(UserContext);
-  const [userExtra, setUserExtra] = useContext(UserContextExtra);
-
-  async function logOut() {
-    try {
-      await userbase.signOut()
-      setUser()
-      if (magic.user.isLoggedIn()) {
-        await magic.user.logout()
-        setUserExtra()
-      }
-      Router.push('/');
-    } catch (e) {
-      console.error(e.message)
-    }
-  }
-
   return (
-    <nav className="container pt-10 mx-auto flex justify-center">
-      <ul className="flex justify-end items-center p-8">
+    <nav className="w-full h-24 fixed left-0 bottom-0 flex justify-center items-center">
+      <ul className="inline-flex -mt-4 space-x-2">
         <li>
-          <button className="btn-yellow mx-2" onClick={logOut}>
-            Log Out!
+          <button className="btn-yellow mx-2">
+            Feed
           </button>
+        </li>
+        <p className='text-3xl'>|</p>
+        <li>
+          <button className="btn-yellow mx-2">
+            Search
+          </button>
+        </li>
+        <p className='text-3xl'>|</p>
+        <li>
+          <Link href="/profile">
+            <button className="btn-yellow mx-2">
+              Profile
+            </button>
+          </Link>
         </li>
       </ul>
     </nav>

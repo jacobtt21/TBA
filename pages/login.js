@@ -22,7 +22,6 @@ function Login() {
         password,
         rememberMe: 'local',
       })
-      setUser(user)
       const DID = await magic.auth.loginWithSMS({
         phoneNumber: '+1'+user.profile.phoneNumber,
       });
@@ -34,6 +33,7 @@ function Login() {
       });
       if (res.status === 200) {
         setUserExtra(await magic.user.getMetadata());
+        setUser(user)
         setLoading(false)
         Router.push('/');
       }
