@@ -1,30 +1,42 @@
 import React from 'react';
 import Link from 'next/link'
+import { IoPersonOutline, IoPerson, IoSearchCircleOutline, IoSearchCircle, IoHome, IoHomeOutline } from "react-icons/io5";
+import Router from 'next/router';
 
 export default function Nav() {
   return (
-    <nav className="w-full h-24 fixed left-0 bottom-0 flex justify-center items-center">
+    <nav className="w-full h-24 fixed left-0 bottom-0 flex justify-center items-center border-t-2 border-black">
       <ul className="inline-flex -mt-4 space-x-2">
         <li>
           <Link href="/">
-            <button className="btn-yellow mx-2">
-              Feed
+            <button className="btn-white mx-2 text-3xl">
+              {Router.pathname === "/" ? (
+                <IoHome />
+              ) : (
+                <IoHomeOutline />
+              )}
             </button>
           </Link>
         </li>
-        <p className='text-3xl'>|</p>
         <li>
           <Link href="/search">
-            <button className="btn-yellow mx-2">
-              Search
+            <button className="btn-white mx-2 text-3xl">
+              {Router.pathname === "/search" ? (
+                <IoSearchCircle />
+              ) : (
+                <IoSearchCircleOutline />
+              )}
             </button>
           </Link>
         </li>
-        <p className='text-3xl'>|</p>
         <li>
           <Link href="/profile">
-            <button className="btn-yellow mx-2">
-              Profile
+            <button className="btn-white mx-2 text-3xl">
+              {Router.pathname === "/profile" ? (
+                <IoPerson />
+              ) : (
+                <IoPersonOutline />
+              )}
             </button>
           </Link>
         </li>
