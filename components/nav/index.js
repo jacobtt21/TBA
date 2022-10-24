@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from 'next/link'
-import { IoPersonOutline, IoPerson, IoSearchCircleOutline, IoSearchCircle, IoHome, IoHomeOutline } from "react-icons/io5";
+import { IoPersonOutline, IoPerson, IoSearchCircleOutline, IoSearchCircle, IoHome, IoHomeOutline, IoWalletOutline, IoWallet } from "react-icons/io5";
 import Router from 'next/router';
 
 export default function Nav() {
   return (
-    <nav className="w-full h-24 fixed left-0 bottom-0 flex justify-center items-center border-t-2 border-black">
-      <ul className="inline-flex -mt-4 space-x-2">
+    <nav className="w-full h-20 fixed left-0 bottom-0 flex justify-center items-center border-t border-stone-700">
+      <ul className="inline-flex -mt-8 space-x-2">
         <li>
           <Link href="/">
             <button className="btn-white mx-2 text-3xl">
@@ -25,6 +25,17 @@ export default function Nav() {
                 <IoSearchCircle />
               ) : (
                 <IoSearchCircleOutline />
+              )}
+            </button>
+          </Link>
+        </li>
+        <li>
+          <Link href="/search">
+            <button className="btn-white mx-2 text-3xl">
+              {Router.pathname === "/search" ? (
+                <IoWallet />
+              ) : (
+                <IoWalletOutline />
               )}
             </button>
           </Link>
