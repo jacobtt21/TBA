@@ -30,9 +30,9 @@ export default function Nav() {
           </Link>
         </li>
         <li>
-          <Link href="/search">
+          <Link href="/wallet">
             <button className="btn-white mx-2 text-3xl">
-              {Router.pathname === "/search" ? (
+              {Router.pathname === "/wallet" ? (
                 <IoWallet />
               ) : (
                 <IoWalletOutline />
