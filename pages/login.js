@@ -65,6 +65,7 @@ function Login() {
           type="text"
           placeholder="Username"
           value={username}
+          disabled={loading}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -81,6 +82,7 @@ function Login() {
           type="password"
           placeholder="*******"
           value={password}
+          disabled={loading}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>

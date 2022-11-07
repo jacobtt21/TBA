@@ -5,7 +5,7 @@ import Router from 'next/router';
 
 export default function Nav() {
   return (
-    <nav className="w-full h-20 fixed left-0 bottom-0 flex justify-center items-center border-t border-stone-700">
+    <nav className="w-full h-20 fixed bg-white opacity-95 left-0 bottom-0 flex justify-center items-center border-t border-stone-700">
       <ul className="inline-flex -mt-8 space-x-2">
         <li>
           <Link href="/">

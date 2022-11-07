@@ -72,6 +72,7 @@ function SignUp() {
           type="text"
           placeholder="First Name"
           value={fname}
+          disabled={loading}
           onChange={(e) => setFName(e.target.value)}
         />
         <input
@@ -80,6 +81,7 @@ function SignUp() {
           type="text"
           placeholder="Last Name"
           value={lname}
+          disabled={loading}
           onChange={(e) => setLName(e.target.value)}
         />
       </div>
@@ -98,6 +100,7 @@ function SignUp() {
           maxLength="2"
           placeholder="MM"
           value={month}
+          disabled={loading}
           onChange={(e) => setMonth(e.target.value)}
         />
         <p className='text-2xl'>/</p>
@@ -109,6 +112,7 @@ function SignUp() {
           maxLength="2"
           placeholder="DD"
           value={day}
+          disabled={loading}
           onChange={(e) => setDay(e.target.value)}
         />
         <p className='text-2xl'>/</p>
@@ -120,6 +124,7 @@ function SignUp() {
           maxLength="4"
           placeholder="YYYY"
           value={year}
+          disabled={loading}
           onChange={(e) => setYear(e.target.value)}
         />
       </div>
@@ -136,6 +141,7 @@ function SignUp() {
           type="text"
           placeholder="Username"
           value={username}
+          disabled={loading}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -154,6 +160,7 @@ function SignUp() {
           maxLength="10"
           placeholder="1234567890"
           value={phoneNumber}
+          disabled={loading}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
       </div>
@@ -170,6 +177,7 @@ function SignUp() {
           type="password"
           placeholder="*******"
           value={password}
+          disabled={loading}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>

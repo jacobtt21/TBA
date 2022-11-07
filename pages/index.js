@@ -1,26 +1,38 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { UserContext, UserContextExtra } from '../lib/UserContext';
 import Link from 'next/link'
+import Grid from '../components/cards/Grid';
 
 function Index() {
   const [user] = useContext(UserContext);
   const [userExtra] = useContext(UserContextExtra);
+  const [feed, setFeed] = useState("");
+
+  useEffect(() => {
+    if (!user) {
+      return
+    }
+    getFeed();
+  }, [user]);
+
+  const getFeed = async () => {
+    let data = ["yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs"];
+    setFeed(data);
+  }
   
   return user ? (
     <div className="w-4/5 md:w-1/2 mx-auto">
-      <div className="container mt-16 flex justify-center">
-        <h3 className="font-bold text-4xl">
-          Welcome, <span className="bg-yellow-400">{user.profile.fname}</span>!
-          {userExtra ? (
-            <>
-              <h3 className="text-2xl">Crypto Capabilties Active</h3>
-            </>
-          ) : (
-            <>
-              <h3 className="text-2xl">Crypto Capabilties Not Active</h3>
-            </>
-          )}
+      <div className="w-full h-24 fixed opacity-95 left-0 top-0 flex bg-white justify-center items-center">
+        <h3 className="font-bold mt-16 text-4xl">
+          <span className="bg-yellow-400 rounded-lg p-1">{user.profile.fname}'s</span> Feed
         </h3>
+      </div>
+      <div className="w-full mt-28 flex justify-center items-center">
+        {feed.length > 0 ? (
+          <Grid feed={feed} />
+        ) : (
+          <h3 className="text-2xl">Can't seem to find anything for ya!</h3>
+        )}
       </div>
     </div>
   ) : (
