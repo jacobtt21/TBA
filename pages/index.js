@@ -1,11 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { UserContext, UserContextExtra } from '../lib/UserContext';
+import { UserContext } from '../lib/UserContext';
 import Link from 'next/link'
 import Grid from '../components/cards/Grid';
 
 function Index() {
   const [user] = useContext(UserContext);
-  const [userExtra] = useContext(UserContextExtra);
   const [feed, setFeed] = useState("");
 
   useEffect(() => {

@@ -1,14 +1,58 @@
-function onboard() {
+import { useState, useContext } from 'react';
+import { UserContext, UserContextExtra } from '../lib/UserContext';
+import Router from 'next/router';
+import userbase from 'userbase-js'
+import Link from 'next/link'
+import { magic } from '../lib/magic';
 
-  return (
-    <div className="w-4/5 md:w-1/2 mx-auto">
-      <div className="container mt-16 flex justify-center">
-        <h3 className="font-bold flex flex-wrap justify-center text-2xl">
-          Loading ...
-        </h3>
+function Onboard() {
+  const [loading, setLoading] = useState()
+  const [error, setError] = useState()
+  const user = useContext(UserContext);
+  const userExtra = useContext(UserContextExtra);
+
+  async function handleSetUp(e) {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      
+    } catch (e) {
+      setLoading(false)
+      setError(e.message)
+    }
+  }
+
+  return user && userExtra ? (
+    <form className="bg-white mt-24 p-8">
+      <div className='mx-auto flex justify-center'>
+        <div className="flex justify-end items-center p-0">
+          <span className="font-bold cursor-pointer text-4xl">
+            Set Up Your Birthday App
+          </span>
+        </div>
       </div>
-    </div>
+      <div className='mx-auto flex justify-center'>
+        <div className="flex justify-end items-center pt-8">
+          <button
+            disabled={loading}
+            className="btn-yellow text-2xl"
+            onClick={handleSetUp}
+          >
+            {loading ? 'Setting Up ...' : 'Done'}
+          </button>
+        </div>
+      </div>
+      <div className='mx-auto flex justify-center'>
+        <div className="flex justify-end items-center p-0">
+          <p className="text-red-500 pt-10 font-bold">{error}</p>
+        </div>
+      </div>
+    </form>
+  ) : (
+    <>
+      hmm
+    </>
   )
 }
 
-export default onboard
+export default Onboard;
