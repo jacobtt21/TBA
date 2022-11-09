@@ -1,9 +1,6 @@
 import { useState, useContext } from 'react';
 import { UserContext, UserContextExtra } from '../lib/UserContext';
-import Router from 'next/router';
-import userbase from 'userbase-js'
-import Link from 'next/link'
-import { magic } from '../lib/magic';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 function Onboard() {
   const [loading, setLoading] = useState()
@@ -15,7 +12,10 @@ function Onboard() {
     e.preventDefault()
     setLoading(true)
     try {
-      
+      const image = await Camera.getPhoto({
+        quality: 100,
+        resultType: CameraResultType.Base64
+      });
     } catch (e) {
       setLoading(false)
       setError(e.message)

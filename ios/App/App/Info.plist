@@ -5,7 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>oustrobday</string>
+	<string>TBA</string>
+  <key>NSCameraUsageDescription</key>
+	<string>Test</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Test</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+	<string>Test</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,5 +51,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict/>
+	</array>
 </dict>
 </plist>
