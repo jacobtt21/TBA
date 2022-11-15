@@ -7,15 +7,17 @@ function Onboard() {
   const [error, setError] = useState()
   const user = useContext(UserContext);
   const userExtra = useContext(UserContextExtra);
+  const [image, setImage] = useState('');
 
   async function handleSetUp(e) {
     e.preventDefault()
     setLoading(true)
     try {
       const image = await Camera.getPhoto({
+        resultType: CameraResultType.DataUrl,
         quality: 100,
-        resultType: CameraResultType.Base64
       });
+      setImage(image.dataUrl)
     } catch (e) {
       setLoading(false)
       setError(e.message)
@@ -38,10 +40,19 @@ function Onboard() {
             className="btn-yellow text-2xl"
             onClick={handleSetUp}
           >
-            {loading ? 'Setting Up ...' : 'Done'}
+            {loading ? 'Uploading ...' : 'Select an Image'}
           </button>
         </div>
       </div>
+      {image && (
+        <div className="container flex -mt-16 justify-center">
+          <img
+          src={image}
+          className="pt-20 w-72"
+          alt="..."
+          />
+        </div>
+      )}
       <div className='mx-auto flex justify-center'>
         <div className="flex justify-end items-center p-0">
           <p className="text-red-500 pt-10 font-bold">{error}</p>
