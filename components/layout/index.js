@@ -1,6 +1,7 @@
 import Nav from '../nav'
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { UserContext, UserContextExtra } from '../../lib/UserContext';
+import Router from 'next/router';
 
 export default function Layout({ children }) {
   const [user] = useContext(UserContext)
@@ -8,8 +9,12 @@ export default function Layout({ children }) {
   return (
     <div>
       {children}
-      {user && (
-        <Nav />
+      {user &&  (
+        <>
+          {Router.pathname !== "/onboard" && (
+            <Nav />
+          )}
+        </>
       )}
     </div>
   )

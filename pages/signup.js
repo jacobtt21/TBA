@@ -23,6 +23,7 @@ function SignUp() {
     e.preventDefault()
     setLoading(true)
     try {
+      await validateForm();
       const user = await userbase.signUp({
         username,
         password,
@@ -50,6 +51,22 @@ function SignUp() {
     }
   }
 
+  async function validateForm() {
+    if (fname === '' || lname === '' || month === '' || day === '' || year === '' || phoneNumber === '') {
+      throw new Error('Missing Required Fields');
+    }
+    if (parseInt(year) > 2022) {
+      throw new Error("Invalid Year");
+    }
+    if (parseInt(month) > 12 || parseInt(month) < 1) {
+      throw new Error("Invalid Month");
+    }
+    // Need to refine day checks
+    if (parseInt(day) > 31 || parseInt(day) < 1) {
+      throw new Error("Invalid Day");
+    }
+  }
+
   return (
     <form className="bg-white mt-24 p-8">
       <div className='mx-auto flex justify-center'>
@@ -68,7 +85,7 @@ function SignUp() {
       <div className="mb-4 inline-flex space-x-2">
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="name"
+          id="fname"
           type="text"
           placeholder="First Name"
           value={fname}
@@ -77,7 +94,7 @@ function SignUp() {
         />
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="name"
+          id="lname"
           type="text"
           placeholder="Last Name"
           value={lname}
