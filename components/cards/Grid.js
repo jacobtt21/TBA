@@ -9,7 +9,7 @@ export default function Grid({ feed }) {
         return (
           <div className="container mt-4 flex justify-center shadow-lg border-solid border border-stone-50 text-black font-bold py-2 px-4 rounded-lg" key={i}>
             <h3 className="font-bold text-2xl">
-              {item}
+              {item} - test data
             </h3>
           </div>
         );

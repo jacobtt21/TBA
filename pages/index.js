@@ -6,6 +6,7 @@ import Grid from '../components/cards/Grid';
 function Index() {
   const [user] = useContext(UserContext);
   const [feed, setFeed] = useState("");
+  const [animateHeader, setAnimateHeader] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -14,19 +15,34 @@ function Index() {
     getFeed();
   }, [user]);
 
+  useEffect(() => {
+    const listener = () => {
+     if (window.scrollY > 140) {
+       setAnimateHeader(true);
+     } else setAnimateHeader(false);
+    };
+    window.addEventListener("scroll", listener);
+    return () => {
+      window.removeEventListener("scroll", listener);
+    };
+  }, []);
+
   const getFeed = async () => {
-    let data = ["yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs", "yee", "bbobs"];
+    let data = ["odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even"];
     setFeed(data);
   }
   
   return user ? (
-    <div className="w-4/5 md:w-1/2 mx-auto">
-      <div className="w-full h-24 fixed opacity-95 left-0 top-0 flex bg-white justify-center items-center">
-        <h3 className="font-bold mt-16 text-4xl">
-          <span className="bg-yellow-400 rounded-lg p-1">{user.profile.fname}'s</span> Feed
-        </h3>
+    <div className="w-full md:w-1/2 mx-auto">
+      <div className="w-full h-12 fixed left-0 top-0 flex bg-white">
+        &nbsp;
       </div>
-      <div className="w-full mt-28 flex justify-center items-center">
+      <div className={`w-full h-24 fixed left-0 top-0 p-4 flex bg-white justify-center items-center trasition-all ease-in-out duration-500 ${
+      animateHeader && "opacity-0"}`}
+      >
+        <h3 className="font-bold mt-12 text-3xl">The Birthday App</h3>
+      </div>
+      <div className="w-full mt-28 mb-28 flex justify-center items-center">
         {feed.length > 0 ? (
           <Grid feed={feed} />
         ) : (
