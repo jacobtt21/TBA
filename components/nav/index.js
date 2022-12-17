@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link'
-import { IoPersonOutline, IoPerson, IoSearchCircleOutline, IoSearchCircle, IoHome, IoHomeOutline, IoWalletOutline, IoWallet } from "react-icons/io5";
+import { IoPersonOutline, IoPerson, IoCalendarOutline, IoCalendar, IoHome, IoHomeOutline, IoGiftOutline, IoGift } from "react-icons/io5";
 import Router from 'next/router';
 
 export default function Nav() {
@@ -9,7 +9,7 @@ export default function Nav() {
       <ul className="inline-flex -mt-8 space-x-2">
         <li>
           <Link href="/">
-            <button className="btn-white mx-2 text-3xl">
+            <button className="btn-white mx-4 text-3xl">
               {Router.pathname === "/" ? (
                 <IoHome />
               ) : (
@@ -19,30 +19,30 @@ export default function Nav() {
           </Link>
         </li>
         <li>
-          <Link href="/search">
-            <button className="btn-white mx-2 text-3xl">
-              {Router.pathname === "/search" ? (
-                <IoSearchCircle />
+          <Link href="/calendar">
+            <button className="btn-white mx-4 text-3xl">
+              {Router.pathname === "/calendar" ? (
+                <IoCalendar />
               ) : (
-                <IoSearchCircleOutline />
+                <IoCalendarOutline />
               )}
             </button>
           </Link>
         </li>
         <li>
           <Link href="/wallet">
-            <button className="btn-white mx-2 text-3xl">
+            <button className="btn-white mx-4 text-3xl">
               {Router.pathname === "/wallet" ? (
-                <IoWallet />
+                <IoGift />
               ) : (
-                <IoWalletOutline />
+                <IoGiftOutline />
               )}
             </button>
           </Link>
         </li>
         <li>
           <Link href="/profile">
-            <button className="btn-white mx-2 text-3xl">
+            <button className="btn-white mx-4 text-3xl">
               {Router.pathname === "/profile" ? (
                 <IoPerson />
               ) : (

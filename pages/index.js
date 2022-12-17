@@ -2,15 +2,21 @@ import React, { useEffect, useContext, useState } from 'react';
 import { UserContext } from '../lib/UserContext';
 import Link from 'next/link'
 import Grid from '../components/cards/Grid';
+import Confetti from 'react-dom-confetti';
 
 function Index() {
   const [user] = useContext(UserContext);
   const [feed, setFeed] = useState("");
   const [animateHeader, setAnimateHeader] = useState(false);
+  const [confetti, setConfetti] = useState(false);
 
   useEffect(() => {
     if (!user) {
       return
+    }
+    // change to user b-day
+    if (Date.parse("12/17/2023") === Date.parse(new Date())) {
+      setConfetti(true);
     }
     getFeed();
   }, [user]);
@@ -31,9 +37,24 @@ function Index() {
     let data = ["odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even"];
     setFeed(data);
   }
+
+  const config = {
+    angle: 90,
+    spread: 360,
+    startVelocity: 40,
+    elementCount: 70,
+    dragFriction: 0.12,
+    duration: 3000,
+    stagger: 3,
+    width: "10px",
+    height: "10px",
+    perspective: "500px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+  };
   
   return user ? (
     <div className="w-full md:w-1/2 mx-auto">
+      <Confetti active={ confetti } config={ config }/>
       <div className="w-full h-12 fixed left-0 top-0 flex bg-white">
         &nbsp;
       </div>
