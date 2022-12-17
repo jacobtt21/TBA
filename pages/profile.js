@@ -27,13 +27,35 @@ function Profile() {
     }
   }
 
+  console.log(user)
   const getTimeUntil = () => {
     // change to user b-day
-    const time = Date.parse("12/17/2022") - Date.parse(new Date());
-    setSeconds(Math.floor((time/1000) % 60));
-    setMinutes(Math.floor((time/1000/60) % 60));
-    setHours(Math.floor((time/(1000*60*60)% 24)));
-    setDays(Math.floor((time/(1000*60*60*24))));
+    const today = new Date()
+    var time;
+    var todayBday = false;
+    if (today.getDate() > 18 && today.getMonth() >= 11) {
+      time = Date.parse("12/18/"+parseInt(today.getFullYear() + 1)) - Date.parse(today);
+    }
+    else if (today.getDate() < 18 && today.getMonth() <= 11) {
+      time = Date.parse("12/18/"+today.getFullYear()) - Date.parse(today);
+
+    }
+    else if (today.getDate() === 18 && today.getMonth() === 11) {
+      todayBday = true;
+    }
+
+    if (todayBday) {
+      setSeconds(0);
+      setMinutes(0);
+      setHours(0);
+      setDays(0);
+    }
+    else {
+      setSeconds(Math.floor((time/1000) % 60));
+      setMinutes(Math.floor((time/1000/60) % 60));
+      setHours(Math.floor((time/(1000*60*60)% 24)));
+      setDays(Math.floor((time/(1000*60*60*24))));
+    }
   }
 
   useEffect(() => {
@@ -47,14 +69,11 @@ function Profile() {
   return user ? (
     <div className="w-4/5 md:w-1/2 mx-auto">
       <div className="container mx-auto mt-16 justify-center">
-        <h1 className="font-bold text-4xl w-full left-0">
-        {user.profile.fname} {user.profile.lname}
-        </h1>
-        <h2 className="text-2xl w-full left-0">
-          @{user.username}
-        </h2>
         <div className="bg-gray-100 p-4 left-0 mt-4 rounded-lg">
-          <nav className="container text-2xl mx-auto flex justify-center">
+          <div className='container text-2xl mx-auto flex justify-center' >
+            Birthday Countdown
+          </div>
+          <nav className="container text-2xl mt-4 mx-auto flex justify-center">
             <ul className='mx-2'>
               <h3 className="block text-sm font-bold mb-2">
                 Days
@@ -96,10 +115,13 @@ function Profile() {
               </div>
             </ul>
           </nav>
-          <div className='container text-2xl mx-auto mt-4 flex justify-center' >
-            Until your birthday!
-          </div>
         </div>
+        <h1 className="font-bold text-4xl mt-4 w-full left-0">
+          {user.profile.fname} {user.profile.lname}
+        </h1>
+        <h2 className="text-2xl w-full left-0">
+          @{user.username}
+        </h2>
         <nav className="container mx-auto mt-4 flex justify-center">
           <ul className="flex justify-end items-center p-1">
             <li>
