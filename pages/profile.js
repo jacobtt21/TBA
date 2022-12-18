@@ -27,7 +27,6 @@ function Profile() {
     }
   }
 
-  console.log(user)
   const getTimeUntil = () => {
     // change to user b-day
     const today = new Date()

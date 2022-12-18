@@ -19,9 +19,9 @@ export default function Nav() {
           </Link>
         </li>
         <li>
-          <Link href="/calendar">
+          <Link href="/search">
             <button className="btn-white mx-4 text-3xl">
-              {Router.pathname === "/calendar" ? (
+              {Router.pathname === "/search" ? (
                 <IoCalendar />
               ) : (
                 <IoCalendarOutline />
