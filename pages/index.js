@@ -15,7 +15,8 @@ function Index() {
       return
     }
     // change to user b-day
-    if (Date.parse("12/17/2023") === Date.parse(new Date())) {
+    const today = new Date()
+    if (today.getDate() === 18 && today.getMonth() === 11) {
       setConfetti(true);
     }
     getFeed();

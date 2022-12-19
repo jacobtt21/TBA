@@ -23,15 +23,6 @@ function Search() {
         />
         </div>
       </div>
-      <div className='mx-auto flex justify-center'>
-        <div className="flex justify-end items-center pt-8">
-          <Link href="/">
-            <button className="btn-yellow text-2xl">
-              Let's Go
-            </button>
-          </Link>
-        </div>
-      </div>
     </div>
   ) : (
     <>
