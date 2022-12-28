@@ -4,6 +4,7 @@ import Router from 'next/router';
 import userbase from 'userbase-js'
 import Link from 'next/link'
 import { magic } from '../lib/magic';
+import algoliasearch from 'algoliasearch';
 
 function SignUp() {
   const [username, setUsername] = useState('')
@@ -19,17 +20,18 @@ function SignUp() {
   const [, setUser] = useContext(UserContext);
   const [, setUserExtra] = useContext(UserContextExtra);
 
+  const searchClient = algoliasearch(
+    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
+    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ADMIN_KEY,
+  );
+
+  const index = searchClient.initIndex('TBA');
+
   async function handleSignUp(e) {
     e.preventDefault()
     setLoading(true)
     try {
       await validateForm();
-      const user = await userbase.signUp({
-        username,
-        password,
-        profile: { 'fname': fname, 'lname': lname, 'phoneNumber': phoneNumber },
-        rememberMe: 'local',
-      })
       const DID = await magic.auth.loginWithSMS({
         phoneNumber: '+1'+phoneNumber,
       });
@@ -40,8 +42,36 @@ function SignUp() {
         },
       });
       if (res.status === 200) {
+        const userFromMagic = await magic.user.getMetadata()
+        const userData = new FormData
+        userData.append("uname", username)
+        userData.append("fname", fname)
+        userData.append("lname", lname)
+        userData.append("day", day)
+        userData.append("month", month)
+        userData.append("year", year)
+        userData.append("wallet", userFromMagic.publicAddress)
+        //
+        // UPDATE THE SERVER URL
+        //
+        const res = await fetch('http://127.0.0.1:5000/create_user', {
+          method: "POST",
+          body: userData
+        })
+        const data = await res.json();
+        const user = await userbase.signUp({
+          username,
+          password,
+          profile: { 'fname': fname, 'lname': lname, 'phoneNumber': phoneNumber, 'userID': (JSON.parse(data["user_id"])["$oid"]).toString()},
+          rememberMe: 'local',
+        })
+        await index.saveObject({
+          username: username,
+          fname: fname,
+          lname: lname
+        }, {autoGenerateObjectIDIfNotExist: true})
         setUser(user)
-        setUserExtra(await magic.user.getMetadata());
+        setUserExtra(userFromMagic);
         setLoading(false)
         Router.push('/onboard');
       }

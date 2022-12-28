@@ -10,6 +10,7 @@ function Login() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState()
   const [error, setError] = useState()
+  const [userbaseAuth, setUserbaseAuth] = useState(false)
   const [, setUser] = useContext(UserContext);
   const [, setUserExtra] = useContext(UserContextExtra);
 
@@ -22,6 +23,7 @@ function Login() {
         password,
         rememberMe: 'local',
       })
+      setUserbaseAuth(true)
       const DID = await magic.auth.loginWithSMS({
         phoneNumber: '+1'+user.profile.phoneNumber,
       });
@@ -38,6 +40,9 @@ function Login() {
         Router.push('/');
       }
     } catch (e) {
+      if (userbaseAuth) {
+        await userbase.signOut()
+      }
       setLoading(false)
       setError(e.message)
     }
