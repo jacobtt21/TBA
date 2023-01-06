@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext, UserContextExtra } from '../lib/UserContext';
 import Router from 'next/router';
 import userbase from 'userbase-js'
@@ -7,10 +7,22 @@ import { magic } from '../lib/magic';
 function Profile() {
   const [user, setUser] = useContext(UserContext);
   const [, setUserExtra] = useContext(UserContextExtra);
-  const [days, setDays] = useState(0)
-  const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] = useState(0)
+  const [reqUser, setReqUser] = useState()
+  
+  useEffect(() => {
+    getUserInfo()
+  }, [])
+
+  const getUserInfo = async () => {
+    const currentUserData = new FormData
+    currentUserData.append("uname", user.username)
+    const res = await fetch('http://127.0.0.1:5000/get_username_info', {
+      method: "POST",
+      body: currentUserData
+    })
+    const data = await res.json();
+    setReqUser(JSON.parse(data["user_info"]))
+  }
 
   async function logOut() {
     try {
@@ -27,100 +39,55 @@ function Profile() {
     }
   }
 
-  const getTimeUntil = () => {
-    // change to user b-day
-    const today = new Date()
-    var time;
-    var todayBday = false;
-    if (today.getDate() > 18 && today.getMonth() >= 11) {
-      time = Date.parse("12/18/"+parseInt(today.getFullYear() + 1)) - Date.parse(today);
-    }
-    else if (today.getDate() < 18 && today.getMonth() <= 11) {
-      time = Date.parse("12/18/"+today.getFullYear()) - Date.parse(today);
-
-    }
-    else if (today.getDate() === 18 && today.getMonth() === 11) {
-      todayBday = true;
-    }
-
-    if (todayBday) {
-      setSeconds(0);
-      setMinutes(0);
-      setHours(0);
-      setDays(0);
-    }
-    else {
-      setSeconds(Math.floor((time/1000) % 60));
-      setMinutes(Math.floor((time/1000/60) % 60));
-      setHours(Math.floor((time/(1000*60*60)% 24)));
-      setDays(Math.floor((time/(1000*60*60*24))));
-    }
-  }
-
-  useEffect(() => {
-    getTimeUntil();
-  })
-
-  useEffect(() => {
-    setInterval(() => getTimeUntil(), 1000)
-  }, [])
-  
-  return user ? (
+  return user && reqUser ? (
     <div className="w-4/5 md:w-1/2 mx-auto">
       <div className="container mx-auto mt-16 justify-center">
-        <div className="bg-gray-100 p-4 left-0 mt-4 rounded-lg">
-          <div className='container text-2xl mx-auto flex justify-center' >
-            Birthday Countdown
-          </div>
-          <nav className="container text-2xl mt-4 mx-auto flex justify-center">
-            <ul className='mx-2'>
-              <h3 className="block text-sm font-bold mb-2">
-                Days
-              </h3>
-              <div className="bg-gray-300 p-2 left-0 flex justify-center rounded">
-                <h3>
-                  {days}
-                </h3>
-              </div>
-            </ul>
-            <ul className='mx-2'>
-              <h3 className="block text-sm font-bold mb-2">
-                Hours
-              </h3>
-              <div className="bg-gray-300 p-2 left-0 flex justify-center rounded">
-                <h3>
-                  {hours}
-                </h3>
-              </div>
-            </ul>
-            <ul className='mx-2'>
-              <h3 className="block text-sm font-bold mb-2">
-                Minutes
-              </h3>
-              <div className="bg-gray-300 p-2 left-0 flex justify-center rounded">
-                <h3>
-                  {minutes}
-                </h3>
-              </div>
-            </ul>
-            <ul className='mx-2'>
-              <h3 className="block text-sm font-bold mb-2">
-                Seconds
-              </h3>
-              <div className="bg-gray-300 p-2 left-0 flex justify-center rounded">
-                <h3>
-                  {seconds}
-                </h3>
-              </div>
-            </ul>
-          </nav>
-        </div>
         <h1 className="font-bold text-4xl mt-4 w-full left-0">
           {user.profile.fname} {user.profile.lname}
         </h1>
-        <h2 className="text-2xl w-full left-0">
+        <h2 className="text-3xl w-full left-0">
           @{user.username}
         </h2>
+        <h2 className="text-2xl w-full mt-10 left-0">
+          Personal Info
+        </h2>
+        <div className="bg-gray-100 p-4 left-0 mt-2 rounded-lg">
+          <h2 className="w-full left-0">
+            Birthday:
+          </h2>
+          <h2 className="w-full left-0">
+            {reqUser.month}/{reqUser.day}/{reqUser.year}
+          </h2>
+          <h2 className="w-full mt-2 left-0">
+            Polygon Wallet:
+          </h2>
+          <h2 className="w-full left-0">
+            {reqUser.wallet.substring(0, 8)}...{reqUser.wallet.substring(30, 38)}
+          </h2>
+          <h2 className="w-full mt-2 left-0">
+            Phone Number:
+          </h2>
+          <h2 className="w-full left-0">
+            (+1) {user.profile.phoneNumber}
+          </h2>
+        </div>
+        <h2 className="text-2xl w-full mt-10 left-0">
+          Account Info
+        </h2>
+        <div className="bg-gray-100 p-4 left-0 mt-2 rounded-lg">
+          <h2 className="w-full left-0">
+            Member Since:
+          </h2>
+          <h2 className="w-full left-0">
+            {user.creationDate}
+          </h2>
+          <h2 className="w-full mt-2 left-0">
+            User ID:
+          </h2>
+          <h2 className="w-full left-0">
+            {user.profile.userID}
+          </h2>
+        </div>
         <nav className="container mx-auto mt-4 flex justify-center">
           <ul className="flex justify-end items-center p-1">
             <li>

@@ -16,7 +16,7 @@ function Index() {
     }
     // change to user b-day
     const today = new Date()
-    if (today.getDate() === 18 && today.getMonth() === 11) {
+    if (today.getDate() === 30 && today.getMonth() === 11) {
       setConfetti(true);
     }
     getFeed();
