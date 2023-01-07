@@ -20,15 +20,22 @@ export default function Countdown({ user }) {
     const today = new Date()
     var time;
     var todayBday = false;
-    if (today.getDate() > parseInt(user.day) && today.getMonth() >= (parseInt(user.month) - 1)) {
+    if (today.getMonth() > (parseInt(user.month) - 1)) {
       time = Date.parse(user.month+"/"+user.day+"/"+parseInt(today.getFullYear() + 1)) - Date.parse(today);
     }
-    else if (today.getDate() < parseInt(user.day) && today.getMonth() <= (parseInt(user.month) - 1)) {
+    else if (today.getMonth() < (parseInt(user.month) - 1)) {
       time = Date.parse(user.month+"/"+user.day+"/"+today.getFullYear()) - Date.parse(today);
-
     }
-    else if (today.getDate() === parseInt(user.day) && today.getMonth() === (parseInt(user.month) - 1)) {
-      todayBday = true;
+    else {
+      if (today.getDate() > parseInt(user.day)) {
+        time = Date.parse(user.month+"/"+user.day+"/"+parseInt(today.getFullYear() + 1)) - Date.parse(today);
+      }
+      else if (today.getDate() < parseInt(user.day)) {
+        time = Date.parse(user.month+"/"+user.day+"/"+today.getFullYear()) - Date.parse(today);
+      }
+      else {
+        todayBday = true;
+      }
     }
 
     if (todayBday) {

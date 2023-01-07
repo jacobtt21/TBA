@@ -45,7 +45,6 @@ function UserPage() {
     })
     const addedFriendData = await resAddFriend.json()
     setFriendStatus(addedFriendData.friend_status)
-    console.log(addedFriendData.friend_status)
   }
 
   const acceptFriend = async () => {

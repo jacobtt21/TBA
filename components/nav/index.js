@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
+import { UserContext } from '../../lib/UserContext';
 import Link from 'next/link'
 import { IoPersonOutline, IoPerson, IoCalendarOutline, IoCalendar, IoHome, IoHomeOutline, IoGiftOutline, IoGift, IoSearch, IoSearchOutline } from "react-icons/io5";
 import Router from 'next/router';
 
 export default function Nav() {
+  const [user] = useContext(UserContext);
+  const [friendNotification, setFriendNotification] = useState(false)
+
+  useEffect(() => {
+    getNotifications()
+  }, [])
+
+  useEffect(() => {
+    setInterval(() => getNotifications(), 1000)
+  }, [])
+
+  const getNotifications = async () => {
+    const notificationData = new FormData
+    notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
+    const res = await fetch('http://127.0.0.1:5000/notify_friend', {
+      method: "POST",
+      body: notificationData
+    })
+    const data = await res.json();
+    setFriendNotification(data["friend_waiting"])
+  }
+
+
   return (
     <nav className="w-full h-20 fixed bg-white opacity-90 left-0 bottom-0 flex justify-center items-center border-t border-stone-700">
       <ul className="inline-flex -mt-8 space-x-2">
@@ -53,13 +77,16 @@ export default function Nav() {
         </li>
         <li>
           <Link href="/profile">
-            <button className="btn-white mx-1 text-3xl">
-              {Router.pathname === "/profile" ? (
-                <IoPerson />
-              ) : (
-                <IoPersonOutline />
-              )}
-            </button>
+              <button className="btn-white mx-1 text-3xl">
+                {Router.pathname === "/profile" ? (
+                  <IoPerson />
+                ) : (
+                  <IoPersonOutline />
+                )}
+                {friendNotification && (
+                  <span class="absolute top-2 right-6 px-1 py-1 bg-red-600 rounded-full"></span>
+                )}
+              </button>            
           </Link>
         </li>
       </ul>

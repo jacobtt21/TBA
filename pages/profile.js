@@ -3,11 +3,13 @@ import { UserContext, UserContextExtra } from '../lib/UserContext';
 import Router from 'next/router';
 import userbase from 'userbase-js'
 import { magic } from '../lib/magic';
+import Link from 'next/link';
 
 function Profile() {
   const [user, setUser] = useContext(UserContext);
   const [, setUserExtra] = useContext(UserContextExtra);
   const [reqUser, setReqUser] = useState()
+  const [friendNotification, setFriendNotification] = useState(false)
   
   useEffect(() => {
     getUserInfo()
@@ -22,6 +24,15 @@ function Profile() {
     })
     const data = await res.json();
     setReqUser(JSON.parse(data["user_info"]))
+
+    const notificationData = new FormData
+    notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
+    const resNotify = await fetch('http://127.0.0.1:5000/notify_friend', {
+      method: "POST",
+      body: notificationData
+    })
+    const dataNotify = await resNotify.json();
+    setFriendNotification(dataNotify["friend_waiting"])
   }
 
   async function logOut() {
@@ -48,6 +59,13 @@ function Profile() {
         <h2 className="text-3xl w-full left-0">
           @{user.username}
         </h2>
+        {friendNotification && (
+          <Link href="/pending">
+            <button className="btn-yellow mt-8">
+              Pending Friend Requests &rarr;
+            </button>
+          </Link>
+        )}
         <h2 className="text-2xl w-full mt-10 left-0">
           Personal Info
         </h2>
@@ -88,7 +106,7 @@ function Profile() {
             {user.profile.userID}
           </h2>
         </div>
-        <nav className="container mx-auto mt-4 flex justify-center">
+        <nav className="container mx-auto mt-8 mb-32 flex justify-center">
           <ul className="flex justify-end items-center p-1">
             <li>
               <button className="btn-yellow mx-2" onClick={logOut}>
