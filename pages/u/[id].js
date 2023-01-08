@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState} from 'react';
 import { UserContext } from '../../lib/UserContext';
 import { useRouter } from 'next/router'
 import Countdown from '../../components/countdown/Countdown'
-import loading from '../loading';
+import Loading from '../loading';
 
 function UserPage() {
   const [user] = useContext(UserContext)
@@ -158,7 +158,7 @@ function UserPage() {
     </div>
   ) : (
     <>
-      <loading />
+      <Loading />
     </>
   )
 }

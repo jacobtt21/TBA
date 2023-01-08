@@ -1,4 +1,4 @@
-function loading() {
+function Loading() {
 
   return (
     <div className="w-4/5 md:w-1/2 mx-auto">
@@ -15,4 +15,4 @@ function loading() {
   )
 }
 
-export default loading
+export default Loading

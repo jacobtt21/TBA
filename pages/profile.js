@@ -4,6 +4,7 @@ import Router from 'next/router';
 import userbase from 'userbase-js'
 import { magic } from '../lib/magic';
 import Link from 'next/link';
+import { IoChevronForward} from "react-icons/io5";
 
 function Profile() {
   const [user, setUser] = useContext(UserContext);
@@ -60,11 +61,17 @@ function Profile() {
           @{user.username}
         </h2>
         {friendNotification && (
-          <Link href="/pending">
-            <button className="btn-yellow mt-8">
-              Pending Friend Requests &rarr;
-            </button>
-          </Link>
+          <nav className="container mx-auto flex justify-center">
+            <ul className="flex justify-end items-center p-1">
+              <li>
+                <Link href="/pending">
+                  <button className="btn-yellow flex items-center mt-8">
+                    Pending Friend Requests <IoChevronForward />
+                  </button>
+                </Link>
+              </li>
+            </ul>
+          </nav>
         )}
         <h2 className="text-2xl w-full mt-10 left-0">
           Personal Info

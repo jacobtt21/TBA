@@ -5,6 +5,7 @@ import userbase from 'userbase-js'
 import Link from 'next/link'
 import { magic } from '../lib/magic';
 import algoliasearch from 'algoliasearch';
+import { IoChevronBack } from "react-icons/io5";
 
 function SignUp() {
   const [username, setUsername] = useState('')
@@ -247,9 +248,9 @@ function SignUp() {
       <div className='mx-auto flex justify-center'>
         <div className="flex justify-end items-center p-8">
           <Link href="/">
-            <span className="font-bold cursor-pointer text-2xl">
-              &larr; Back
-            </span>
+            <button disabled={loading} className="btn-white flex items-center text-2xl">
+              <IoChevronBack /> Go Back
+            </button>
         </Link>
         </div>
       </div>

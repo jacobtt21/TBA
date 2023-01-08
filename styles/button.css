@@ -5,3 +5,7 @@
 .btn-yellow:hover {
   @apply bg-yellow-500;
 }
+
+.btn-yellow:disabled {
+  @apply bg-yellow-200 text-gray-500 pointer-events-none;
+}

@@ -22,14 +22,14 @@ function Pending() {
   }
 
   return user && pending ? (
-    <div className="w-4/5 md:w-1/2 mx-auto">
+    <div className="w-full">
       <div className="mx-auto justify-center text-center items-center">
         <h3 className="font-bold mt-16 text-2xl">
           Pending Friend Requests
         </h3>
       </div>
-      <div className="mt-4 left-0">
-      <FriendList list={pending} />
+      <div className="mt-4 w-full">
+        <FriendList list={pending} />
       </div>
     </div>
   ) : (

@@ -1,5 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
+import { IoChevronForward } from "react-icons/io5";
 
 export default function FriendCard({ FriendID }) {
   const [reqUser, setReqUser] = useState()
@@ -22,9 +23,18 @@ export default function FriendCard({ FriendID }) {
   return reqUser ? (
     <div>
       <Link href={{pathname: '/u/[id]', query: { id: reqUser.username }}}>
-        <h2 className="text-2xl w-full mt-2 left-0">
-          @{reqUser.username}
-        </h2>
+        <div className='container mt-4 flow-root items-center bg-gray-200 py-2 px-4 rounded-lg'>
+          <div className='float-left'>
+            <h2 className="text-2xl">
+              @{reqUser.username}
+            </h2>
+          </div>
+          <div className='float-right'>
+            <h2 className="text-3xl">
+              <IoChevronForward />
+            </h2>
+          </div>
+        </div>
       </Link>
     </div>
   ) : (
