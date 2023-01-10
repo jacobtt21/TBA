@@ -111,7 +111,7 @@ function UserPage() {
           <nav className="container mx-auto mt-4 flex justify-center">
             <ul className="flex justify-end items-center p-1">
               <li>
-                <button className="btn-yellow mx-2" disabled>
+                <button className="btn-yellow mx-2" disabled={true}>
                   Waiting for {reqUser.fname}
                 </button>
               </li>
@@ -150,9 +150,15 @@ function UserPage() {
             </ul>
           </nav>
         ) : (
-          <h2 className="mt-8 w-full text-center">
-            An Error Occured
-          </h2>
+          <nav className="container mx-auto mt-4 flex justify-center">
+            <ul className="flex justify-end items-center p-1">
+              <li>
+                <button className="btn-yellow mx-2" disabled={true}>
+                  Loading...
+                </button>
+              </li>
+            </ul>
+          </nav>
         )}
       </div>
     </div>

@@ -5,35 +5,43 @@ import userbase from 'userbase-js'
 import { magic } from '../lib/magic';
 import Link from 'next/link';
 import { IoChevronForward} from "react-icons/io5";
+import Loading from './loading';
+
 
 function Profile() {
   const [user, setUser] = useContext(UserContext);
   const [, setUserExtra] = useContext(UserContextExtra);
   const [reqUser, setReqUser] = useState()
   const [friendNotification, setFriendNotification] = useState(false)
+  const [errorOccured, setErrorOccured] = useState(false)
   
   useEffect(() => {
     getUserInfo()
   }, [])
 
   const getUserInfo = async () => {
-    const currentUserData = new FormData
-    currentUserData.append("uname", user.username)
-    const res = await fetch('http://127.0.0.1:5000/get_username_info', {
-      method: "POST",
-      body: currentUserData
-    })
-    const data = await res.json();
-    setReqUser(JSON.parse(data["user_info"]))
+    try {
+      const currentUserData = new FormData
+      currentUserData.append("uname", user.username)
+      const res = await fetch('http://127.0.0.1:5000/get_username_info', {
+        method: "POST",
+        body: currentUserData
+      })
+      const data = await res.json();
+      setReqUser(JSON.parse(data["user_info"]))
 
-    const notificationData = new FormData
-    notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
-    const resNotify = await fetch('http://127.0.0.1:5000/notify_friend', {
-      method: "POST",
-      body: notificationData
-    })
-    const dataNotify = await resNotify.json();
-    setFriendNotification(dataNotify["friend_waiting"])
+      const notificationData = new FormData
+      notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
+      const resNotify = await fetch('http://127.0.0.1:5000/notify_friend', {
+        method: "POST",
+        body: notificationData
+      })
+      const dataNotify = await resNotify.json();
+      setFriendNotification(dataNotify["friend_waiting"])
+    } catch (e) {
+      setReqUser(false)
+      setInterval(setErrorOccured(true), 5000);
+    }
   }
 
   async function logOut() {
@@ -126,6 +134,17 @@ function Profile() {
     </div>
   ) : (
     <>
+      {errorOccured ? (
+        <div className="w-full">
+          <div className="mx-auto justify-center text-center items-center">
+            <h3 className="font-bold mt-16 text-2xl">
+              Server Connection Error
+            </h3>
+          </div>
+        </div>
+      ) : (
+        <Loading />
+      )}
     </>
   )
 }

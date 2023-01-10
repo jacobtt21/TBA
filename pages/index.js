@@ -3,22 +3,21 @@ import { UserContext } from '../lib/UserContext';
 import Link from 'next/link'
 import Grid from '../components/cards/Grid';
 import Confetti from 'react-dom-confetti';
+import Loading from './loading';
 
 function Index() {
   const [user] = useContext(UserContext);
-  const [feed, setFeed] = useState("");
-  const [animateHeader, setAnimateHeader] = useState(false);
+  const [feed, setFeed] = useState([]);
+  const [animateHeader, setAnimateHeader] = useState(false)
   const [confetti, setConfetti] = useState(false);
+  const [errorOccured, setErrorOccured] = useState(false)
+  const [reqUser, setReqUser] = useState()
 
   useEffect(() => {
     if (!user) {
       return
     }
-    // change to user b-day
-    const today = new Date()
-    if (today.getDate() === user && today.getMonth() === 11) {
-      setConfetti(true);
-    }
+    getUserInfo()
     getFeed();
   }, [user]);
 
@@ -34,9 +33,36 @@ function Index() {
     };
   }, []);
 
+  const getUserInfo = async () => {
+    try {
+      const currentUserData = new FormData
+      currentUserData.append("uname", user.username)
+      const res = await fetch('http://127.0.0.1:5000/get_username_info', {
+        method: "POST",
+        body: currentUserData
+      })
+      const data = await res.json();
+      setReqUser(JSON.parse(data["user_info"]))
+    } catch (e) {
+      setReqUser(false)
+      setInterval(setErrorOccured(true), 5000);
+    }
+  }
+
   const getFeed = async () => {
-    let data = ["odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even", "odd", "even"];
-    setFeed(data);
+    try {
+      const feedData = new FormData
+      feedData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
+      const resFeed = await fetch('http://127.0.0.1:5000/get_feed', {
+        method: "POST",
+        body: feedData
+      })
+      const dataFeed = await resFeed.json();
+      setFeed(dataFeed["posts"])
+    } catch (e) {
+      setFeed(false)
+      setInterval(setErrorOccured(true), 5000);
+    }
   }
 
   const config = {
@@ -54,24 +80,38 @@ function Index() {
   };
   
   return user ? (
-    <div className="w-full md:w-1/2 mx-auto">
-      <Confetti active={ confetti } config={ config }/>
-      <div className="w-full h-12 fixed left-0 top-0 flex bg-white">
-        &nbsp;
-      </div>
-      <div className={`w-full h-24 fixed left-0 top-0 p-4 flex bg-white justify-center items-center trasition-all ease-in-out duration-500 ${
-      animateHeader && "opacity-0"}`}
-      >
-        <h3 className="font-bold mt-12 text-3xl">The Birthday App</h3>
-      </div>
-      <div className="w-full mt-28 mb-28 flex justify-center items-center">
-        {feed.length > 0 ? (
-          <Grid feed={feed} />
-        ) : (
-          <h3 className="text-2xl">Can't seem to find anything for ya!</h3>
-        )}
-      </div>
-    </div>
+    <>
+      {reqUser && feed ? (
+        <div className="w-full md:w-1/2 mx-auto">
+          <Confetti active={ confetti } config={ config }/>
+          <div className="w-full h-12 fixed left-0 top-0 flex bg-white">
+            &nbsp;
+          </div>
+          <div className={`w-full h-24 fixed left-0 top-0 p-4 flex bg-white justify-center items-center trasition-all ease-in-out duration-500 ${
+          animateHeader && "opacity-0"}`}
+          >
+            <h3 className="font-bold mt-12 text-3xl">The Birthday App</h3>
+          </div>
+          <div className="w-full mt-28 mb-28 flex justify-center items-center">
+            <Grid feed={feed} />
+          </div>
+        </div>
+      ) : (
+        <>
+          {errorOccured ? (
+            <div className="w-full">
+              <div className="mx-auto justify-center text-center items-center">
+                <h3 className="font-bold mt-16 text-2xl">
+                  Server Connection Error
+                </h3>
+              </div>
+            </div>
+          ) : (
+            <Loading />
+          )}
+        </>
+      )}
+    </>
   ) : (
     <div className="w-4/5 md:w-1/2 mx-auto">
       <div className="container mt-16 flex justify-center">

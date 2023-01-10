@@ -77,14 +77,14 @@ export default function Nav() {
         </li>
         <li>
           <Link href="/profile">
-              <button className="btn-white mx-1 text-3xl">
+              <button className="btn-white flex mx-1 text-3xl">
                 {Router.pathname === "/profile" ? (
                   <IoPerson />
                 ) : (
                   <IoPersonOutline />
                 )}
                 {friendNotification && (
-                  <span class="absolute top-2 right-6 px-1 py-1 bg-red-600 rounded-full"></span>
+                  <span class="absolute px-1 py-1 bg-red-600 rounded-full"></span>
                 )}
               </button>            
           </Link>
