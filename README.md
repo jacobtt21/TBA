@@ -11,7 +11,7 @@
 3. Install packages - 
 `yarn`
 
-4. Build `out` file - 
+4. Build `/out` - 
 `yarn static`
 
 5. To build it to the iphone/andriod sim -
