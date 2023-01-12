@@ -1,5 +1,5 @@
 .btn-white {
-  @apply text-black font-bold py-2 px-4 rounded;
+  @apply text-black font-bold py-2 px-4 rounded-full;
 }
 
 .btn-white:disabled {

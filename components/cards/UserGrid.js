@@ -1,8 +1,8 @@
 import React from 'react';
-import Card from './Card';
+import UserCard from './UserCard';
 import Skeleton from './Skeleton';
 
-export default function Grid({ feed, loading }) {
+export default function UserGrid({ feed, loading }) {
   return (
     <div className="w-4/5 md:w-1/2 mx-auto">
       {loading ? (
@@ -17,13 +17,13 @@ export default function Grid({ feed, loading }) {
         feed.slice(0).reverse().map((friend, i) => {
           return (
             <div key={i}>
-              <Card FriendID={friend} />
+              <UserCard FriendID={friend} />
             </div>
           );
         })
       ) : (
         <h3 className="text-center mt-16 text-2xl">
-          Add some friends to generate a feed!
+          No Birthday Posts!
         </h3> 
       )}
     </div>

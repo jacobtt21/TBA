@@ -13,18 +13,26 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
-    setInterval(() => getNotifications(), 1000)
+    try {
+      setInterval(() => getNotifications(), 1000)
+    } catch (e) {
+      setFriendNotification(false)
+    }
   }, [])
 
   const getNotifications = async () => {
-    const notificationData = new FormData
-    notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
-    const res = await fetch('http://127.0.0.1:5000/notify_friend', {
-      method: "POST",
-      body: notificationData
-    })
-    const data = await res.json();
-    setFriendNotification(data["friend_waiting"])
+    try {
+      const notificationData = new FormData
+      notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
+      const res = await fetch('http://127.0.0.1:5000/notify_friend', {
+        method: "POST",
+        body: notificationData
+      })
+      const data = await res.json();
+      setFriendNotification(data["friend_waiting"])
+    } catch (e) {
+      setFriendNotification(false)
+    }
   }
 
 
@@ -84,7 +92,7 @@ export default function Nav() {
                   <IoPersonOutline />
                 )}
                 {friendNotification && (
-                  <span class="absolute px-1 py-1 bg-red-600 rounded-full"></span>
+                  <span className="absolute px-1 py-1 bg-red-600 rounded-full"></span>
                 )}
               </button>            
           </Link>

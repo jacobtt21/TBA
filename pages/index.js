@@ -9,6 +9,7 @@ function Index() {
   const [user] = useContext(UserContext);
   const [feed, setFeed] = useState([]);
   const [animateHeader, setAnimateHeader] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [confetti, setConfetti] = useState(false);
   const [errorOccured, setErrorOccured] = useState(false)
   const [reqUser, setReqUser] = useState()
@@ -35,6 +36,7 @@ function Index() {
 
   const getUserInfo = async () => {
     try {
+      setLoading(true)
       const currentUserData = new FormData
       currentUserData.append("uname", user.username)
       const res = await fetch('http://127.0.0.1:5000/get_username_info', {
@@ -59,6 +61,7 @@ function Index() {
       })
       const dataFeed = await resFeed.json();
       setFeed(dataFeed["posts"])
+      setLoading(false)
     } catch (e) {
       setFeed(false)
       setInterval(setErrorOccured(true), 5000);
@@ -93,7 +96,7 @@ function Index() {
             <h3 className="font-bold mt-12 text-3xl">The Birthday App</h3>
           </div>
           <div className="w-full mt-28 mb-28 flex justify-center items-center">
-            <Grid feed={feed} />
+            <Grid feed={feed} loading={loading} />
           </div>
         </div>
       ) : (

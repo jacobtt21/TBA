@@ -53,7 +53,7 @@ function Search() {
   const CustomSearchBox = connectSearchBox(SearchBox);
 
   return user ? (
-    <div className="w-4/5 md:w-1/2 mx-auto">
+    <div className="w-11/12 md:w-1/2 mx-auto">
       <div className="mx-auto justify-center text-center items-center">
         <h3 className="font-bold mt-16 text-4xl">
           Search

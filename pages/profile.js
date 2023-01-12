@@ -60,7 +60,7 @@ function Profile() {
   }
 
   return user && reqUser ? (
-    <div className="w-4/5 md:w-1/2 mx-auto">
+    <div className="w-11/12 md:w-1/2 mx-auto">
       <div className="container mx-auto mt-16 justify-center">
         <h1 className="font-bold text-4xl mt-4 w-full left-0">
           {user.profile.fname} {user.profile.lname}
