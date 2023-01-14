@@ -110,12 +110,19 @@ function UserPage() {
       <div className="w-11/12 md:w-1/2 mx-auto">
         <div className="container mx-auto mt- justify-center">
           <Countdown user={reqUser} />
-          <h1 className="font-bold text-4xl mt-4 w-full left-0">
-            {reqUser.fname} {reqUser.lname}
-          </h1>
-          <h2 className="text-2xl w-full left-0">
-            @{router.query.id}
-          </h2>
+          <div className='container flex text-left mt-8'>
+            <div className='w-16 h-16 mr-4'>
+              <img className='rounded-full border' src={reqUser.profilePic} />
+            </div>
+            <div>
+              <h1 className="font-bold text-4xl w-full left-0">
+                {reqUser.fname} {reqUser.lname}
+              </h1>
+              <h2 className="text-2xl w-full left-0">
+                @{router.query.id}
+              </h2>
+            </div>
+          </div>
         </div>
         <div>
           {friendStatus === 0 ? (

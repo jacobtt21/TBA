@@ -4,16 +4,26 @@ import Router from 'next/router';
 import userbase from 'userbase-js'
 import { magic } from '../lib/magic';
 import Link from 'next/link';
-import { IoChevronForward} from "react-icons/io5";
+import { IoChevronForward, IoCameraReverseOutline} from "react-icons/io5";
 import Loading from './loading';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import algoliasearch from 'algoliasearch';
 
 
 function Profile() {
   const [user, setUser] = useContext(UserContext);
   const [, setUserExtra] = useContext(UserContextExtra);
   const [reqUser, setReqUser] = useState()
+  const [profilePic, setProfilePic] = useState('')
   const [friendNotification, setFriendNotification] = useState(false)
   const [errorOccured, setErrorOccured] = useState(false)
+
+  const searchClient = algoliasearch(
+    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
+    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ADMIN_KEY,
+  );
+
+  const index = searchClient.initIndex('TBA');
   
   useEffect(() => {
     getUserInfo()
@@ -29,6 +39,7 @@ function Profile() {
       })
       const data = await res.json();
       setReqUser(JSON.parse(data["user_info"]))
+      setProfilePic(JSON.parse(data["user_info"])["profilePic"])
 
       const notificationData = new FormData
       notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
@@ -38,6 +49,32 @@ function Profile() {
       })
       const dataNotify = await resNotify.json();
       setFriendNotification(dataNotify["friend_waiting"])
+    } catch (e) {
+      setReqUser(false)
+      setInterval(setErrorOccured(true), 5000);
+    }
+  }
+
+  const changeProfilePic = async () => {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: true,
+        resultType: CameraResultType.DataUrl
+      });
+      const picData = new FormData
+      picData.append('uname', user.username)
+      picData.append("pic", image["dataUrl"])
+      const res = await fetch('http://127.0.0.1:5000/profile_pic', {
+        method: "POST",
+        body: picData
+      })
+      const data = await res.json();
+      await index.partialUpdateObject({
+        profilePic: data["profilePic"],
+        objectID: user.username
+      })
+      setProfilePic(data["profilePic"])
     } catch (e) {
       setReqUser(false)
       setInterval(setErrorOccured(true), 5000);
@@ -68,6 +105,10 @@ function Profile() {
         <h2 className="text-3xl w-full left-0">
           @{user.username}
         </h2>
+        <div className='w-44 h-44 mt-4 mx-auto'>
+          <img className='rounded-full border' src={profilePic} onClick={changeProfilePic} />
+          <span className='absolute px-2 py-2 -mt-12 ml-2 bg-yellow-400 rounded-full text-4xl' onClick={changeProfilePic}><IoCameraReverseOutline /></span>
+        </div>
         {friendNotification && (
           <nav className="container mx-auto flex justify-center">
             <ul className="flex justify-end items-center p-1">
@@ -81,7 +122,7 @@ function Profile() {
             </ul>
           </nav>
         )}
-        <h2 className="text-2xl w-full mt-10 left-0">
+        <h2 className="text-2xl w-full mt-8 left-0">
           Personal Info
         </h2>
         <div className="bg-gray-100 p-4 left-0 mt-2 rounded-lg">

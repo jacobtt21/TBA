@@ -67,10 +67,11 @@ function SignUp() {
           rememberMe: 'local',
         })
         await index.saveObject({
-          username: username,
+          objectID: username,
           fname: fname,
-          lname: lname
-        }, {autoGenerateObjectIDIfNotExist: true})
+          lname: lname,
+          profilePic: "https://github.com/Oustro/OustroImages/blob/main/Untitled%20design.png?raw=true"
+        })
         setUser(user)
         setUserExtra(userFromMagic);
         setLoading(false)

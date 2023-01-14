@@ -13,10 +13,15 @@ function Search() {
   );
 
   const Hit = ({ hit }) => (
-    <Link href={user[0].username === hit.username ? "/profile" : {pathname: '/u/[id]', query: { id: hit.username }}}>
-      <div className='container text-left py-4 px-4'>
-        <h1>@{hit.username} {user[0].username === hit.username && ("(me)")}</h1>
-        <h2 className='text-sm'>{hit.fname} {hit.lname}</h2>
+    <Link href={user[0].username === hit.objectID ? "/profile" : {pathname: '/u/[id]', query: { id: hit.objectID }}}>
+      <div className='container flex text-left py-4 px-4'>
+        <div className='w-12 h-12 align-middle mr-4'>
+          <img className='rounded-full' src={hit.profilePic} />
+        </div>
+        <div>
+          <h1>@{hit.objectID} {user[0].username === hit.objectID && ("(me)")}</h1>
+          <h2 className='text-sm'>{hit.fname} {hit.lname}</h2>
+        </div>
       </div>
     </Link>
   );
