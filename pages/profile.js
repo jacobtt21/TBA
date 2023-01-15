@@ -105,8 +105,8 @@ function Profile() {
         <h2 className="text-3xl w-full left-0">
           @{user.username}
         </h2>
-        <div className='w-44 h-44 mt-4 mx-auto'>
-          <img className='rounded-full border' src={profilePic} onClick={changeProfilePic} />
+        <div className='relative w-44 h-44 mt-4 mx-auto'>
+          <img className='w-44 h-44 border rounded-full' src={profilePic} onClick={changeProfilePic} />
           <span className='absolute px-2 py-2 -mt-12 ml-2 bg-yellow-400 rounded-full text-4xl' onClick={changeProfilePic}><IoCameraReverseOutline /></span>
         </div>
         {friendNotification && (
