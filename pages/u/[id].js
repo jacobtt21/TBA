@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState} from 'react';
 import { UserContext } from '../../lib/UserContext';
 import { useRouter } from 'next/router'
 import Countdown from '../../components/countdown/Countdown'
-import Loading from '../loading';
 import UserGrid from '../../components/cards/UserGrid';
 import { IoChevronBack } from "react-icons/io5";
+import { Transition } from '@headlessui/react'
 
 function UserPage() {
   const [user] = useContext(UserContext)
@@ -101,7 +101,15 @@ function UserPage() {
   }
 
   return user && reqUser ? (
-    <>
+    <Transition
+      show={!loading}
+      enter="transition-transform	duration-[300ms]"
+      enterFrom="-translate-x-96"
+      enterTo="-translate-x-0"
+      leave="transition-transform	duration-[300ms]"
+      leaveFrom="-translate-x-96"
+      leaveTo="-translate-x-0"
+    >
       <nav className="w-full h-20 mt-0 bg-white left-0 p-1 top-4 items-left border-b border-stone-700">
         <button className="btn-white mt-8 text-3xl" onClick={() => router.back()}>
           <IoChevronBack />
@@ -195,10 +203,9 @@ function UserPage() {
           )}
         </div>
       </div>
-    </>
+    </Transition>
   ) : (
     <>
-      <Loading />
     </>
   )
 }

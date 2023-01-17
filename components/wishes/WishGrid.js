@@ -17,7 +17,7 @@ export default function WishGrid({ wishes, loading }) {
         wishes.map((wish, i) => {
           return (
             <div key={i}>
-              <UserCard PostID={wish} />
+              <WishCard PostID={wish} />
             </div>
           );
         })
