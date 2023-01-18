@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState} from 'react';
-import { UserContext } from '../../lib/UserContext';
+import { UserContext } from '../../../lib/UserContext';
 import { useRouter } from 'next/router'
-import WishGrid from '../../components/wishes/WishGrid';
+import WishGrid from '../../../components/wishes/WishGrid';
 import { IoChevronBack, IoAdd } from "react-icons/io5";
 import Link from 'next/link'
 import { Transition } from '@headlessui/react'
 
-function UserPage() {
+function WishPage() {
   const [user] = useContext(UserContext)
   const [wishlist, setWishList] = useState()
   const [loading , setLoading] = useState(true)
@@ -47,18 +47,18 @@ function UserPage() {
       <div className="w-full mt-28 mb-28 flex justify-center items-center">
         <WishGrid wishes={wishlist} loading={loading} />
       </div>
-        <div className="w-full mt-28 mb-28 flex justify-center items-center">
-          <Link href="/">
-            <button className="btn-yellow flex items-center text-2xl" >
-              <IoAdd /> Add a wish
-            </button>
-          </Link>
-        </div>
-      </Transition>
+      <div className="w-full mt-28 mb-28 flex justify-center items-center">
+        <Link href={{pathname: '/post/[id]/create', query: { id: router.query.id }}}>
+          <button className="btn-yellow flex items-center text-2xl" >
+            <IoAdd /> Add a wish
+          </button>
+        </Link>
+      </div>
+    </Transition>
   ) : (
     <>
     </>
   )
 }
 
-export default UserPage
+export default WishPage
