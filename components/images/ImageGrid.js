@@ -14,7 +14,7 @@ export default function Grid({ cards, loading }) {
           );
         })
       ) : cards.length > 0 ? (
-        cards.slice(0).reverse().map((imageCard, i) => {
+        cards.map((imageCard, i) => {
           return (
             <div key={i}>
               <ImageCard card={imageCard} />

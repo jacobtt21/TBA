@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { IoChevronForward } from "react-icons/io5";
+import React, { useContext } from 'react';
+import { bDayCardContext, bDayCardNextContext, msgContext } from '../../lib/UserContext';
 
 export default function ImageCard({ card }) {
+  const [, setChosenCard] = useContext(bDayCardContext)
+  const [, setCardSlide] = useContext(bDayCardNextContext)
+  const [, setMsgSlide] = useContext(msgContext)
+
+  const changeCard = () => {
+    setChosenCard(card)
+    setCardSlide(false)
+    setTimeout(function(){
+      setMsgSlide(true)
+    }, 500);
+  }
 
   return  (
-    <div className='container mt-4 flow-root items-center bg-gray-200 rounded-lg'>
+    <div className='container mt-4 flow-root items-center bg-gray-200 rounded-lg' onClick={changeCard}>
       <img src={card} className="rounded object-fill w-full"/>
     </div>
   )
