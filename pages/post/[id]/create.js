@@ -96,6 +96,30 @@ function GiftPage() {
                   <h1 className='flex justify-center mb-4 text-2xl'>2. Write a Message</h1>
                   <label for="message" className="block text-sm font-bold mb-2">Your message</label>
                   <textarea rows="4" className="block p-2.5 w-full shadow appearance-none border-lg bg-gray-200 rounded leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                  <button className='btn-white mt-4 flex mx-auto' onClick={GiveGift}>
+                    Add a Gift
+                  </button>
+                  <button className='btn-yellow mt-24 mb-32 text-2xl flex mx-auto' onClick={submitNoGift}>
+                    Make Wish
+                  </button>
+                </div>
+              </Transition>
+              <Transition
+              show={giftUp}
+              enter="transition-transform	duration-[400ms]"
+              enterFrom="-translate-x-96"
+              enterTo="-translate-x-0"
+              leave="transition-transform	duration-[400ms]"
+              leaveFrom="-translate-x-0"
+              leaveTo="translate-x-96"
+              >
+                <div className="w-full p-4 justify-center items-center">
+                  <h1 className='flex justify-center mb-4 text-2xl'>3. Add a Gift</h1>
+                  <label for="message" className="block text-sm font-bold mb-2">Your message</label>
+                  <textarea rows="4" className="block p-2.5 w-full shadow appearance-none border-lg bg-gray-200 rounded leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                  <button className='btn-yellow mt-4 text-3xl flex mx-auto'>
+                    Make Wish
+                  </button>
                 </div>
               </Transition>
             </div>
