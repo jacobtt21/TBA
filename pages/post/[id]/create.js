@@ -12,7 +12,7 @@ function GiftPage() {
   const [msgUp, setMsgUp] = useState(false)
   const [giftUp, setGiftUp] = useState(false)
   const [bDayCard, setBDayCard] = useState('https://github.com/Oustro/OustroImages/blob/main/bday.png?raw=true')
-  const [ cards ] = useState(['https://github.com/Oustro/OustroImages/blob/main/bday.png?raw=true', 'https://github.com/Oustro/OustroImages/blob/main/Black%20Beige%20Typography%20Happy%20Birthday%20Card.png?raw=true'])
+  const [ cards, setCards ] = useState([])
   const router = useRouter();
 
   useEffect(() => {
@@ -20,7 +20,17 @@ function GiftPage() {
     setTimeout(function(){
       setCardUp(true)
     }, 500);
+    getCards()
   }, [])
+
+  const getCards = async () => {
+    const resCards = await fetch('http://127.0.0.1:5000/get_cards', {
+      method: "GET",
+    })
+    const dataCards = await resCards.json()
+    setCards(JSON.parse(dataCards["cards"]))
+    setLoading(true)
+  }
 
   const GiveGift = () => {
     setMsgUp(false)
@@ -44,7 +54,7 @@ function GiftPage() {
   }
 
 
-  return user ? (
+  return user && cards ? (
     <Transition
       show={loading}
       enter="transition-transform	duration-[400ms]"
@@ -68,7 +78,7 @@ function GiftPage() {
                   <h1>Create A Wish</h1>
                 </div>
               </nav>
-              <img src={bDayCard} className='mx-auto mt-8 rounded w-4/5 h-48 object-fill'/>
+              <img src={bDayCard} className='mx-auto mt-8 shadow rounded w-4/5 h-48 object-fill'/>
               <Transition
               show={cardUp}
               enter="transition-transform	duration-[400ms]"

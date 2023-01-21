@@ -7,7 +7,7 @@ export default function ImageCard({ card }) {
   const [, setMsgSlide] = useContext(msgContext)
 
   const changeCard = () => {
-    setChosenCard(card)
+    setChosenCard(card["url"])
     setCardSlide(false)
     setTimeout(function(){
       setMsgSlide(true)
@@ -16,7 +16,7 @@ export default function ImageCard({ card }) {
 
   return  (
     <div className='container mt-4 flow-root items-center bg-gray-200 rounded-lg' onClick={changeCard}>
-      <img src={card} className="rounded object-fill w-full"/>
+      <img src={card["url"]} className="rounded object-fill w-full"/>
     </div>
   )
 }
