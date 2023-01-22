@@ -50,7 +50,7 @@ function WishPage() {
       <div className="w-full mt-28 mb-28 flex justify-center items-center">
         <Link href={{pathname: '/post/[id]/create', query: { id: router.query.id }}}>
           <button className="btn-yellow flex items-center text-2xl" >
-            <IoAdd /> Add a wish
+            <IoAdd /> Make a wish
           </button>
         </Link>
       </div>

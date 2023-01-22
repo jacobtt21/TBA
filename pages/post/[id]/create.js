@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext, bDayCardContext, bDayCardNextContext, msgContext} from '../../../lib/UserContext';
 import { useRouter } from 'next/router'
-import { IoChevronBack } from "react-icons/io5";
+import { IoChevronBack, IoAdd } from "react-icons/io5";
 import { Transition } from '@headlessui/react'
 import ImageGrid from '../../../components/images/ImageGrid';
 
@@ -106,11 +106,11 @@ function GiftPage() {
                   <h1 className='flex justify-center mb-4 text-2xl'>2. Write a Message</h1>
                   <label for="message" className="block text-sm font-bold mb-2">Your message</label>
                   <textarea rows="4" className="block p-2.5 w-full shadow appearance-none border-lg bg-gray-200 rounded leading-tight focus:outline-none focus:shadow-outline"></textarea>
-                  <button className='btn-white mt-4 flex mx-auto' onClick={GiveGift}>
-                    Add a Gift
+                  <button className='btn-white mt-4 flex text-2xl items-center mx-auto' onClick={GiveGift}>
+                    <IoAdd /> Add a Gift
                   </button>
                   <button className='btn-yellow mt-24 mb-32 text-2xl flex mx-auto' onClick={submitNoGift}>
-                    Make Wish
+                    Make your wish
                   </button>
                 </div>
               </Transition>

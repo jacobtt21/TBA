@@ -15,7 +15,7 @@ export default function ImageCard({ card }) {
   }
 
   return  (
-    <div className='container mt-4 flow-root items-center bg-gray-200 rounded-lg' onClick={changeCard}>
+    <div className='container shadow mt-4 flow-root items-center bg-gray-200 rounded-lg' onClick={changeCard}>
       <img src={card["url"]} className="rounded object-fill w-full"/>
     </div>
   )
