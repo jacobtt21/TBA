@@ -10,8 +10,6 @@ function GiftPage() {
   const [transition , settransition] = useState(false)
   const [cardUp, setCardUp] = useState(false)
   const [msgUp, setMsgUp] = useState(false)
-  const [flipCardFront, setFlipCardFront] = useState(true)
-  const [flipCardRear, setFlipCardRear] = useState(false)
   const [giftUp, setGiftUp] = useState(false)
   const [bDayCard, setBDayCard] = useState('https://github.com/Oustro/OustroImages/blob/main/bday.png?raw=true')
   const [cards, setCards] = useState([])
@@ -67,22 +65,6 @@ function GiftPage() {
     }, 600);
   }
 
-  const turnCard = async () => {
-    if (flipCardFront) {
-      setFlipCardFront(false)
-      setTimeout(function(){
-      setFlipCardRear(true)
-      }, 400);
-    }
-    else {
-      setFlipCardRear(false)
-      setTimeout(function(){
-      setFlipCardFront(true)
-      }, 400);
-    }
-  }
-
-
   return user && cards ? (
     <Transition
       show={transition}
@@ -107,31 +89,7 @@ function GiftPage() {
                   <h1>Create A Wish</h1>
                 </div>
               </nav>
-              <Transition
-              show={flipCardFront}
-              enter="transition-transform	duration-[400ms]"
-              enterFrom="-translate-x-96"
-              enterTo="-translate-x-0"
-              leave="transition-transform	duration-[400ms]"
-              leaveFrom="-translate-x-0"
-              leaveTo="translate-x-96"
-              >
-                <img src={bDayCard} onClick={turnCard} className='mx-auto mt-8 shadow rounded w-4/5 h-48 object-fill'/>
-              </Transition>
-              <Transition
-              show={flipCardRear}
-              enter="transition-transform	duration-[400ms]"
-              enterFrom="-translate-x-96"
-              enterTo="-translate-x-0"
-              leave="transition-transform	duration-[400ms]"
-              leaveFrom="-translate-x-0"
-              leaveTo="translate-x-96"
-              >
-                <div className='mx-auto mt-8 p-8 shadow rounded w-4/5 h-48 object-fill' onClick={turnCard}>
-                  <h2 className='flex justify-center text-center mt-8'>{msg}</h2>
-                  <h2 className='flex justify-center text-center mt-8'>- {user.profile.fname} {user.profile.lname}</h2>
-                </div>
-              </Transition>
+              <img src={bDayCard} className='mx-auto mt-8 shadow rounded w-4/5 h-48 object-fill'/>
               <Transition
               show={cardUp}
               enter="transition-transform	duration-[400ms]"

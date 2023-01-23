@@ -4,7 +4,7 @@ import Skeleton from './Skeleton';
 
 export default function WishGrid({ wishes, loading }) {
   return (
-    <div className="w-4/5 md:w-1/2 mx-auto">
+    <div className="w-full md:w-1/2 mx-auto">
       {loading ? (
         Array(20).fill(0).map((_, i) => {
           return (
