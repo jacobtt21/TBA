@@ -39,21 +39,26 @@ function WishPage() {
       leaveFrom="-translate-x-96"
       leaveTo="-translate-x-0"
     >
-      <nav className="w-full h-20 mt-0 bg-white left-0 p-1 top-4 items-left border-b border-stone-700">
-        <button className="btn-white mt-8 text-3xl" onClick={() => router.back()}>
+      <nav className="w-full h-20 mt-0 bg-white flex p-1 top-4 items-left border-b border-stone-700">
+        <button className="btn-white absolute mt-8 left-0 text-3xl" onClick={() => router.back()}>
           <IoChevronBack />
         </button>
+        <Link href={{pathname: '/post/[id]/create', query: { id: router.query.id }}}>
+          <button className="btn-white absolute mt-8 right-0 text-3xl" >
+            <IoAdd />
+          </button>
+        </Link>
       </nav>
-      <div className="w-full mt-28 mb-28 flex justify-center items-center">
+      <div className="w-full mb-28 flex justify-center items-center">
         <WishGrid wishes={wishlist} loading={loading} />
       </div>
-      <div className="w-full mt-28 mb-28 flex justify-center items-center">
+      {/* <div className="w-full mt-28 mb-28 flex justify-center items-center">
         <Link href={{pathname: '/post/[id]/create', query: { id: router.query.id }}}>
           <button className="btn-yellow flex items-center text-2xl" >
             <IoAdd /> Make a wish
           </button>
         </Link>
-      </div>
+      </div> */}
     </Transition>
   ) : (
     <>
