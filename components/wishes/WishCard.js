@@ -50,6 +50,11 @@ export default function WishCard({ PostID }) {
           </div>
         </div>
       </div>
+      <div className='mx-auto mt-0 rounded w-4/5 h-48 object-fill'>
+          <h1 className='text-center p-12'>
+            &nbsp;
+          </h1>
+        </div>
       <Transition
       show={front}
       enter="transition-transform	duration-[400ms]"
@@ -59,7 +64,7 @@ export default function WishCard({ PostID }) {
       leaveFrom="-translate-x-0"
       leaveTo="translate-x-96"
       >
-        <img src={PostID.card} onClick={showBack} className='mx-auto mt-0 shadow rounded w-4/5 h-48 object-fill'/>
+        <img src={PostID.card} onClick={showBack} className='mx-auto -mt-48 shadow rounded w-4/5 h-48 object-fill'/>
       </Transition>
       <Transition
       show={back}
@@ -70,7 +75,7 @@ export default function WishCard({ PostID }) {
       leaveFrom="-translate-x-0"
       leaveTo="translate-x-96"
       >
-        <div onClick={showFront} className='mx-auto bg-gray-100 mt-0 shadow rounded w-4/5 h-48 object-fill'>
+        <div onClick={showFront} className='mx-auto bg-gray-100 -mt-48 shadow rounded w-4/5 h-48 object-fill'>
           <h1 className='text-center p-12'>
             {PostID.message}
           </h1>
