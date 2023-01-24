@@ -21,6 +21,8 @@
     "react-dom-confetti": "^0.2.0",
     "react-icons": "^4.6.0",
     "react-instantsearch-dom": "^6.38.1",
+    "react-square-web-payments-sdk": "^3.2.1",
+    "square": "^25.1.0",
     "userbase-js": "^1.3.0"
   },
   "devDependencies": {

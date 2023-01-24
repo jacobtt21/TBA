@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { IoChevronBack, IoAdd } from "react-icons/io5";
 import { Transition } from '@headlessui/react'
 import ImageGrid from '../../../components/images/ImageGrid';
+import { PaymentForm, CreditCard } from 'react-square-web-payments-sdk';
+
 
 function GiftPage() {
   const [user] = useContext(UserContext)
@@ -16,6 +18,7 @@ function GiftPage() {
   const [msg, setMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter();
+  const [some, setSome] = useState('')
 
   useEffect(() => {
     setTimeout(settransition(true), 400)
@@ -63,6 +66,21 @@ function GiftPage() {
     setTimeout(function(){
       router.back()
     }, 600);
+  }
+
+  const payForCard = async (token) => {
+    const response = await fetch("/api/pay", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        sourceId: token.token,
+        amount: 10000,
+      }),
+    });
+    const resPay = await response.json()
+    setSome(resPay.payment.status)
   }
 
   return user && cards ? (
@@ -115,14 +133,14 @@ function GiftPage() {
               >
                 <div className="w-full p-4 justify-center items-center">
                   <h1 className='flex justify-center mb-4 text-2xl'>2. Write a Message</h1>
-                  <label for="message" className="block text-sm font-bold mb-2">Your message (60 Characters)</label>
+                  <label htmlFor="message" className="block text-sm font-bold mb-2">Your message (60 Characters)</label>
                   <textarea 
                   rows="4" 
                   className="block p-2.5 w-full shadow appearance-none border-lg bg-gray-200 rounded leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
                   onChange={(e) => setMsg(e.target.value)}
                   value={msg}
-                  maxlength="60"
+                  maxLength="60"
                   disabled={loading}
                   >
                   </textarea>
@@ -145,11 +163,27 @@ function GiftPage() {
               >
                 <div className="w-full p-4 justify-center items-center">
                   <h1 className='flex justify-center mb-4 text-2xl'>3. Add a Gift</h1>
-                  <label for="message" className="block text-sm font-bold mb-2">Your message</label>
-                  <textarea rows="4" className="block p-2.5 w-full shadow appearance-none border-lg bg-gray-200 rounded leading-tight focus:outline-none focus:shadow-outline"></textarea>
-                  <button className='btn-yellow mt-4 text-3xl flex mx-auto'>
-                    Make Wish
-                  </button>
+                  <PaymentForm
+                    applicationId="sandbox-sq0idb-zo5Ox1DUaC1cc-pMsSluwA"
+                    cardTokenizeResponseReceived={async (token) => {
+                      await payForCard(token)
+                    }}
+                    locationId='LPTT4PFM4RPJB'
+                  >
+                    <CreditCard 
+                      buttonProps={{
+                        css: {
+                          backgroundColor: "#771520",
+                          fontSize: "14px",
+                          color: "#fff",
+                          "&:hover": {
+                            backgroundColor: "#530f16",
+                          },
+                        },
+                      }}
+                    />
+                  </PaymentForm>
+                  {some}
                 </div>
               </Transition>
             </div>

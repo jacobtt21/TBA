@@ -19,7 +19,6 @@ export default function WishCard({ PostID }) {
     })
     const data = await resUser.json()
     setReqUser(JSON.parse(data["user_info"]))
-    console.log(JSON.parse(data["user_info"]))
   }
 
   const showBack = () => {
