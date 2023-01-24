@@ -127,7 +127,7 @@ function GiftPage() {
                   >
                   </textarea>
                   <button className='btn-white mt-4 flex text-2xl items-center mx-auto' disabled={loading} onClick={GiveGift}>
-                    <IoAdd /> Add a Gift
+                    <IoAdd /> Add a gift?
                   </button>
                   <button className='btn-yellow mt-24 mb-32 text-2xl flex mx-auto' disabled={loading} onClick={submitNoGift}>
                     Make your wish
