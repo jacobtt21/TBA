@@ -14,7 +14,7 @@ export default function Nav() {
 
   useEffect(() => {
     try {
-      setInterval(() => getNotifications(), 1000)
+      setInterval(() => getNotifications(), 10000)
     } catch (e) {
       setFriendNotification(false)
     }

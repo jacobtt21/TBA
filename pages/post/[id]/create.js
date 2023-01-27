@@ -69,18 +69,13 @@ function GiftPage() {
   }
 
   const payForCard = async (token) => {
-    const response = await fetch("/api/pay", {
+    const info = new FormData
+    info.append("source", token.token)
+    info.append("amount", 17)
+    await fetch('http://127.0.0.1:5000/pay', {
       method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        sourceId: token.token,
-        amount: 10000,
-      }),
-    });
-    const resPay = await response.json()
-    setSome(resPay.payment.status)
+      body: info
+    })
   }
 
   return user && cards ? (
@@ -166,7 +161,7 @@ function GiftPage() {
                   <PaymentForm
                     applicationId="sandbox-sq0idb-zo5Ox1DUaC1cc-pMsSluwA"
                     cardTokenizeResponseReceived={async (token) => {
-                      await payForCard(token)
+                      payForCard(token)
                     }}
                     locationId='LPTT4PFM4RPJB'
                   >
