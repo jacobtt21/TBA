@@ -168,15 +168,30 @@ function GiftPage() {
                     <CreditCard 
                       buttonProps={{
                         css: {
-                          backgroundColor: "#771520",
-                          fontSize: "14px",
-                          color: "#fff",
+                          backgroundColor: "#FACC15",
+                          fontSize: "1.5rem",
+                          fontWeight: "bold",
+                          lineHeight: "2rem",
+                          color: "#000",
                           "&:hover": {
-                            backgroundColor: "#530f16",
+                            backgroundColor: "#EAB308",
                           },
+                          "&:disabled": {
+                            backgroundColor: "#FEF08A",
+                          }
                         },
                       }}
-                    />
+                      style={{
+                        input: {
+                          fontSize: '14px',
+                        },
+                        'input::placeholder': {
+                          color: '#771520',
+                        },
+                      }}
+                    >
+                      Make your wish
+                    </CreditCard>
                   </PaymentForm>
                   {some}
                 </div>
