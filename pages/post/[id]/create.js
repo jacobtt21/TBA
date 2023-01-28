@@ -5,6 +5,7 @@ import { IoChevronBack, IoAdd } from "react-icons/io5";
 import { Transition } from '@headlessui/react'
 import ImageGrid from '../../../components/images/ImageGrid';
 import { PaymentForm, CreditCard } from 'react-square-web-payments-sdk';
+import GiftCardGrid from '../../../components/giftcards/CardGrid';
 
 
 function GiftPage() {
@@ -13,12 +14,13 @@ function GiftPage() {
   const [cardUp, setCardUp] = useState(false)
   const [msgUp, setMsgUp] = useState(false)
   const [giftUp, setGiftUp] = useState(false)
+  const [giftCardUp, setGiftCardUp] = useState(false)
+  const [amountCard, setAmountCard] = useState(false)
   const [bDayCard, setBDayCard] = useState('https://github.com/Oustro/OustroImages/blob/main/bday.png?raw=true')
   const [cards, setCards] = useState([])
   const [msg, setMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter();
-  const [some, setSome] = useState('')
 
   useEffect(() => {
     setTimeout(settransition(true), 400)
@@ -37,8 +39,23 @@ function GiftPage() {
     settransition(true)
   }
 
-  const GiveGift = () => {
+
+  const ChooseCard = () => {
     setMsgUp(false)
+    setTimeout(function(){
+      setGiftCardUp(true)
+    }, 500);
+  }
+
+  const ChooseAmount = () => {
+    setGiftCardUp(false)
+    setTimeout(function(){
+      setAmountCard(true)
+    }, 500);
+  }
+
+  const GiveGift = async () => {
+    setAmountCard(false)
     setTimeout(function(){
       setGiftUp(true)
     }, 500);
@@ -56,13 +73,6 @@ function GiftPage() {
       body: wish
     })
     setMsgUp(false)
-    setTimeout(function(){
-      router.back()
-    }, 600);
-  }
-
-  const submitGift = async () => {
-    setGiftUp(false)
     setTimeout(function(){
       router.back()
     }, 600);
@@ -113,7 +123,7 @@ function GiftPage() {
               leaveTo="translate-x-96"
               >
                 <div className="w-full mt-4 mb-32 justify-center items-center">
-                  <h1 className='flex justify-center text-2xl'>1. Choose a Card</h1>
+                  <h1 className='flex justify-center text-2xl'>1. Choose a card</h1>
                   <ImageGrid cards={cards} />
                 </div>
               </Transition>
@@ -127,7 +137,7 @@ function GiftPage() {
               leaveTo="translate-x-96"
               >
                 <div className="w-full p-4 justify-center items-center">
-                  <h1 className='flex justify-center mb-4 text-2xl'>2. Write a Message</h1>
+                  <h1 className='flex justify-center mb-4 text-2xl'>2. Write a message</h1>
                   <label htmlFor="message" className="block text-sm font-bold mb-2">Your message (60 Characters)</label>
                   <textarea 
                   rows="4" 
@@ -139,13 +149,43 @@ function GiftPage() {
                   disabled={loading}
                   >
                   </textarea>
-                  <button className='btn-white mt-4 flex text-2xl items-center mx-auto' disabled={loading} onClick={GiveGift}>
+                  <button className='btn-white mt-4 flex text-2xl items-center mx-auto' disabled={loading} onClick={ChooseCard}>
                     <IoAdd /> Add a gift?
                   </button>
                   <button className='btn-yellow mt-24 mb-32 text-2xl flex mx-auto' disabled={loading} onClick={submitNoGift}>
                     Make your wish
                   </button>
                 </div>
+              </Transition>
+              <Transition
+              show={giftCardUp}
+              enter="transition-transform	duration-[400ms]"
+              enterFrom="-translate-x-96"
+              enterTo="-translate-x-0"
+              leave="transition-transform	duration-[400ms]"
+              leaveFrom="-translate-x-0"
+              leaveTo="translate-x-96"
+              >
+                <div className="w-full p-4 justify-center items-center">
+                  <h1 className='flex justify-center mb-4 text-2xl'>3. Select a gift</h1>
+                  <GiftCardGrid />
+                  <button className='btn-yellow mt-4 flex text-2xl items-center mx-auto' disabled={loading} onClick={ChooseAmount}>
+                    Choose Amount
+                  </button>
+                </div>
+              </Transition>
+              <Transition
+              show={amountCard}
+              enter="transition-transform	duration-[400ms]"
+              enterFrom="-translate-x-96"
+              enterTo="-translate-x-0"
+              leave="transition-transform	duration-[400ms]"
+              leaveFrom="-translate-x-0"
+              leaveTo="translate-x-96"
+              >
+               <button className='btn-white mt-4 flex text-2xl items-center mx-auto' disabled={loading} onClick={GiveGift}>
+                  Pay and submit
+                </button> 
               </Transition>
               <Transition
               show={giftUp}
@@ -193,7 +233,6 @@ function GiftPage() {
                       Make your wish
                     </CreditCard>
                   </PaymentForm>
-                  {some}
                 </div>
               </Transition>
             </div>
