@@ -6,6 +6,7 @@ import { Transition } from '@headlessui/react'
 import { PaymentForm, CreditCard } from 'react-square-web-payments-sdk';
 import algoliasearch from 'algoliasearch';
 import { InstantSearch, Hits, connectSearchBox } from "react-instantsearch-dom";
+import { numberFormat } from '../../../lib/convert';
 
 function GiftPage() {
   const [user] = useContext(UserContext)
@@ -306,8 +307,8 @@ function GiftPage() {
               </div>
               <div className="float-right w-[48%]">
                 <h1 className='text-1xl'>${amount} (giftcard)</h1>
-                <h1 className='text-1xl'>${((amount*0.029) + 1).toString().substring(0, 4)} (service fee)</h1>
-                <h1 className='text-2xl'>${((amount*1.029) + 1)}</h1>
+                <h1 className='text-1xl'>{numberFormat((amount * 0.029) + 1)} (service fee)</h1>
+                <h1 className='text-2xl'>{numberFormat((amount * 1.029) + 1)}</h1>
               </div>
             </div>
 
