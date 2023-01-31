@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { UserContext, UserContextExtra } from '../lib/UserContext';
+import Head from 'next/head'
 import userbase from 'userbase-js'
 import Layout from '../components/layout'
 import { magic } from '../lib/magic';
@@ -36,6 +37,11 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
+    <>
+    <Head>
+      <meta name="viewport" content="width=device-width, user-scalable=no" /> 
+      <title>TBA</title>
+    </Head>
     <UserContext.Provider value={[user, setUser]}>
       <UserContextExtra.Provider value={[userExtra, setUserExtra]}>
         <Layout>
@@ -43,7 +49,7 @@ function MyApp({ Component, pageProps }) {
         </Layout>
       </UserContextExtra.Provider>
     </UserContext.Provider>
-
+    </>
   )
 }
 

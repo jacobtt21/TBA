@@ -19,6 +19,7 @@ function GiftPage() {
   const [bdayCard, setBdayCard] = useState('https://github.com/Oustro/OustroImages/blob/main/bday.png?raw=true')
   const [msg, setMsg] = useState('')
   const [giftcard, setGiftcard] = useState([])
+  const [amount, setAmount] = useState(10)
 
   const [loading, setLoading] = useState(false)
   const router = useRouter();
@@ -159,6 +160,7 @@ function GiftPage() {
   }
 
   const payForGift = () => {
+    console.log(amount)
     setAmountCard(false)
     setTimeout(function(){
       setPaymentCard(true)
@@ -216,14 +218,14 @@ function GiftPage() {
         >
           <div className="w-full p-4 justify-center items-center">
             <h1 className='flex justify-center mb-4 text-2xl'>2. Write a message</h1>
-            <label htmlFor="message" className="block text-sm font-bold mb-2">Your message (60 Characters)</label>
+            <label htmlFor="message" className="block text-sm font-bold mb-2">Your message (160 Characters)</label>
             <textarea 
             rows="4" 
             className="block p-2.5 w-full shadow appearance-none border-lg bg-gray-200 rounded leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             onChange={(e) => setMsg(e.target.value)}
             value={msg}
-            maxLength="60"
+            maxLength="160"
             disabled={loading}
             >
             </textarea>
@@ -277,6 +279,8 @@ function GiftPage() {
                 id="month"
                 type="number"
                 pattern="[0-9]*" 
+                onChange={(e) => setAmount(e.target.value)}
+                value={amount}
                 disabled={loading}
               />
             </div>
@@ -296,6 +300,17 @@ function GiftPage() {
         >
           <div className="w-full p-4 justify-center items-center">
             <h1 className='flex justify-center mb-4 text-2xl'>3. Checkout</h1>
+            <div className="flow-root bg-gray-200 p-4 rounded-lg flex mb-8">  
+              <div className="float-left w-[48%]">
+                <img src={giftcard[1]} className='mx-auto shadow rounded-lg w-4/5 object-fill'/>
+              </div>
+              <div className="float-right w-[48%]">
+                <h1 className='text-1xl'>${amount} (giftcard)</h1>
+                <h1 className='text-1xl'>${((amount*0.029) + 1).toString().substring(0, 4)} (service fee)</h1>
+                <h1 className='text-2xl'>${((amount*1.029) + 1)}</h1>
+              </div>
+            </div>
+
             <PaymentForm
               applicationId="sandbox-sq0idb-zo5Ox1DUaC1cc-pMsSluwA"
               cardTokenizeResponseReceived={async (token) => {
