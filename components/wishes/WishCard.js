@@ -50,39 +50,44 @@ export default function WishCard({ PostID }) {
         </div>
       </div>
       <div className='mx-auto mt-0 rounded w-4/5 h-48 object-fill'>
-          <h1 className='text-center p-12'>
-            &nbsp;
-          </h1>
-        </div>
-      <Transition
-      show={front}
-      enter="transition-transform	duration-[400ms]"
-      enterFrom="-translate-x-96"
-      enterTo="-translate-x-0"
-      leave="transition-transform	duration-[400ms]"
-      leaveFrom="-translate-x-0"
-      leaveTo="translate-x-96"
-      >
-        <img src={PostID.card} onClick={showBack} className='mx-auto -mt-48 shadow rounded w-4/5 h-48 object-fill'/>
-      </Transition>
-      <Transition
-      show={back}
-      enter="transition-transform	duration-[400ms]"
-      enterFrom="-translate-x-96"
-      enterTo="-translate-x-0"
-      leave="transition-transform	duration-[400ms]"
-      leaveFrom="-translate-x-0"
-      leaveTo="translate-x-96"
-      >
-        <div onClick={showFront} className='mx-auto bg-gray-100 -mt-48 shadow rounded w-4/5 h-48 object-fill'>
-          <h1 className='text-center p-12'>
-            {PostID.message}
-          </h1>
-          <h1 className='text-center'>
-            - @{reqUser.username}
-          </h1>
-        </div>
-      </Transition>
+        <h1 className='text-center p-12'>
+          &nbsp;
+        </h1>
+      </div>
+      {PostID.message ? (
+        <>
+          <Transition
+          show={front}
+          enter="transition-transform	duration-[400ms]"
+          enterFrom="-translate-x-96"
+          enterTo="-translate-x-0"
+          leave="transition-transform	duration-[400ms]"
+          leaveFrom="-translate-x-0"
+          leaveTo="translate-x-96"
+          >
+            <img src={PostID.card} onClick={showBack} className='mx-auto -mt-48 shadow-2xl rounded w-4/5 h-48 object-fill'/>
+          </Transition>
+          <Transition
+          show={back}
+          enter="transition-transform	duration-[400ms]"
+          enterFrom="-translate-x-96"
+          enterTo="-translate-x-0"
+          leave="transition-transform	duration-[400ms]"
+          leaveFrom="-translate-x-0"
+          leaveTo="translate-x-96"
+          >
+            <div onClick={showFront} className='mx-auto bg-gray-100 -mt-48 shadow-2xl rounded w-4/5 h-48 object-fill'>
+              <h1 className='text-center p-16'>
+                {PostID.message}
+              </h1>
+            </div>
+          </Transition>
+        </>
+      ) : (
+        <>
+          <img src={PostID.card} onClick={showBack} className='mx-auto -mt-48 shadow rounded w-4/5 h-48 object-fill'/>
+        </>
+      )}
     </div>
   ) : (
     <>

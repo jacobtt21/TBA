@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UserContext, UserContextExtra } from '../lib/UserContext';
+import { UserContext } from '../lib/UserContext';
 import Link from 'next/link'
 import algoliasearch from 'algoliasearch';
 import { InstantSearch, Hits, connectSearchBox } from "react-instantsearch-dom";
