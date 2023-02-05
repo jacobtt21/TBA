@@ -125,12 +125,49 @@ function GiftPage() {
   }
 
   const submitWithGift = async (token) => {
+    setLoading(true)
     const info = new FormData
     info.append("source", token.token)
-    info.append("amount", 17)
-    await fetch('http://127.0.0.1:5000/pay', {
+    info.append("amount", parseInt(amount))
+    info.append("cardID", giftcard[0])
+    const linkData = await fetch('http://127.0.0.1:5000/pay', {
       method: "POST",
       body: info
+    })
+    const link = await linkData.json()
+    console.log(link)
+
+    const wish = new FormData
+    wish.append("pid", '{"$oid":"'+router.query.id+'"}')
+    wish.append("cid", '{"$oid":"'+user.profile.userID+'"}')
+    wish.append("url", bdayCard)
+    wish.append("message", msg)
+    const wishData =  await fetch('http://127.0.0.1:5000/create_wish', {
+      method: "POST",
+      body: wish
+    })
+    const dataWish = await wishData.json()
+    console.log(dataWish["wish_id"])
+
+    const postData = new FormData
+    postData.append("pid", '{"$oid":"'+router.query.id+'"}')
+    const postDataSent = await fetch('http://127.0.0.1:5000/get_post_recipient', {
+      method: "POST",
+      body: postData
+    })
+    const postDataRes = await postDataSent.json()
+    console.log(JSON.parse(postDataRes["post_info"])["recipient"])
+    
+    const gift = new FormData
+    gift.append("wid", dataWish["wish_id"])
+    gift.append("cid", '{"$oid":"'+user.profile.userID+'"}')
+    gift.append("oid", '{"$oid":"'+JSON.parse(postDataRes["post_info"])["recipient"]["$oid"]+'"}')
+    gift.append("url", link["Link"])
+    gift.append("amount", amount)
+    gift.append("image", giftcard[1])
+    await fetch('http://127.0.0.1:5000/create_gift', {
+      method: "POST",
+      body: gift
     })
   }
 
@@ -161,7 +198,6 @@ function GiftPage() {
   }
 
   const payForGift = () => {
-    console.log(amount)
     setAmountCard(false)
     setTimeout(function(){
       setPaymentCard(true)
