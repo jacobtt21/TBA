@@ -52,13 +52,6 @@ function WishPage() {
       <div className="w-full mb-28 flex justify-center items-center">
         <WishGrid wishes={wishlist} loading={loading} />
       </div>
-      {/* <div className="w-full mt-28 mb-28 flex justify-center items-center">
-        <Link href={{pathname: '/post/[id]/create', query: { id: router.query.id }}}>
-          <button className="btn-yellow flex items-center text-2xl" >
-            <IoAdd /> Make a wish
-          </button>
-        </Link>
-      </div> */}
     </Transition>
   ) : (
     <>

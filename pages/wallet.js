@@ -10,11 +10,13 @@ function Wallet() {
   const [userExtra, setUserExtra] = useContext(UserContextExtra);
   
   return user ? (
-    <div className="w-4/5 md:w-1/2 mx-auto">
-      <div className="container mt-16 flex justify-center">
-        <h3 className="font-bold text-4xl">
-          <span className="bg-yellow-400">{user.profile.fname} {user.profile.lname}</span>
-        </h3>
+    <div className="w-11/12 md:w-1/2 mx-auto">
+      <div className="container mx-auto mt-16 justify-center">
+        <h1 className="font-bold text-4xl mt-4 text-center w-full">
+          Wallet
+        </h1>
+        <h2 className="text-7xl text-center mt-8">274</h2>
+        <h3 className='text-2xl text-center'>Birthday Points</h3>
       </div>
     </div>
   ) : (
