@@ -17,7 +17,7 @@ function GiftPage() {
   const [amountCard, setAmountCard] = useState(false)
   const [paymentCard, setPaymentCard] = useState(false)
 
-  const [bdayCard, setBdayCard] = useState('https://github.com/Oustro/OustroImages/blob/main/bday.png?raw=true')
+  const [bdayCard, setBdayCard] = useState('')
   const [msg, setMsg] = useState('')
   const [giftcard, setGiftcard] = useState([])
   const [amount, setAmount] = useState(10)
@@ -225,7 +225,17 @@ function GiftPage() {
             <h1>Create A Wish</h1>
           </div>
         </nav>
-        <img src={bdayCard} className='mx-auto mt-8 shadow rounded-lg w-4/5 h-48 object-fill'/>
+        <div className='w-full sticky bg-white pb-4 top-0 z-20 left-0 top-0 flex justify-center items-center'>
+          {bdayCard ? (
+            <img src={bdayCard} className='mx-auto mt-8 sticky shadow rounded-lg w-4/5 h-48 object-fill'/>
+          ) : (
+            <div className='mx-auto mt-8 shadow bg-gray-100 rounded-lg w-4/5 h-48 object-fill'>
+              <h1 className='text-center p-16'>
+                Tap me to use AI to generate a unique birthday card
+              </h1>
+            </div>
+          )}
+        </div>
         <Transition
         show={bdayCardCard}
         enter="transition-transform	duration-[400ms]"

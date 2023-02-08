@@ -39,7 +39,7 @@ function WishPage() {
       leaveFrom="-translate-x-96"
       leaveTo="-translate-x-0"
     >
-      <nav className="w-full h-20 mt-0 bg-white flex p-1 top-4 items-left border-b border-stone-700">
+      <nav className="w-full h-20 sticky bg-white left-0 top-0 flex justify-center items-center border-b border-stone-700">
         <button className="btn-white absolute mt-8 left-0 text-3xl" onClick={() => router.back()}>
           <IoChevronBack />
         </button>
