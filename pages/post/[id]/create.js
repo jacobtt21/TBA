@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../../lib/UserContext';
 import { useRouter } from 'next/router'
-import { IoChevronBack, IoAdd } from "react-icons/io5";
+import { IoChevronBack, IoAdd, IoChevronForward } from "react-icons/io5";
 import { Transition } from '@headlessui/react'
 import { PaymentForm, CreditCard } from 'react-square-web-payments-sdk';
 import algoliasearch from 'algoliasearch';
@@ -10,6 +10,7 @@ import { numberFormat } from '../../../lib/convert';
 
 function GiftPage() {
   const [user] = useContext(UserContext)
+  const [phase, setPhase] = useState(1)
   const [transitionFull, setTransitionFull] = useState(false)
   const [bdayCardCard, setBdayCardCard] = useState(false)
   const [msgCard, setMsgCard] = useState(false)
@@ -23,6 +24,7 @@ function GiftPage() {
   const [amount, setAmount] = useState(10)
 
   const [loading, setLoading] = useState(false)
+  const [genImageLoading, setGenImageLoading] = useState(false)
   const router = useRouter();
 
   useEffect(() => {
@@ -171,16 +173,62 @@ function GiftPage() {
     })
   }
 
+  const nextPhase = () => {
+    if (phase === 1) {
+      setBdayCardCard(false)
+      setPhase(2)
+      setTimeout(function(){
+        setMsgCard(true)
+      }, 500);
+    }
+  }
+
+
+  const backPhase = () => {
+    if (phase === 1) {
+      router.back()
+    }
+    else if (phase === 2) {
+      setMsgCard(false)
+      setPhase(1)
+      setTimeout(function(){
+        setBdayCardCard(true)
+      }, 500);
+    }
+    else if (phase === 3) {
+      setGiftcardCard(false)
+      setPhase(2)
+      setTimeout(function(){
+        setMsgCard(true)
+      }, 500);
+    }
+    else if (phase === 4) {
+      setAmountCard(false)
+      setPhase(3)
+      setTimeout(function(){
+        setGiftcardCard(true)
+      }, 500);
+    }
+    else if (phase === 5) {
+      setPaymentCard(false)
+      setPhase(4)
+      setTimeout(function(){
+        setAmountCard(true)
+      }, 500);
+    }
+  }
+
+  const doNothing = () => {
+    console.log("hi")
+  }
+
   const selectBdayCard = (e) => {
     setBdayCard(e)
-    setBdayCardCard(false)
-    setTimeout(function(){
-      setMsgCard(true)
-    }, 500);
   }
 
   const addGiftcard = () => {
     setMsgCard(false)
+    setPhase(3)
     setTimeout(function(){
       setGiftcardCard(true)
     }, 500);
@@ -192,6 +240,7 @@ function GiftPage() {
     giftcard.push(c)
     setGiftcard(giftcard)
     setGiftcardCard(false)
+    setPhase(4)
     setTimeout(function(){
       setAmountCard(true)
     }, 500);
@@ -199,9 +248,20 @@ function GiftPage() {
 
   const payForGift = () => {
     setAmountCard(false)
+    setPhase(5)
     setTimeout(function(){
       setPaymentCard(true)
     }, 500);
+  }
+
+  const genImage = async () => {
+    setGenImageLoading(true)
+    const newCard = await fetch('http://127.0.0.1:5000/generate_card', {
+      method: "GET"
+    })
+    const newCardRes = await newCard.json()
+    setBdayCard(newCardRes["card"])
+    setGenImageLoading(false)
   }
 
   return user ? (
@@ -215,19 +275,34 @@ function GiftPage() {
       leaveTo="-translate-x-0"
     >
       <div className="w-full md:w-1/2 mx-auto">
-        <nav className="w-full h-20 item-center mt-0 left-0 p-1 top-4 border-b border-stone-700">
-          <div className='w-full flex'>
-            <button className="btn-white left-0 mt-8 text-3xl" disabled={loading} onClick={() => router.back()}>
-              <IoChevronBack />
+        <nav className="w-full h-20 bg-white left-0 top-0 flex justify-center items-center border-b border-stone-700">
+          <button className="btn-white absolute mt-8 left-0 text-3xl" onClick={backPhase}>
+            <IoChevronBack />
+          </button>
+          {phase === 1 && (
+            <button className="btn-white absolute mt-8 right-0 text-3xl" disabled={bdayCard ? false : true} onClick={nextPhase}>
+              <IoChevronForward />
             </button>
-          </div>
-          <div className='w-full font-bold flex justify-center text-2xl -mt-10 pb-4'>
-            <h1>Create A Wish</h1>
-          </div>
+          )}
         </nav>
-        <div className='w-full sticky bg-white pb-4 top-0 z-20 left-0 top-0 flex justify-center items-center'>
-          {bdayCard ? (
+        <div className='w-full font-bold flex justify-center text-2xl -mt-10 pb-4'>
+          <h1>Create A Wish</h1>
+        </div>
+        <div className='w-full sticky bg-white pb-4 pt-2 top-0 z-20 left-0 top-0 flex justify-center items-center' onClick={phase === 1 ? genImage : doNothing}>
+          {bdayCard && !genImageLoading ? (
             <img src={bdayCard} className='mx-auto mt-8 sticky shadow rounded-lg w-4/5 h-48 object-fill'/>
+          ) : genImageLoading ? (
+            <>
+              {bdayCard ? (
+                <img src={bdayCard} className='mx-auto animate-pulse mt-8 sticky shadow rounded-lg w-4/5 h-48 object-fill'/>
+              ) : (
+                <div className='mx-auto mt-8 animate-pulse shadow bg-gray-100 rounded-lg w-4/5 h-48 object-fill'>
+                  <h1 className='text-center p-16'>
+                    Loading...
+                  </h1>
+                </div>
+              )}
+            </>
           ) : (
             <div className='mx-auto mt-8 shadow bg-gray-100 rounded-lg w-4/5 h-48 object-fill'>
               <h1 className='text-center p-16'>
@@ -331,7 +406,7 @@ function GiftPage() {
                 disabled={loading}
               />
             </div>
-            <button className='btn-yellow mt-20 w-full p-4 text-2xl items-center mx-auto' disabled={loading} onClick={payForGift}>
+            <button className='btn-yellow mt-12 w-full p-4 text-2xl items-center mx-auto' disabled={loading} onClick={payForGift}>
             Checkout
           </button> 
           </div>
