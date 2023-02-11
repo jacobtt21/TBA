@@ -428,8 +428,8 @@ function GiftPage() {
               </div>
               <div className="float-right w-[48%]">
                 <h1 className='text-1xl'>${amount} (giftcard)</h1>
-                <h1 className='text-1xl'>{numberFormat((amount * 0.029) + 1)} (service fee)</h1>
-                <h1 className='text-2xl'>{numberFormat((amount * 1.029) + 1)}</h1>
+                <h1 className='text-1xl line-through'>{numberFormat((amount * 0.029) + 1)} (service fee)</h1>
+                <h1 className='text-2xl'>${amount}</h1>
               </div>
             </div>
 
@@ -449,10 +449,10 @@ function GiftPage() {
                     lineHeight: "2rem",
                     color: "#000",
                     "&:hover": {
-                      backgroundColor: "#EAB308",
+                      backgroundColor: "#0000",
                     },
                     "&:disabled": {
-                      backgroundColor: "#FEF08A",
+                      backgroundColor: "#000",
                     }
                   },
                 }}
@@ -461,7 +461,6 @@ function GiftPage() {
                     fontSize: '14px',
                   },
                   'input::placeholder': {
-                    color: '#771520',
                   },
                 }}
               >
