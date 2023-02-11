@@ -137,7 +137,6 @@ function GiftPage() {
       body: info
     })
     const link = await linkData.json()
-    console.log(link)
 
     const wish = new FormData
     wish.append("pid", '{"$oid":"'+router.query.id+'"}')
@@ -149,7 +148,6 @@ function GiftPage() {
       body: wish
     })
     const dataWish = await wishData.json()
-    console.log(dataWish["wish_id"])
 
     const postData = new FormData
     postData.append("pid", '{"$oid":"'+router.query.id+'"}')
@@ -158,7 +156,6 @@ function GiftPage() {
       body: postData
     })
     const postDataRes = await postDataSent.json()
-    console.log(JSON.parse(postDataRes["post_info"])["recipient"])
     
     const gift = new FormData
     gift.append("wid", dataWish["wish_id"])
@@ -171,6 +168,10 @@ function GiftPage() {
       method: "POST",
       body: gift
     })
+    setPaymentCard(false)
+    setTimeout(function(){
+      router.back()
+    }, 600);
   }
 
   const nextPhase = () => {
@@ -274,7 +275,7 @@ function GiftPage() {
       leaveFrom="-translate-x-96"
       leaveTo="-translate-x-0"
     >
-      <div className="w-full md:w-1/2 mx-auto">
+      <div className="w-full h-full md:w-1/2 mx-auto">
         <nav className="w-full h-20 bg-white left-0 top-0 flex justify-center items-center border-b border-stone-700">
           <button className="btn-white absolute mt-8 left-0 text-3xl" onClick={backPhase}>
             <IoChevronBack />
@@ -386,7 +387,7 @@ function GiftPage() {
         leaveFrom="-translate-x-0"
         leaveTo="translate-x-96"
         >
-          <div className="w-full p-4 justify-center items-center">
+          <div className="w-full h-full p-4 justify-center items-center">
             <h1 className='flex justify-center text-2xl'>4. Set an amount</h1>
             <img src={giftcard[1]} className='mx-auto mt-8 shadow rounded-lg w-3/5 object-fill'/>
             <div className='text-center'>
@@ -406,9 +407,9 @@ function GiftPage() {
                 disabled={loading}
               />
             </div>
-            <button className='btn-yellow mt-12 w-full p-4 text-2xl items-center mx-auto' disabled={loading} onClick={payForGift}>
-            Checkout
-          </button> 
+            <button className='btn-yellow mt-12 mb-0 w-full p-4 text-2xl items-center mx-auto' disabled={loading} onClick={payForGift}>
+              Checkout
+            </button> 
           </div>
         </Transition>
         <Transition
@@ -421,7 +422,7 @@ function GiftPage() {
         leaveTo="translate-x-96"
         >
           <div className="w-full p-4 justify-center items-center">
-            <h1 className='flex justify-center mb-4 text-2xl'>3. Checkout</h1>
+            <h1 className='flex justify-center mb-4 text-2xl'>5. Checkout</h1>
             <div className="flow-root bg-gray-200 p-4 rounded-lg flex mb-8">  
               <div className="float-left w-[48%]">
                 <img src={giftcard[1]} className='mx-auto shadow rounded-lg w-4/5 object-fill'/>
