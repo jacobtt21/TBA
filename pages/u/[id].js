@@ -149,15 +149,20 @@ function UserPage() {
               </div>
             </div>
           ) : friendStatus === 1 ? (
-            <nav className="container mx-auto mt-4 flex justify-center">
-              <ul className="flex justify-end items-center p-1">
-                <li>
-                  <button className="btn-yellow mx-2" disabled={true}>
-                    Waiting for {reqUser.fname}
-                  </button>
-                </li>
-              </ul>
-            </nav>
+            <div>
+              <nav className="container mx-auto mt-4 flex justify-center">
+                <ul className="flex justify-end items-center p-1">
+                  <li>
+                    <button className="btn-yellow mx-2" disabled={true}>
+                      Waiting for {reqUser.fname}
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+              <div className='mt-8 pt-4 border-t border-stone-700'>
+                <UserGrid feed={feed} loading={true} />
+              </div>
+            </div>
           ) : friendStatus === 2 ? (
             <>
               <h2 className="mt-8 w-full text-center">
@@ -179,17 +184,25 @@ function UserPage() {
                   </li>
                 </ul>
               </nav>
+              <div className='mt-8 pt-4 border-t border-stone-700'>
+                <UserGrid feed={feed} loading={true} />
+              </div>
             </>
           ) : friendStatus === 3 ? (
-            <nav className="container mx-auto mt-4 flex justify-center">
-              <ul className="flex justify-end items-center p-1">
-                <li>
-                  <button className="btn-yellow mx-2" onClick={sendFriendReq}>
-                    Add As Friend
-                  </button>
-                </li>
-              </ul>
-            </nav>
+            <div>
+              <nav className="container mx-auto mt-4 flex justify-center">
+                <ul className="flex justify-end items-center p-1">
+                  <li>
+                    <button className="btn-yellow mx-2" onClick={sendFriendReq}>
+                      Add As Friend
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+              <div className='mt-8 pt-4 border-t border-stone-700'>
+                <UserGrid feed={feed} loading={true} />
+              </div>
+            </div>
           ) : (
             <nav className="container mx-auto mt-4 flex justify-center">
               <ul className="flex justify-end items-center p-1">

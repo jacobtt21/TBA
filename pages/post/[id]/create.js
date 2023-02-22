@@ -17,6 +17,7 @@ function GiftPage() {
   const [giftcardCard, setGiftcardCard] = useState(false)
   const [amountCard, setAmountCard] = useState(false)
   const [paymentCard, setPaymentCard] = useState(false)
+  const [confirmationCard, setConfirmationCard] = useState(false)
 
   const [bdayCard, setBdayCard] = useState('')
   const [msg, setMsg] = useState('')
@@ -128,6 +129,10 @@ function GiftPage() {
 
   const submitWithGift = async (token) => {
     setLoading(true)
+    setPaymentCard(false)
+    setTimeout(function(){
+      setConfirmationCard(true)
+    }, 600);
     const info = new FormData
     info.append("source", token.token)
     info.append("amount", parseInt(amount))
@@ -168,7 +173,7 @@ function GiftPage() {
       method: "POST",
       body: gift
     })
-    setPaymentCard(false)
+    setConfirmationCard(false)
     setTimeout(function(){
       router.back()
     }, 600);
@@ -450,10 +455,10 @@ function GiftPage() {
                     lineHeight: "2rem",
                     color: "#000",
                     "&:hover": {
-                      backgroundColor: "#0000",
+                      backgroundColor: "#eab308",
                     },
                     "&:disabled": {
-                      backgroundColor: "#000",
+                      backgroundColor: "#eab308",
                     }
                   },
                 }}
@@ -468,6 +473,21 @@ function GiftPage() {
                 Make your wish
               </CreditCard>
             </PaymentForm>
+          </div>
+        </Transition>
+        <Transition
+        show={confirmationCard}
+        enter="transition-transform	duration-[400ms]"
+        enterFrom="-translate-x-96"
+        enterTo="-translate-x-0"
+        leave="transition-transform	duration-[400ms]"
+        leaveFrom="-translate-x-0"
+        leaveTo="translate-x-96"
+        >
+          <div className="w-full h-full p-4 justify-center items-center">
+            <h1 className='flex mt-16 text-center justify-center text-2xl'>
+              Boom, you've just made someone's day and we'll take care of the rest!
+            </h1>
           </div>
         </Transition>
       </div>
