@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Browser } from '@capacitor/browser';
 
 export default function Card({ gift }) {
   const [reqUser, setReqUser] = useState()
+
+  console.log(gift)
 
   useEffect(() => {
     getUserInfo()
@@ -18,8 +21,12 @@ export default function Card({ gift }) {
     setReqUser(JSON.parse(data["user_info"]))
   }
 
+  const openCard = async () => {
+    await Browser.open({ url: gift["url"] });
+  };
+
   return reqUser ? (
-    <div className="flow-root bg-gray-200 p-2 rounded-lg flex mb-8">  
+    <div className="flow-root bg-gray-200 p-2 rounded-lg flex mb-8" onClick={openCard}>  
       <div className="float-left w-[48%]">
         <img src={gift["image"]} className='mx-auto shadow rounded-lg w-4/5 object-fill'/>
       </div>
