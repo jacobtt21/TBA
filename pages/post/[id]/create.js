@@ -69,6 +69,38 @@ function GiftPage() {
           />
         </div>
       </form>
+      <div className="flex relative overflow-x-scroll no-scrollbar pb-4">
+        <div className="pl-4">
+          <button className='btn-yellow' onClick={() => refine("Colorful")}>
+            Colorful
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-yellow' onClick={() => refine("Retro")}>
+            Retro
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-yellow' onClick={() => refine("Sports")}>
+            Sports
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-yellow' onClick={() => refine("Fun")}>
+            Fun
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-yellow' onClick={() => refine("Art")}>
+            Artsy
+          </button>
+        </div>
+        <div className="pl-2 pr-4">
+          <button className='btn-yellow' onClick={() => refine("Classic")}>
+            Classic
+          </button>
+        </div>
+      </div>
       <Hits hitComponent={HitBdayCard} />
     </>
   );  
