@@ -149,7 +149,7 @@ function Index() {
       </nav>
       <div className="flex mt-28 flex-wrap justify-center">
         <img
-        src="https://www.oustro.xyz/oustro_logo_b.svg"
+        src="https://www.oustro.xyz/oustro_logo.svg"
         className="w-28"
         alt="..."
         />
