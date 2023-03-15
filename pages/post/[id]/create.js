@@ -392,7 +392,7 @@ function GiftPage() {
             <button className='btn-white mt-4 flex text-2xl items-center mx-auto' disabled={loading} onClick={addGiftcard}>
               <IoAdd /> Add a gift?
             </button>
-            <button className='btn-yellow mt-24 w-full p-4 text-2xl items-center mx-auto' disabled={loading} onClick={submitNoGift}>
+            <button className='btn-yellow mt-24 w-full p-4 text-2xl relative items-center mx-auto' disabled={loading} onClick={submitNoGift}>
               Make your wish
             </button>
           </div>

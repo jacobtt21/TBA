@@ -1,26 +1,88 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../lib/UserContext';
+import CalHeatmap from 'cal-heatmap';
+import Tooltip from 'cal-heatmap/plugins/Tooltip';
 
 function Calendar() {
-  const user = useContext(UserContext);
+  const [user] = useContext(UserContext);
+  const [currYear, setCurrYear] = useState()
+
+  const getDateData = async () => {
+    const datesForm = new FormData
+    datesForm.append("uid", '{"$oid":"'+user.profile.userID+'"}')
+    const datesRes = await fetch('http://127.0.0.1:5000/get_friends_list', {
+      method: "POST",
+      body: datesForm
+    })
+    const data = await datesRes.json();
+    
+    let dates = []
+    for (var i = 0; i < data["friends"].length; ++i) {
+      dates.push(JSON.parse(data["friends"][i]))
+    }
+    
+    const d = new Date();
+    let year = d.getFullYear();
+    setCurrYear(year)
+    const cal = new CalHeatmap();
+    cal.paint({ 
+      verticalOrientation: true,
+      date: { 
+        start: new Date(year.toString()+'-01-01'),
+        max: new Date(year.toString()+'-12-31')
+      },
+      domain: {
+        type: 'month',
+        padding: [0, 0, -35, 0],
+        label: { position: 'top', height: 50 },
+      },
+      subDomain: { type: 'xDay', radius: 4, width: 50, height: 50, label: 'D', color: "black" },
+      data: { 
+        source: dates,
+        x: datum => {
+          return +new Date(year, datum['month'] - 1, datum['day']);
+        },
+        y: datum => {
+          return +1;
+        },
+      }, 
+    },
+    [[
+      Tooltip,
+      {
+        text: function (date, value, dayjsDate) {
+          if (value) {
+            let bdayNames = ""
+            for (var i = 0; i < dates.length; ++i) {
+              if (dates[i]["month"] === parseInt(dayjsDate.format('M')) && dates[i]["day"] === parseInt(dayjsDate.format('D'))) {
+                bdayNames += dates[i]["fname"] + " " + (dates[i]["lname"]) + "<br />"
+              }
+            }
+            return (
+              bdayNames.slice(0, bdayNames.length - 6)
+            )
+          }
+        },
+      },
+    ]]
+    );
+  }
+
+  useEffect(() => {
+    getDateData()
+  }, [])
 
   return user ? (
-    <div className="w-11/12 md:w-1/2 mx-auto">
-      <div className="mx-auto justify-center text-center items-center">
-        <h3 className="font-bold mt-16 text-4xl">
-          Calendar
-        </h3>
-        <div className="relative mt-4">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          </div>
-          <input
-          className="shadow appearance-none border-lg bg-gray-200 rounded w-full py-2 pl-10 leading-tight focus:outline-none focus:shadow-outline"
-          id="search"
-          type="text"
-          placeholder="Search Friend's Usernames"
-        />
-        </div>
+    <div className="h-full bg-hero m-0 bg-cover bg-center bg-fixed">
+      <div>
+        &nbsp;
+      </div>
+      <h1 className="font-bold text-4xl mt-10 text-center w-full">
+        {currYear} Calendar
+      </h1>
+      <div id="cal-heatmap" className='flex justify-center'></div>
+      <div className='h-40'>
+        &nbsp;
       </div>
     </div>
   ) : (

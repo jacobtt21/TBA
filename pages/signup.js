@@ -5,7 +5,8 @@ import userbase from 'userbase-js'
 import Link from 'next/link'
 import { magic } from '../lib/magic';
 import algoliasearch from 'algoliasearch';
-import { IoChevronBack } from "react-icons/io5";
+import { Transition } from '@headlessui/react';
+import { IoEyeOff, IoEyeOutline } from "react-icons/io5";
 
 function SignUp() {
   const [username, setUsername] = useState('')
@@ -21,6 +22,100 @@ function SignUp() {
   const [, setUser] = useContext(UserContext);
   const [, setUserExtra] = useContext(UserContextExtra);
 
+
+  const [nameCard, setNameCard] = useState(true)
+  const [bdayCard, setBdayCard] = useState(false)
+  const [usernameCard, setUsernameCard] = useState(false)
+  const [phoneNumberCard, setPhoneNumberCard] = useState(false)
+  const [passwordCard, setPasswordCard] = useState(false)
+  const [reviewCard, setReviewCard] = useState(false)
+
+  const [showPassword, setShowPassword] = useState(false)
+
+  const getBday = () => {
+    if (fname === '' || lname === '') {
+      setError('Missing Required Fields')
+      return
+    }
+    let first = fname.slice(0, 1).toUpperCase() + fname.slice(1).toLowerCase()
+    let last = lname.slice(0, 1).toUpperCase() + lname.slice(1).toLowerCase()
+    setFName(first)
+    setLName(last)
+    setNameCard(false)
+    setError()
+    setTimeout(function(){
+      setBdayCard(true)
+    }, 500);
+  }
+
+  const getUname = () => {
+    if (month === '' || day === '' || year === '') {
+      setError('Missing Required Fields')
+      return
+    }
+    if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
+      setError('Invalid Input')
+      return
+    }
+    var d = new Date(year+"/"+month+"/"+day);
+    const currDate = new Date();
+    let currYear = currDate.getFullYear();
+    if (Object.prototype.toString.call(d) === "[object Date]") {
+      if (isNaN(d.getTime()) && parseInt(year) <= parseInt(currYear)) {
+        setError('Invalid Date')
+        return
+      }
+    }
+    setBdayCard(false)
+    setError()
+    setTimeout(function(){
+      setUsernameCard(true)
+    }, 500);
+  }
+
+  const getPhoneNumber = () => {
+    if (username === '') {
+      setError('Missing Required Fields')
+      return
+    }
+    let u = username
+    setUsername(u.toLowerCase())
+    setError()
+    setUsernameCard(false)
+    setTimeout(function(){
+      setPhoneNumberCard(true)
+    }, 500);
+  }
+
+  const getPassword = () => {
+    if (phoneNumber === '') {
+      setError('Missing Required Fields')
+      return
+    }
+    if (phoneNumber.length !== 10) {
+      setError('Invalid Phone Number')
+      return
+    }
+    setError()
+    setPhoneNumberCard(false)
+    setTimeout(function(){
+      setPasswordCard(true)
+    }, 500);
+  }
+
+  const goReview = () => {
+    if (password === '') {
+      setError('Missing Required Fields')
+      return
+    }
+    setError()
+    setPasswordCard(false)
+    setTimeout(function(){
+      setReviewCard(true)
+    }, 500);
+  }
+
+
   const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
     process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ADMIN_KEY,
@@ -33,6 +128,7 @@ function SignUp() {
     setLoading(true)
     try {
       await validateForm();
+
       const DID = await magic.auth.loginWithSMS({
         phoneNumber: '+1'+phoneNumber,
       });
@@ -52,9 +148,7 @@ function SignUp() {
         userData.append("month", month)
         userData.append("year", year)
         userData.append("wallet", userFromMagic.publicAddress)
-        //
-        // UPDATE THE SERVER URL
-        //
+        userData.append("phoneNumber", phoneNumber)
         const res = await fetch('http://127.0.0.1:5000/create_user', {
           method: "POST",
           body: userData
@@ -70,7 +164,7 @@ function SignUp() {
           objectID: username,
           fname: fname,
           lname: lname,
-          profilePic: "https://github.com/Oustro/OustroImages/blob/main/Untitled%20design.png?raw=true"
+          profilePic: "https://github.com/Oustro/OustroImages/blob/main/people.png?raw=true"
         })
         setUser(user)
         setUserExtra(userFromMagic);
@@ -87,175 +181,444 @@ function SignUp() {
     if (fname === '' || lname === '' || month === '' || day === '' || year === '' || phoneNumber === '') {
       throw new Error('Missing Required Fields');
     }
-    if (parseInt(year) > 2022) {
-      throw new Error("Invalid Year");
+
+    // fix fname fix lname fix uname
+    let first = fname.slice(0, 1).toUpperCase() + fname.slice(1).toLowerCase()
+    let last = lname.slice(0, 1).toUpperCase() + lname.slice(1).toLowerCase()
+    setFName(first)
+    setLName(last)
+
+    let u = username
+    setUsername(u.toLowerCase())
+
+    //make sure date is valid
+    if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
+      throw new Error('Invalid Date Input');
     }
-    if (parseInt(month) > 12 || parseInt(month) < 1) {
-      throw new Error("Invalid Month");
+    const currDate = new Date();
+    let currYear = currDate.getFullYear();
+    var d = new Date(year+"/"+month+"/"+day);
+    if (Object.prototype.toString.call(d) === "[object Date]") {
+      if (isNaN(d.getTime()) && parseInt(year) <= parseInt(currYear)) {
+        throw new Error('Invalid Date');
+      }
     }
-    // Need to refine day checks
-    if (parseInt(day) > 31 || parseInt(day) < 1) {
-      throw new Error("Invalid Day");
+
+    // make sure phone number not associated with another account and is valid
+    if (phoneNumber.length !== 10) {
+      throw new Error('Invalid Phone Number');
+    }
+    const phoneCheck = new FormData
+    phoneCheck.append("number", phoneNumber)
+    const resCheckPhoneNumber = await fetch('http://127.0.0.1:5000/check_phone_number', {
+      method: "POST",
+      body: phoneCheck
+    })
+    const phoneUsed = await resCheckPhoneNumber.json();
+    if (phoneUsed["status"]) {
+      throw new Error('Phone number already used');
     }
   }
 
   return (
-    <form className="bg-white mt-24 p-8">
+    <div className="bg-hero h-screen p-8">
       <div className='mx-auto flex justify-center'>
-        <div className="flex justify-end items-center p-0">
+        <div className="flex justify-end mt-32 items-center p-0">
           <span className="font-bold cursor-pointer text-4xl">
             Here We Go!
           </span>
         </div>
       </div>
-      <label
-        className="block text-sm font-bold mb-2 mt-8"
-        htmlFor="name"
+      <Transition
+      show={nameCard}
+      enter="transition-transform	duration-[400ms]"
+      enterFrom="-translate-x-96"
+      enterTo="-translate-x-0"
+      leave="transition-transform	duration-[400ms]"
+      leaveFrom="-translate-x-0"
+      leaveTo="translate-x-96"
       >
-        Your Name
-      </label>
-      <div className="mb-4 inline-flex space-x-2">
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="fname"
-          type="text"
-          placeholder="First Name"
-          value={fname}
-          disabled={loading}
-          onChange={(e) => setFName(e.target.value)}
-        />
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="lname"
-          type="text"
-          placeholder="Last Name"
-          value={lname}
-          disabled={loading}
-          onChange={(e) => setLName(e.target.value)}
-        />
-      </div>
-      <label
-        className="block text-sm font-bold mb-2"
-        htmlFor="month"
+        <div className='mt-8'>
+          <label
+          className="block text-sm font-bold mb-2"
+          htmlFor="fname"
+          >
+            What's your name?
+          </label>
+          <input
+            className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+            id="fname"
+            type="text"
+            placeholder="First Name"
+            value={fname}
+            disabled={loading}
+            onChange={(e) => setFName(e.target.value)}
+          />
+          <input
+            className="shadow appearance-none mt-4 border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+            id="lname"
+            type="text"
+            placeholder="Last Name"
+            value={lname}
+            disabled={loading}
+            onChange={(e) => setLName(e.target.value)}
+          />
+          <button className='btn-yellow mt-12 mb-0 w-full p-2 text-2xl items-center mx-auto' disabled={loading} onClick={getBday}>
+            Next
+          </button>
+          <div className='mx-auto flex justify-center'>
+            <div className="flex justify-end items-center p-0">
+              <Link href="/login">
+                <p className="pt-10 font-bold">I have an Account</p>
+              </Link>
+            </div>
+          </div> 
+          <div className='mx-auto flex justify-center'>
+            <div className="flex justify-end items-center p-0">
+              <p className="text-red-500 pt-10 font-bold">{error}</p>
+            </div>
+          </div> 
+        </div>
+      </Transition>
+      <Transition
+      show={bdayCard}
+      enter="transition-transform	duration-[400ms]"
+      enterFrom="-translate-x-96"
+      enterTo="-translate-x-0"
+      leave="transition-transform	duration-[400ms]"
+      leaveFrom="-translate-x-0"
+      leaveTo="translate-x-96"
       >
-        Your Birthday
-      </label>
-      <div className="mb-4 inline-flex space-x-2">
-        <input
-          className="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="month"
-          type="number"
-          pattern="[0-9]*" 
-          maxLength="2"
-          placeholder="MM"
-          value={month}
-          disabled={loading}
-          onChange={(e) => setMonth(e.target.value)}
-        />
-        <p className='text-2xl'>/</p>
-        <input
-          className="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="day"
-          type="number"
-          pattern="[0-9]*" 
-          maxLength="2"
-          placeholder="DD"
-          value={day}
-          disabled={loading}
-          onChange={(e) => setDay(e.target.value)}
-        />
-        <p className='text-2xl'>/</p>
-        <input
-          className="shadow appearance-none border rounded w-28 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="year"
-          type="number"
-          pattern="[0-9]*" 
-          maxLength="4"
-          placeholder="YYYY"
-          value={year}
-          disabled={loading}
-          onChange={(e) => setYear(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <label
+        <div className='mt-8'>
+          <label
+            className="block text-sm font-bold mb-2"
+            htmlFor="fname"
+          >
+            When's your birthday? 
+          </label>
+          <div className="mb-4 inline-flex space-x-2">
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="month"
+              type="number"
+              pattern="[0-9]*" 
+              maxLength="2"
+              placeholder="MM"
+              value={month}
+              disabled={loading}
+              onChange={(e) => setMonth(e.target.value)}
+            />
+            <p className='text-2xl'>/</p>
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="day"
+              type="number"
+              pattern="[0-9]*" 
+              maxLength="2"
+              placeholder="DD"
+              value={day}
+              disabled={loading}
+              onChange={(e) => setDay(e.target.value)}
+            />
+            <p className='text-2xl'>/</p>
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="year"
+              type="number"
+              pattern="[0-9]*" 
+              maxLength="4"
+              placeholder="YYYY"
+              value={year}
+              disabled={loading}
+              onChange={(e) => setYear(e.target.value)}
+            />
+          </div>
+          <button className='btn-yellow mt-12 mb-0 w-full p-2 text-2xl items-center mx-auto' disabled={loading} onClick={getUname}>
+            Next
+          </button>
+          <div className='mx-auto flex justify-center'>
+            <div className="flex justify-end items-center p-0">
+              <p className="text-red-500 pt-10 font-bold">{error}</p>
+            </div>
+          </div> 
+        </div>
+      </Transition>
+      <Transition
+      show={usernameCard}
+      enter="transition-transform	duration-[400ms]"
+      enterFrom="-translate-x-96"
+      enterTo="-translate-x-0"
+      leave="transition-transform	duration-[400ms]"
+      leaveFrom="-translate-x-0"
+      leaveTo="translate-x-96"
+      >
+        <div className='mt-8'>
+          <label
           className="block text-sm font-bold mb-2"
-          htmlFor="username"
-        >
-          Username
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="username"
-          type="text"
-          placeholder="Username"
-          value={username}
-          disabled={loading}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <label
+          htmlFor="fname"
+          >
+            Choose a username
+          </label>
+          <input
+            className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Username"
+            value={username}
+            disabled={loading}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <button className='btn-yellow mt-12 mb-0 w-full p-2 text-2xl items-center mx-auto' disabled={loading} onClick={getPhoneNumber}>
+            Next
+          </button>
+          <div className='mx-auto flex justify-center'>
+            <div className="flex justify-end items-center p-0">
+              <p className="text-red-500 pt-10 font-bold">{error}</p>
+            </div>
+          </div> 
+        </div>
+      </Transition>
+      <Transition
+      show={phoneNumberCard}
+      enter="transition-transform	duration-[400ms]"
+      enterFrom="-translate-x-96"
+      enterTo="-translate-x-0"
+      leave="transition-transform	duration-[400ms]"
+      leaveFrom="-translate-x-0"
+      leaveTo="translate-x-96"
+      >
+        <div className='mt-8'>
+          <label
           className="block text-sm font-bold mb-2"
-          htmlFor="number"
-        >
-          Phone Number
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="number"
-          type="number"
-          pattern="[0-9]*" 
-          maxLength="10"
-          placeholder="1234567890"
-          value={phoneNumber}
-          disabled={loading}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <label
+          htmlFor="fname"
+          >
+            What's your phone number?
+          </label>
+          <input
+            className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+            id="number"
+            type="number"
+            pattern="[0-9]*" 
+            maxLength="10"
+            placeholder="1234567890"
+            value={phoneNumber}
+            disabled={loading}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+          <button className='btn-yellow mt-12 mb-0 w-full p-2 text-2xl items-center mx-auto' disabled={loading} onClick={getPassword}>
+            Next
+          </button>
+          <div className='mx-auto flex justify-center'>
+            <div className="flex justify-end items-center p-0">
+              <p className="text-red-500 pt-10 font-bold">{error}</p>
+            </div>
+          </div> 
+        </div>
+      </Transition>
+      <Transition
+      show={passwordCard}
+      enter="transition-transform	duration-[400ms]"
+      enterFrom="-translate-x-96"
+      enterTo="-translate-x-0"
+      leave="transition-transform	duration-[400ms]"
+      leaveFrom="-translate-x-0"
+      leaveTo="translate-x-96"
+      >
+        <div className='mt-8'>
+          <label
           className="block text-sm font-bold mb-2"
-          htmlFor="password"
-        >
-          Password
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="password"
-          type="password"
-          placeholder="*******"
-          value={password}
-          disabled={loading}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div className='mx-auto flex justify-center'>
-        <div className="flex justify-end items-center pt-8">
+          htmlFor="fname"
+          >
+            Choose a password
+          </label>
+          <div className="relative">
+            <input
+            className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="*******"
+            value={password}
+            disabled={loading}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center pl-3">
+              <button className='btn-white' onClick={() => setShowPassword(o => !o)}>
+                {showPassword ? (
+                  <IoEyeOff />
+                ) : (
+                  <IoEyeOutline />
+                )}
+              </button>
+            </div>
+          </div>
+          <button className='btn-yellow mt-12 mb-0 w-full p-2 text-2xl items-center mx-auto' disabled={loading} onClick={goReview}>
+            Review
+          </button>
+          <div className='mx-auto flex justify-center'>
+            <div className="flex justify-end items-center p-0">
+              <p className="text-red-500 pt-10 font-bold">{error}</p>
+            </div>
+          </div> 
+        </div>
+      </Transition>
+      <Transition
+      show={reviewCard}
+      enter="transition-transform	duration-[400ms]"
+      enterFrom="-translate-x-96"
+      enterTo="-translate-x-0"
+      leave="transition-transform	duration-[400ms]"
+      leaveFrom="-translate-x-0"
+      leaveTo="translate-x-96"
+      >
+        <div className='mt-8'>
+          <label
+            className="block text-sm font-bold mb-2 mt-8"
+            htmlFor="name"
+          >
+            Your Name
+          </label>
+          <div className="mb-4 inline-flex space-x-2">
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="fname"
+              type="text"
+              placeholder="First Name"
+              value={fname}
+              disabled={loading}
+              onChange={(e) => setFName(e.target.value)}
+            />
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="lname"
+              type="text"
+              placeholder="Last Name"
+              value={lname}
+              disabled={loading}
+              onChange={(e) => setLName(e.target.value)}
+            />
+          </div>
+          <label
+            className="block text-sm font-bold mb-2"
+            htmlFor="month"
+          >
+            Your Birthday
+          </label>
+          <div className="mb-4 inline-flex space-x-2">
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="month"
+              type="number"
+              pattern="[0-9]*" 
+              maxLength="2"
+              placeholder="MM"
+              value={month}
+              disabled={loading}
+              onChange={(e) => setMonth(e.target.value)}
+            />
+            <p className='text-2xl'>/</p>
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="day"
+              type="number"
+              pattern="[0-9]*" 
+              maxLength="2"
+              placeholder="DD"
+              value={day}
+              disabled={loading}
+              onChange={(e) => setDay(e.target.value)}
+            />
+            <p className='text-2xl'>/</p>
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outlinee"
+              id="year"
+              type="number"
+              pattern="[0-9]*" 
+              maxLength="4"
+              placeholder="YYYY"
+              value={year}
+              disabled={loading}
+              onChange={(e) => setYear(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Username
+            </label>
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="username"
+              type="text"
+              placeholder="Username"
+              value={username}
+              disabled={loading}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-sm font-bold mb-2"
+              htmlFor="number"
+            >
+              Phone Number
+            </label>
+            <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="number"
+              type="number"
+              pattern="[0-9]*" 
+              maxLength="10"
+              placeholder="1234567890"
+              value={phoneNumber}
+              disabled={loading}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-sm font-bold mb-2"
+              htmlFor="password"
+            >
+              Password
+            </label>
+            <div className="relative">
+              <input
+              className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
+              id="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="*******"
+              value={password}
+              disabled={loading}
+              onChange={(e) => setPassword(e.target.value)}
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center pl-3">
+                <button className='btn-white' onClick={() => setShowPassword(o => !o)}>
+                  {showPassword ? (
+                    <IoEyeOff />
+                  ) : (
+                    <IoEyeOutline />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
           <button
             disabled={loading}
-            className="btn-yellow text-2xl"
+            className="btn-yellow mt-12 mb-0 w-full p-2 text-2xl items-center mx-auto"
             onClick={handleSignUp}
           >
             {loading ? 'Signing Up ...' : 'Sign Up'}
           </button>
+          <div className='mx-auto flex justify-center'>
+            <div className="flex justify-end items-center p-0">
+              <p className="text-red-500 pt-10 font-bold">{error}</p>
+            </div>
+          </div> 
         </div>
-      </div>
-      <div className='mx-auto flex justify-center'>
-        <div className="flex justify-end items-center p-0">
-          <p className="text-red-500 pt-10 font-bold">{error}</p>
-        </div>
-      </div>
-      <div className='mx-auto flex justify-center'>
-        <div className="flex justify-end items-center p-8">
-          <Link href="/">
-            <button disabled={loading} className="btn-white flex items-center text-2xl">
-              <IoChevronBack /> Go Back
-            </button>
-        </Link>
-        </div>
-      </div>
-    </form>
+      </Transition>
+    </div>
   )
 }
 

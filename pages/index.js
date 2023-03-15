@@ -116,20 +116,20 @@ function Index() {
       )}
     </>
   ) : (
-    <div className="w-4/5 md:w-1/2 mx-auto">
-      <div className="container mt-16 flex justify-center">
-        <h3 className="font-bold flex flex-wrap justify-center text-7xl">
+    <div className="h-screen fixed bg-hero bg-no-repeat overflow-hidden m-0 bg-cover bg-center bg-fixed">
+      <div className="flex mx-auto w-4/5 justify-center">
+        <h3 className="font-bold flex flex-wrap justify-center mt-16 text-7xl">
           The Birthday App
         </h3>
       </div>
       <div className="container flex -mt-16 justify-center">
         <img
-        src="https://raw.githubusercontent.com/Oustro/OustroImages/main/people.png"
+        src="https://raw.githubusercontent.com/Oustro/OustroImages/937173d3970c7fa3cba5b775b8beeb7e6d7ef239/TBAlogo.svg"
         className="pt-20 w-72"
         alt="..."
         />
       </div>
-      <nav className="container mx-auto flex justify-center">
+      <nav className="container mx-auto mt-12 flex justify-center">
         <ul className="flex justify-end items-center p-1">
           <li>
             <Link href="/login">
@@ -147,7 +147,7 @@ function Index() {
           </li>
         </ul>
       </nav>
-      <div className="flex mt-28 flex-wrap justify-center">
+      <div className="flex mt-20 flex-wrap justify-center">
         <img
         src="https://www.oustro.xyz/oustro_logo.svg"
         className="w-28"

@@ -5,6 +5,7 @@ import userbase from 'userbase-js'
 import Link from 'next/link'
 import { magic } from '../lib/magic';
 import { IoChevronBack } from "react-icons/io5";
+import { IoEyeOff, IoEyeOutline } from "react-icons/io5";
 
 function Login() {
   const [username, setUsername] = useState('')
@@ -14,6 +15,8 @@ function Login() {
   const [userbaseAuth, setUserbaseAuth] = useState(false)
   const [, setUser] = useContext(UserContext);
   const [, setUserExtra] = useContext(UserContextExtra);
+
+  const [showPassword, setShowPassword] = useState(false)
 
   async function handleLogIn(e) {
     e.preventDefault()
@@ -50,10 +53,10 @@ function Login() {
   }
 
   return (
-    <form className="bg-white mt-32 p-8">
+    <div className="bg-hero h-screen p-8">
       <div className='mx-auto flex justify-center'>
         <div className="flex justify-end items-center p-0">
-          <span className="font-bold cursor-pointer text-4xl">
+          <span className="font-bold mt-32 cursor-pointer text-4xl">
             Welcome Back
           </span>
         </div>
@@ -66,7 +69,7 @@ function Login() {
           Username
         </label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
           id="username"
           type="text"
           placeholder="Username"
@@ -82,15 +85,26 @@ function Login() {
         >
           Password
         </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        <div className="relative">
+          <input
+          className="shadow appearance-none border-lg bg-gray-200 rounded w-full p-2 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="*******"
           value={password}
           disabled={loading}
           onChange={(e) => setPassword(e.target.value)}
-        />
+          />
+          <div className="absolute inset-y-0 right-0 flex items-center pl-3">
+            <button className='btn-white' onClick={() => setShowPassword(o => !o)}>
+              {showPassword ? (
+                <IoEyeOff />
+              ) : (
+                <IoEyeOutline />
+              )}
+            </button>
+          </div>
+        </div>
       </div>
       <div className='mx-auto flex justify-center'>
         <div className="flex justify-end items-center pt-8">
@@ -117,7 +131,7 @@ function Login() {
         </Link>
         </div>
       </div>
-    </form>
+    </div>
   )
 }
 
