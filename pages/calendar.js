@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../lib/UserContext';
 import CalHeatmap from 'cal-heatmap';
 import Tooltip from 'cal-heatmap/plugins/Tooltip';
+import Loading from './loading';
 
 function Calendar() {
   const [user] = useContext(UserContext);
@@ -72,22 +73,17 @@ function Calendar() {
     getDateData()
   }, [])
 
-  return user ? (
+  return user && currYear ? (
     <div className="h-full bg-hero m-0 bg-cover bg-center bg-fixed">
-      <div>
-        &nbsp;
+      <div className='w-full sticky bg-hero pb-4 pt-2 top-0 z-20 left-0 top-0 flex justify-center items-center'>
+        <h1 className="font-bold text-4xl pt-16 text-center w-full">
+          {currYear} Calendar
+        </h1>
       </div>
-      <h1 className="font-bold text-4xl mt-10 text-center w-full">
-        {currYear} Calendar
-      </h1>
-      <div id="cal-heatmap" className='flex justify-center'></div>
-      <div className='h-40'>
-        &nbsp;
-      </div>
+      <div id="cal-heatmap" className='flex pb-40 h-full justify-center'></div>
     </div>
   ) : (
-    <>
-    </>
+    <Loading />
   )
 }
 
