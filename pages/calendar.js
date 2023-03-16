@@ -74,13 +74,13 @@ function Calendar() {
   }, [])
 
   return user && currYear ? (
-    <div className="h-full bg-hero m-0 bg-cover bg-center bg-fixed">
-      <div className='w-full sticky bg-hero pb-4 pt-2 top-0 z-20 left-0 top-0 flex justify-center items-center'>
-        <h1 className="font-bold text-4xl pt-16 text-center w-full">
+    <div>
+      <div className='w-full sticky bg-white opacity-90 pt-16 top-0 z-20 left-0 top-0 flex justify-center items-center'>
+        <h1 className="font-bold text-4xl shadow p-2 text-center w-full">
           {currYear} Calendar
         </h1>
       </div>
-      <div id="cal-heatmap" className='flex pb-40 h-full justify-center'></div>
+      <div id="cal-heatmap" className='flex bg-calbg bg-fixed pb-40 h-full justify-center'></div>
     </div>
   ) : (
     <Loading />

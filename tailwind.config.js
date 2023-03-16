@@ -14,7 +14,7 @@ module.exports = {
       },
       backgroundImage: {
         'hero': "url('https://raw.githubusercontent.com/Oustro/OustroImages/9155909854381e9cb82e00608c6969b79d0111f9/bgTBA.svg')",
-        'herobg': "url('https://github.com/Oustro/OustroImages/blob/main/nehero-big.png?raw=true')"
+        'calbg': "url('https://raw.githubusercontent.com/Oustro/OustroImages/39df7fa31573e256970532fc1b42a3d5164ee4db/calbg.svg')"
       },
     },
   },
