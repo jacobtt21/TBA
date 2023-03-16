@@ -49,23 +49,54 @@ function SignUp() {
   }
 
   const getUname = () => {
+    // checking whether or not the fields are there
     if (month === '' || day === '' || year === '') {
       setError('Missing Required Fields')
       return
     }
-    if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
-      setError('Invalid Input')
-      return
-    }
-    var d = new Date(year+"/"+month+"/"+day);
+
     const currDate = new Date();
     let currYear = currDate.getFullYear();
-    if (Object.prototype.toString.call(d) === "[object Date]") {
-      if (isNaN(d.getTime()) && parseInt(year) <= parseInt(currYear)) {
-        setError('Invalid Date')
+
+    // checking lengths of the inputs
+    if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
+      setError('Please input a month like 12, day like 06, and month like 2001')
+      return
+    }
+
+    let ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // making sure no negative numbers or 0
+    if (parseInt(day) <= 0 || parseInt(month) <= 0 || parseInt(year) <= 0) {
+      setError('Days, Months, and Years cannot be less than 0')
+      return
+    }
+    // making sure not past 12 months
+    if (parseInt(month) > 12) {
+      setError('Months cannot be greater that 12')
+      return
+    }
+
+    // if the leap year and feb, check whether it is less than 29
+    if (parseInt(month) === 2 && parseInt(year) % 4 === 0) {
+      if (29 < parseInt(day)) {
+        setError("Even though it's a leap year, that day doesn't exist")
+        return
+      }
+    } 
+    // if not a leap year and not feb, making sure day is within month
+    else {
+      if (ListofDays[parseInt(month) - 1] < parseInt(day)) {
+        setError("That day doesn't exist")
         return
       }
     }
+    // making sure that year is less than current year
+    if (parseInt(year) >= parseInt(currYear)) {
+      setError('You seem to be too young to use The Birthday App')
+      return
+    }
+
     setBdayCard(false)
     setError()
     setTimeout(function(){
@@ -192,16 +223,48 @@ function SignUp() {
     setUsername(u.toLowerCase())
 
     //make sure date is valid
-    if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
-      throw new Error('Invalid Date Input');
-    }
     const currDate = new Date();
     let currYear = currDate.getFullYear();
-    var d = new Date(year+"/"+month+"/"+day);
-    if (Object.prototype.toString.call(d) === "[object Date]") {
-      if (isNaN(d.getTime()) && parseInt(year) <= parseInt(currYear)) {
-        throw new Error('Invalid Date');
+
+    // checking lengths of the inputs
+    if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
+      setError('Please input a month like 12, day like 06, and month like 2001')
+      return
+    }
+
+    let ListofDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // making sure no negative numbers or 0
+    if (parseInt(day) <= 0 || parseInt(month) <= 0 || parseInt(year) <= 0) {
+      setError('Days, Months, and Years cannot be less than 0')
+      return
+    }
+    // making sure not past 12 months
+    if (parseInt(month) > 12) {
+      setError('Months cannot be greater that 12')
+      return
+    }
+
+    // if the leap year and feb, check whether it is less than 29
+    if (parseInt(month) === 2 && parseInt(year) % 4 === 0) {
+      if (29 < parseInt(day)) {
+        setError("Even though it's a leap year, that day doesn't exist")
+        return
       }
+    } 
+
+    // if not a leap year and not feb, making sure day is within month
+    else {
+      if (ListofDays[parseInt(month) - 1] < parseInt(day)) {
+        setError("That day doesn't exist")
+        return
+      }
+    }
+
+    // making sure that year is less than current year
+    if (parseInt(year) >= parseInt(currYear)) {
+      setError('You seem to be too young to use The Birthday App')
+      return
     }
 
     // make sure phone number not associated with another account and is valid
