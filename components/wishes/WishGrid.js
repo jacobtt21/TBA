@@ -22,7 +22,7 @@ export default function WishGrid({ wishes, loading }) {
           );
         })
       ) : (
-        <h3 className="text-center mt-16 text-2xl">
+        <h3 className="text-center mt-16 text-1xl">
           No wishes yet, why not be the first?
         </h3> 
       )}

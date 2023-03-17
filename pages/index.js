@@ -8,7 +8,6 @@ import Loading from './loading';
 function Index() {
   const [user] = useContext(UserContext);
   const [feed, setFeed] = useState([]);
-  const [animateHeader, setAnimateHeader] = useState(false)
   const [loading, setLoading] = useState(true)
   const [confetti, setConfetti] = useState(false);
   const [errorOccured, setErrorOccured] = useState(false)
@@ -21,18 +20,6 @@ function Index() {
     getUserInfo()
     getFeed();
   }, [user]);
-
-  useEffect(() => {
-    const listener = () => {
-     if (window.scrollY > 140) {
-       setAnimateHeader(true);
-     } else setAnimateHeader(false);
-    };
-    window.addEventListener("scroll", listener);
-    return () => {
-      window.removeEventListener("scroll", listener);
-    };
-  }, []);
 
   const getUserInfo = async () => {
     try {
@@ -85,17 +72,20 @@ function Index() {
   return user ? (
     <>
       {reqUser && feed ? (
-        <div className="w-full md:w-1/2 mx-auto">
+        <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
           <Confetti active={ confetti } config={ config }/>
-          <div className="w-full h-12 fixed left-0 top-0 flex bg-white">
-            &nbsp;
+          <div className='w-full fixed bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
+            <h1 className="font-bold text-4xl pb-2 text-center w-full">
+              The Birthday App
+            </h1>
           </div>
-          <div className={`w-full h-24 fixed left-0 top-0 p-4 flex bg-white justify-center items-center trasition-all ease-in-out duration-500 ${
-          animateHeader && "opacity-0"}`}
-          >
-            <h3 className="font-bold mt-12 text-3xl">The Birthday App</h3>
+          <div className="w-full flex mt-28 justify-center items-center">
+            <Grid feed={feed} loading={loading} />
           </div>
-          <div className="w-full mt-28 mb-28 flex justify-center items-center">
+          <div className="w-full flex justify-center items-center">
+            <Grid feed={feed} loading={loading} />
+          </div>
+          <div className="w-full mb-28 flex justify-center items-center">
             <Grid feed={feed} loading={loading} />
           </div>
         </div>
