@@ -37,6 +37,14 @@ function Calendar() {
         padding: [0, 0, -35, 0],
         label: { position: 'top', height: 50 },
       },
+      scale: {
+        color: {
+          range: ['#FACC15', '#6851FF'],
+          interpolate: 'hsl',
+          type: 'linear',
+          domain: [0, dates.length],
+        },
+      },
       subDomain: { type: 'xDay', radius: 4, width: 50, height: 50, label: 'D', color: "black" },
       data: { 
         source: dates,
@@ -75,10 +83,13 @@ function Calendar() {
 
   return user && currYear ? (
     <div>
-      <div className='w-full sticky bg-white opacity-90 pt-16 top-0 z-20 left-0 top-0 flex justify-center items-center'>
-        <h1 className="font-bold text-4xl shadow p-2 text-center w-full">
+      <div className='w-full sticky bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
+        <h1 className="font-bold text-4xl text-center w-full">
           {currYear} Calendar
         </h1>
+        <h2 className="font-bold text-1xl p-2 text-center w-full">
+          All your friend's birthdays in 2023
+        </h2>
       </div>
       <div id="cal-heatmap" className='flex bg-calbg bg-fixed pb-40 h-full justify-center'></div>
     </div>
