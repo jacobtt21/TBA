@@ -39,10 +39,10 @@ function Calendar() {
       },
       scale: {
         color: {
-          range: ['#FACC15', '#6851FF'],
-          interpolate: 'hsl',
+          range: ['#FFFFE0', '#FACC15'],
+          interpolate: 'rgb',
           type: 'linear',
-          domain: [0, dates.length],
+          domain: [1, dates.length],
         },
       },
       subDomain: { type: 'xDay', radius: 4, width: 50, height: 50, label: 'D', color: "black" },
