@@ -82,7 +82,7 @@ export default function Card({ FriendID }) {
               </div>
               ) : (
                 <div className="px-4 mt-4 flex items-center">
-                View all wishes <IoChevronForward />
+                View all {numWishes} wishes <IoChevronForward />
               </div>
               )}
             </>
