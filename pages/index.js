@@ -79,13 +79,7 @@ function Index() {
               The Birthday App
             </h1>
           </div>
-          <div className="w-full flex mt-28 justify-center items-center">
-            <Grid feed={feed} loading={loading} />
-          </div>
-          <div className="w-full flex justify-center items-center">
-            <Grid feed={feed} loading={loading} />
-          </div>
-          <div className="w-full mb-28 flex justify-center items-center">
+          <div className="w-full flex mt-28 mb-28 justify-center items-center">
             <Grid feed={feed} loading={loading} />
           </div>
         </div>
