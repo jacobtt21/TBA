@@ -37,7 +37,7 @@ export default function Card({ FriendID }) {
 
   return reqUser && postID && numWishes >= 0 ? (
     <div>
-      <Link href={{pathname: '/post/[id]', query: { id: postID }}}>
+      <Link href={numWishes === 0 ? {pathname: '/post/[id]/create', query: { id: postID }} : {pathname: '/post/[id]', query: { id: postID }}}>
         <div className="rounded-lg mt-4 justify-center bg-gray-50 text-left p-4 shadow">
           {numWishes === 0 ? (
             <>
@@ -52,7 +52,7 @@ export default function Card({ FriendID }) {
               </div>
               <h1 className='text-2xl px-4 font-bold'>Happy Birthday {reqUser.fname}!</h1>
               <div className="px-4 mt-4 flex items-center">
-                Wish Derek <IoChevronForward />
+                Make a wish <IoChevronForward />
               </div>
             </>
           ) : (
