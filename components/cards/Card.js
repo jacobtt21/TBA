@@ -42,7 +42,7 @@ export default function Card({ FriendID }) {
           {numWishes === 0 ? (
             <>
               <div className='container flex text-left px-4 py-4'>
-                <div className='w-12 h-12 align-middle mr-4'>
+                <div className='w-12 h-12 align-middle mr-2'>
                   <img className='w-12 h-12 rounded-full border' src={reqUser.profilePic} />
                 </div>
                 <div>
@@ -57,17 +57,17 @@ export default function Card({ FriendID }) {
             </>
           ) : (
             <>
-              <div className='bg-yellow-400 absolute w-20 h-12 rotate-[50deg] -mt-2 right-2 rounded shadow'>
+              <div className='bg-red-400 absolute w-20 h-12 rotate-[50deg] -mt-2 right-2 rounded shadow'>
                 &nbsp;
               </div>
               <div className='bg-indigo-400 absolute w-20 h-12 -mt-2 rotate-[25deg] right-2 rounded shadow'>
                 &nbsp;
               </div>
               <div className='bg-blue-400 absolute w-20 h-12 -mt-2 rotate-[38deg] right-2 rounded shadow'>
-                <img className='w-full h-full rounded' src={topImage} />
+                <img className='w-full h-full rounded' src={topImage} onError={() => setTopImage('https://github.com/Oustro/OustroImages/blob/main/error.png?raw=true')}/>
               </div>
               <div className='container flex text-left py-4 px-4'>
-                <div className='w-12 h-12 align-middle mr-4'>
+                <div className='w-12 h-12 align-middle mr-2'>
                   <img className='w-12 h-12 rounded-full border' src={reqUser.profilePic} />
                 </div>
                 <div>
@@ -78,12 +78,12 @@ export default function Card({ FriendID }) {
               <h1 className='text-2xl px-4 font-bold'>Happy Birthday {reqUser.fname}!</h1>
               {numWishes === 1 ? (
                 <div className="px-4 mt-4 flex items-center">
-                View wish <IoChevronForward />
-              </div>
+                  View wish <IoChevronForward />
+                </div>
               ) : (
                 <div className="px-4 mt-4 flex items-center">
-                View all {numWishes} wishes <IoChevronForward />
-              </div>
+                  View all {numWishes} wishes <IoChevronForward />
+                </div>
               )}
             </>
           )}
