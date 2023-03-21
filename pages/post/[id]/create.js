@@ -23,6 +23,7 @@ function GiftPage() {
   const [msg, setMsg] = useState('')
   const [giftcard, setGiftcard] = useState([])
   const [amount, setAmount] = useState(10)
+  const [privateMsg, setPrivateMsg] = useState('True')
 
   const [loading, setLoading] = useState(false)
   const [genImageLoading, setGenImageLoading] = useState(false)
@@ -149,6 +150,8 @@ function GiftPage() {
     wish.append("cid", '{"$oid":"'+user.profile.userID+'"}')
     wish.append("url", bdayCard)
     wish.append("message", msg)
+    wish.append('privateMsg', privateMsg)
+    wish.append("pay", 'False')
     await fetch('http://127.0.0.1:5000/create_wish', {
       method: "POST",
       body: wish
@@ -180,6 +183,8 @@ function GiftPage() {
     wish.append("cid", '{"$oid":"'+user.profile.userID+'"}')
     wish.append("url", bdayCard)
     wish.append("message", msg)
+    wish.append('privateMsg', privateMsg)
+    wish.append("pay", 'True')
     const wishData =  await fetch('http://127.0.0.1:5000/create_wish', {
       method: "POST",
       body: wish
@@ -257,7 +262,7 @@ function GiftPage() {
   }
 
   const doNothing = () => {
-    console.log("hi")
+    console.log("hi, this didn't do anything but we're glad you pressed it!")
   }
 
   const selectBdayCard = (e) => {
@@ -378,21 +383,34 @@ function GiftPage() {
         >
           <div className="w-full p-4 justify-center items-center">
             <h1 className='flex justify-center mb-4 text-2xl'>2. Write a message</h1>
-            <label htmlFor="message" className="block text-sm font-bold mb-2">Your message (160 Characters)</label>
+            <label htmlFor="message" className="block text-sm font-bold mb-2">Your message (260 Characters)</label>
             <textarea 
             rows="4" 
             className="block p-2.5 w-full shadow appearance-none border-lg bg-gray-200 rounded leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             onChange={(e) => setMsg(e.target.value)}
             value={msg}
-            maxLength="160"
+            maxLength="260"
             disabled={loading}
             >
             </textarea>
+            <div className='flex'>
+              {privateMsg === 'True' ? (
+                <button className='btn-yellow mt-4 w-full items-center mx-auto' disabled={loading} onClick={() => setPrivateMsg(o => 'False')}>
+                  <h1>Make Message Public</h1>
+                  <p className='font-normal text-sm'>Currently only recipient can see</p>
+                </button>
+              ) : (
+                <button className='btn-yellow mt-4 w-full items-center mx-auto' disabled={loading} onClick={() => setPrivateMsg(o => 'True')}>
+                  <h1>Make Message Private</h1>
+                  <p className='font-normal text-sm'>Currently friends can see</p>
+                </button>
+              )}
+            </div>
             <button className='btn-white mt-4 flex text-2xl items-center mx-auto' disabled={loading} onClick={addGiftcard}>
               <IoAdd /> Add a gift?
             </button>
-            <button className='btn-yellow mt-24 w-full p-4 text-2xl relative items-center mx-auto' disabled={loading} onClick={submitNoGift}>
+            <button className='btn-yellow mt-16 w-full p-4 text-2xl relative items-center mx-auto' disabled={loading} onClick={submitNoGift}>
               Make your wish
             </button>
           </div>

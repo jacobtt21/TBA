@@ -4,9 +4,7 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 
 export default function WishCard({ PostID }) {
   const [reqUser, setReqUser] = useState()
-  const [src, setSrc] = React.useState(PostID.card);
-  console.log(PostID)
-
+  const [src, setSrc] = useState(PostID.card);
 
   useEffect(() => {
     getWishInfo()
@@ -35,11 +33,11 @@ export default function WishCard({ PostID }) {
             <h2 className='text-sm'>@{reqUser.username}</h2>
           </div>
         </div>
-        <p className="text-gray-700 mt-4 text-base">
-          {PostID.message}  
-        </p>
+        {!PostID.privateMsg && (
+          <p className="text-gray-700 mt-4 text-base">{PostID.message}</p>    
+        )}
       </div>
-      <img className="w-full shadow" src={src} onError={() => setSrc('https://github.com/Oustro/OustroImages/blob/main/error.png?raw=true')}/>
+      <img className="w-full shadow h-48" src={src} onError={() => setSrc('https://github.com/Oustro/OustroImages/blob/main/error.png?raw=true')}/>
       <button className="px-6 py-4 flex items-center">
         <IoAlertCircleOutline />&nbsp;Learn more about this card
       </button>

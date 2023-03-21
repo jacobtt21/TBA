@@ -88,7 +88,7 @@ function Calendar() {
           {currYear} Calendar
         </h1>
         <h2 className="font-bold text-1xl p-2 text-center w-full">
-          All your friend's birthdays in 2023
+          Birthday Heatmap
         </h2>
       </div>
       <div id="cal-heatmap" className='flex bg-calbg bg-fixed pb-40 pt-36 h-full justify-center'></div>

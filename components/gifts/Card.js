@@ -4,8 +4,6 @@ import { Browser } from '@capacitor/browser';
 export default function Card({ gift }) {
   const [reqUser, setReqUser] = useState()
 
-  console.log(gift)
-
   useEffect(() => {
     getUserInfo()
   }, [])

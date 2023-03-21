@@ -3,7 +3,6 @@ import Card from './Card';
 import Skeleton from './Skeleton';
 
 export default function Grid({ gifts, loading }) {
-  console.log(gifts)
   return (
     <div className="w-5/5 mt-4 md:w-1/2 mx-auto">
       {loading ? (
