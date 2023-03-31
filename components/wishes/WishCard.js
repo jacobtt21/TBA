@@ -38,9 +38,6 @@ export default function WishCard({ PostID }) {
         )}
       </div>
       <img className="w-full shadow h-48" src={src} onError={() => setSrc('https://github.com/Oustro/OustroImages/blob/main/error.png?raw=true')}/>
-      <button className="px-6 py-4 flex items-center">
-        <IoAlertCircleOutline />&nbsp;Learn more about this card
-      </button>
     </div>
   ) : (
     <>

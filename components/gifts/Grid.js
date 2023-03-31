@@ -4,7 +4,7 @@ import Skeleton from './Skeleton';
 
 export default function Grid({ gifts, loading }) {
   return (
-    <div className="w-5/5 mt-4 md:w-1/2 mx-auto">
+    <div className="w-5/5 mt-4 mx-auto">
       {loading ? (
         Array(20).fill(0).map((_, i) => {
           return (

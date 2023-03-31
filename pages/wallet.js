@@ -9,7 +9,6 @@ function Wallet() {
   const [reqGift, setReqGift] = useState()
   const [loading, setLoading] = useState(true)
 
-
   useEffect(() => {
     getUserInfo()
   }, [])
@@ -28,14 +27,13 @@ function Wallet() {
       setReqUser(JSON.parse(data["user_info"]))
 
       const currentGiftData = new FormData
-      currentGiftData.append("cid", '{"$oid":"'+JSON.parse(data["user_info"])["_id"]["$oid"]+'"}')
-      const resGift = await fetch('http://127.0.0.1:5000/get_gifts', {
+      currentGiftData.append("uid", '{"$oid":"'+JSON.parse(data["user_info"])["_id"]["$oid"]+'"}')
+      const resGift = await fetch('http://127.0.0.1:5000/get_gifts_and_wishes', {
         method: "POST",
         body: currentGiftData
       })
       const dataGift = await resGift.json();
-      setReqGift(JSON.parse(dataGift["giftList"]))
-      console.log(JSON.parse(dataGift["giftList"]))
+      setReqGift(JSON.parse(dataGift["giftsAndWishes"]))
       setLoading(false)
     } catch (e) {
       setReqUser(false)
@@ -43,16 +41,42 @@ function Wallet() {
     }
   }
   
-  return user && reqUser ? (
-    <div className="w-11/12 md:w-1/2 mx-auto">
-      <div className="container mx-auto mt-16 justify-center">
-        <h1 className="font-bold text-4xl mt-4 text-center w-full">
-          Wallet
-        </h1>
-        <h2 className="text-7xl text-center mt-8">{reqUser.points}</h2>
-        <h3 className='text-2xl text-center'>Birthday Points</h3>
+  return user && reqUser && reqGift ? (
+    <div className='bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-more'>
+      <div className="container mx-auto w-11/12 mt-16 justify-center mb-32">
+          <div className='w-full fixed bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
+            <h1 className="font-bold text-4xl pb-2 text-center w-full">Wallet</h1>
+            <h2 className="text-7xl text-center mt-8">{reqUser.points}</h2>
+            <h3 className='text-2xl pb-2 text-center'>Birthday Points</h3>
+          </div>
+          <div className='mt-72'>
+          {reqGift.length == 0 ? (
+            <>
+              No Gifts
+            </>
+          ) : reqGift.length === 1 ? (
+            <>
+              <div className="flex relative overflow-x-scroll no-scrollbar pb-4">
+                <button className='btn-yellow'>
+                  {reqGift[0]["year"]}
+                </button>
+              </div>
+              <Grid gifts={reqGift[0]["items"]} loading={loading} />
+            </>
+          ) : (
+            reqGift.slice(0).reverse().map((gift, i) => {
+              return (
+                <div className="pl-2">
+                  <button className='btn-yellow'>
+                    {gift["year"]}
+                  </button>
+                </div>
+              );
+            }))
+          }
+
+          </div>
       </div>
-      <Grid gifts={reqGift} loading={loading} />
     </div>
   ) : (
     <>
