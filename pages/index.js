@@ -26,7 +26,7 @@ function Index() {
       setLoading(true)
       const currentUserData = new FormData
       currentUserData.append("uname", user.username)
-      const res = await fetch('http://127.0.0.1:5000/get_username_info', {
+      const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_username_info', {
         method: "POST",
         body: currentUserData
       })
@@ -42,7 +42,7 @@ function Index() {
     try {
       const feedData = new FormData
       feedData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
-      const resFeed = await fetch('http://127.0.0.1:5000/get_feed', {
+      const resFeed = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_feed', {
         method: "POST",
         body: feedData
       })

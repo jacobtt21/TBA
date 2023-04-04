@@ -12,7 +12,7 @@ export default function Card({ gift }) {
   const getWishInfo = async () => {
     const currentUserData = new FormData
     currentUserData.append("cid", '{"$oid":"'+gift[0]["sender"]["$oid"]+'"}')
-    const resUser = await fetch('http://127.0.0.1:5000/get_id_info', {
+    const resUser = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_id_info', {
       method: "POST",
       body: currentUserData
     })

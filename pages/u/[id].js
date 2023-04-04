@@ -22,7 +22,7 @@ function UserPage() {
     setLoading(true)
     const currentUserData = new FormData
     currentUserData.append("uname", router.query.id)
-    const resUser = await fetch('http://127.0.0.1:5000/get_username_info', {
+    const resUser = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_username_info', {
       method: "POST",
       body: currentUserData
     })
@@ -32,7 +32,7 @@ function UserPage() {
     const friendStatusData = new FormData
     friendStatusData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
     friendStatusData.append("oid", '{"$oid":"'+JSON.parse(data["user_info"])["_id"]["$oid"]+'"}')
-    const resFriend = await fetch('http://127.0.0.1:5000/is_friend', {
+    const resFriend = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/is_friend', {
       method: "POST",
       body: friendStatusData
     })
@@ -41,7 +41,7 @@ function UserPage() {
 
     const feedData = new FormData
     feedData.append("uid", '{"$oid":"'+JSON.parse(data["user_info"])["_id"]["$oid"]+'"}')
-    const resFeed = await fetch('http://127.0.0.1:5000/get_user_posts', {
+    const resFeed = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_user_posts', {
       method: "POST",
       body: feedData
     })
@@ -54,7 +54,7 @@ function UserPage() {
     const addFriendData = new FormData
     addFriendData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
     addFriendData.append("oid", '{"$oid":"'+reqUser["_id"]["$oid"]+'"}')
-    const resAddFriend = await fetch('http://127.0.0.1:5000/req_friend', {
+    const resAddFriend = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/req_friend', {
       method: "POST",
       body: addFriendData
     })
@@ -67,7 +67,7 @@ function UserPage() {
     decideFriendData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
     decideFriendData.append("oid", '{"$oid":"'+reqUser["_id"]["$oid"]+'"}')
     decideFriendData.append("decision", 'True')
-    const resdecideFriend = await fetch('http://127.0.0.1:5000/decide_friend', {
+    const resdecideFriend = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/decide_friend', {
       method: "POST",
       body: decideFriendData
     })
@@ -80,7 +80,7 @@ function UserPage() {
     decideFriendData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
     decideFriendData.append("oid", '{"$oid":"'+reqUser["_id"]["$oid"]+'"}')
     decideFriendData.append("decision", 'False')
-    const resdecideFriend = await fetch('http://127.0.0.1:5000/decide_friend', {
+    const resdecideFriend = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/decide_friend', {
       method: "POST",
       body: decideFriendData
     })
@@ -92,7 +92,7 @@ function UserPage() {
     const removeFriendData = new FormData
     removeFriendData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
     removeFriendData.append("oid", '{"$oid":"'+reqUser["_id"]["$oid"]+'"}')
-    const resRemoveFriend = await fetch('http://127.0.0.1:5000/remove_friend', {
+    const resRemoveFriend = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/remove_friend', {
       method: "POST",
       body: removeFriendData
     })

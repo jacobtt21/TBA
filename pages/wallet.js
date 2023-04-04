@@ -19,7 +19,7 @@ function Wallet() {
 
       const currentUserData = new FormData
       currentUserData.append("uname", user.username)
-      const res = await fetch('http://127.0.0.1:5000/get_username_info', {
+      const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_username_info', {
         method: "POST",
         body: currentUserData
       })
@@ -28,7 +28,7 @@ function Wallet() {
 
       const currentGiftData = new FormData
       currentGiftData.append("uid", '{"$oid":"'+JSON.parse(data["user_info"])["_id"]["$oid"]+'"}')
-      const resGift = await fetch('http://127.0.0.1:5000/get_gifts_and_wishes', {
+      const resGift = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_gifts_and_wishes', {
         method: "POST",
         body: currentGiftData
       })

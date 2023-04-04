@@ -33,7 +33,7 @@ function Profile() {
     try {
       const currentUserData = new FormData
       currentUserData.append("uname", user.username)
-      const res = await fetch('http://127.0.0.1:5000/get_username_info', {
+      const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_username_info', {
         method: "POST",
         body: currentUserData
       })
@@ -43,7 +43,7 @@ function Profile() {
 
       const notificationData = new FormData
       notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
-      const resNotify = await fetch('http://127.0.0.1:5000/notify_friend', {
+      const resNotify = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/notify_friend', {
         method: "POST",
         body: notificationData
       })
@@ -65,7 +65,7 @@ function Profile() {
       const picData = new FormData
       picData.append('uname', user.username)
       picData.append("pic", image["dataUrl"])
-      const res = await fetch('http://127.0.0.1:5000/profile_pic', {
+      const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/profile_pic', {
         method: "POST",
         body: picData
       })

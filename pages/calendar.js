@@ -11,7 +11,7 @@ function Calendar() {
   const getDateData = async () => {
     const datesForm = new FormData
     datesForm.append("uid", '{"$oid":"'+user.profile.userID+'"}')
-    const datesRes = await fetch('http://127.0.0.1:5000/get_friends_list', {
+    const datesRes = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_friends_list', {
       method: "POST",
       body: datesForm
     })

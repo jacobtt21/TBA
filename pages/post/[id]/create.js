@@ -152,7 +152,7 @@ function GiftPage() {
     wish.append("message", msg)
     wish.append('privateMsg', privateMsg)
     wish.append("pay", 'False')
-    await fetch('http://127.0.0.1:5000/create_wish', {
+    await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/create_wish', {
       method: "POST",
       body: wish
     })
@@ -172,7 +172,7 @@ function GiftPage() {
     info.append("source", token.token)
     info.append("amount", parseInt(amount))
     info.append("cardID", giftcard[0])
-    const linkData = await fetch('http://127.0.0.1:5000/pay', {
+    const linkData = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/pay', {
       method: "POST",
       body: info
     })
@@ -185,7 +185,7 @@ function GiftPage() {
     wish.append("message", msg)
     wish.append('privateMsg', privateMsg)
     wish.append("pay", 'True')
-    const wishData =  await fetch('http://127.0.0.1:5000/create_wish', {
+    const wishData =  await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/create_wish', {
       method: "POST",
       body: wish
     })
@@ -193,7 +193,7 @@ function GiftPage() {
 
     const postData = new FormData
     postData.append("pid", '{"$oid":"'+router.query.id+'"}')
-    const postDataSent = await fetch('http://127.0.0.1:5000/get_post_recipient', {
+    const postDataSent = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_post_recipient', {
       method: "POST",
       body: postData
     })
@@ -206,7 +206,7 @@ function GiftPage() {
     gift.append("url", link["Link"])
     gift.append("amount", amount)
     gift.append("image", giftcard[1])
-    await fetch('http://127.0.0.1:5000/create_gift', {
+    await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/create_gift', {
       method: "POST",
       body: gift
     })
@@ -299,7 +299,7 @@ function GiftPage() {
 
   const genImage = async () => {
     setGenImageLoading(true)
-    const newCard = await fetch('http://127.0.0.1:5000/generate_card', {
+    const newCard = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/generate_card', {
       method: "GET"
     })
     const newCardRes = await newCard.json()

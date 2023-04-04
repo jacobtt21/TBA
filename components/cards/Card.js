@@ -15,7 +15,7 @@ export default function Card({ FriendID }) {
   const getUserInfo = async () => {
     const currentUserData = new FormData
     currentUserData.append("cid", '{"$oid":"'+JSON.parse(FriendID)["recipient"]["$oid"]+'"}')
-    const resUser = await fetch('http://127.0.0.1:5000/get_id_info', {
+    const resUser = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_id_info', {
       method: "POST",
       body: currentUserData
     })
@@ -24,7 +24,7 @@ export default function Card({ FriendID }) {
     setPostID(JSON.parse(FriendID)["_id"]["$oid"])
     const currentPostData = new FormData
     currentPostData.append("pid", '{"$oid":"'+JSON.parse(FriendID)["_id"]["$oid"]+'"}')
-    const resPost = await fetch('http://127.0.0.1:5000/get_wishes_by_post', {
+    const resPost = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_wishes_by_post', {
       method: "POST",
       body: currentPostData
     })

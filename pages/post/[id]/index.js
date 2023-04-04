@@ -20,7 +20,7 @@ function WishPage() {
     setLoading(true)
     const postData = new FormData
     postData.append("pid", '{"$oid":"'+router.query.id+'"}')
-    const resPost = await fetch('http://127.0.0.1:5000/get_wishes_by_post', {
+    const resPost = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_wishes_by_post', {
       method: "POST",
       body: postData
     })

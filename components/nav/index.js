@@ -24,7 +24,7 @@ export default function Nav() {
     try {
       const notificationData = new FormData
       notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
-      const res = await fetch('http://127.0.0.1:5000/notify_friend', {
+      const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/notify_friend', {
         method: "POST",
         body: notificationData
       })

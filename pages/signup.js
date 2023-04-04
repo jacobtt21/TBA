@@ -180,7 +180,7 @@ function SignUp() {
         userData.append("year", year)
         userData.append("wallet", userFromMagic.publicAddress)
         userData.append("phoneNumber", phoneNumber)
-        const res = await fetch('http://127.0.0.1:5000/create_user', {
+        const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/create_user', {
           method: "POST",
           body: userData
         })
@@ -273,7 +273,7 @@ function SignUp() {
     }
     const phoneCheck = new FormData
     phoneCheck.append("number", phoneNumber)
-    const resCheckPhoneNumber = await fetch('http://127.0.0.1:5000/check_phone_number', {
+    const resCheckPhoneNumber = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/check_phone_number', {
       method: "POST",
       body: phoneCheck
     })
