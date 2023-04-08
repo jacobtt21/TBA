@@ -317,7 +317,7 @@ function GiftPage() {
       leaveFrom="-translate-x-96"
       leaveTo="-translate-x-0"
     >
-      <div className="w-full h-full md:w-1/2 mx-auto">
+      <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
         <nav className="w-full h-20 bg-white left-0 top-0 flex justify-center items-center border-b border-stone-700">
           <button className="btn-white absolute mt-8 left-0 text-3xl" onClick={backPhase}>
             <IoChevronBack />
@@ -331,7 +331,7 @@ function GiftPage() {
         <div className='w-full font-bold flex justify-center text-2xl -mt-10 pb-4'>
           <h1>Create A Wish</h1>
         </div>
-        <div className='w-full sticky bg-white pb-4 pt-2 top-0 z-20 left-0 top-0 flex justify-center items-center' onClick={phase === 1 ? genImage : doNothing}>
+        <div className='w-full sticky pb-4 pt-2 top-0 z-20 left-0 top-0 flex justify-center items-center' onClick={phase === 1 ? genImage : doNothing}>
           {bdayCard && !genImageLoading ? (
             <img src={bdayCard} className='mx-auto mt-8 sticky shadow rounded-lg w-4/5 h-48 object-fill'/>
           ) : genImageLoading ? (
@@ -410,7 +410,7 @@ function GiftPage() {
             <button className='btn-white mt-4 flex text-2xl items-center mx-auto' disabled={loading} onClick={addGiftcard}>
               <IoAdd /> Add a gift?
             </button>
-            <button className='btn-yellow mt-16 w-full p-4 text-2xl relative items-center mx-auto' disabled={loading} onClick={submitNoGift}>
+            <button className='btn-yellow mt-4 w-full p-4 text-2xl relative items-center mx-auto' disabled={loading} onClick={submitNoGift}>
               Make your wish
             </button>
           </div>
@@ -478,7 +478,7 @@ function GiftPage() {
         >
           <div className="w-full p-4 justify-center items-center">
             <h1 className='flex justify-center mb-4 text-2xl'>5. Checkout</h1>
-            <div className="flow-root bg-gray-200 p-4 rounded-lg flex mb-8">  
+            <div className="flow-root bg-white p-4 rounded-lg flex mb-8">  
               <div className="float-left w-[48%]">
                 <img src={giftcard[1]} className='mx-auto shadow rounded-lg w-4/5 object-fill'/>
               </div>

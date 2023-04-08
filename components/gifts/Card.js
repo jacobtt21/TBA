@@ -28,24 +28,67 @@ export default function Card({ gift }) {
     console.log("nothing")
   };
 
+  const addReaction = async () => {
+    console.log("nothing")
+  }
+
   return reqUser && (
-    <div className="bg-gray-50 mt-4 rounded overflow-hidden shadow-lg" onClick={gift.length > 1 ? openCard : doNothing}>
-      {gift.length > 1 && (
-        <img className='h-18 w-20 absolute right-2 rounded shadow rotate-[30deg]' src={gift[1]["image"]} />
-      )}
-      <div className="px-6 py-4">
-        <div className='container flex text-left'>
-          <div className='w-12 h-12 align-middle mr-2'>
-            <img className='w-12 h-12 rounded-full border' src={reqUser.profilePic} />
+    <>
+      <div className="bg-gray-50 mt-4 rounded overflow-hidden shadow-lg" onClick={gift.length > 1 ? openCard : doNothing}>
+        {gift.length > 1 && (
+          <img className='h-18 w-20 absolute right-2 rounded shadow rotate-[30deg]' src={gift[1]["image"]} />
+        )}
+        <div className="px-6 py-4">
+          <div className='container flex text-left'>
+            <div className='w-12 h-12 align-middle mr-2'>
+              <img className='w-12 h-12 rounded-full border' src={reqUser.profilePic} />
+            </div>
+            <div>
+              <h1 className='font-bold'>{reqUser.fname} {reqUser.lname}</h1>
+              <h2 className='text-sm'>@{reqUser.username}</h2>
+            </div>
           </div>
-          <div>
-            <h1 className='font-bold'>{reqUser.fname} {reqUser.lname}</h1>
-            <h2 className='text-sm'>@{reqUser.username}</h2>
-          </div>
+          <p className="text-gray-700 mt-4 text-base">{gift[0]["message"]}</p>
         </div>
-        <p className="text-gray-700 mt-4 text-base">{gift[0]["message"]}</p>
+        <img className="w-full shadow h-48" src={src} onError={() => setSrc('https://github.com/Oustro/OustroImages/blob/main/error.png?raw=true')}/>
       </div>
-      <img className="w-full shadow h-48" src={src} onError={() => setSrc('https://github.com/Oustro/OustroImages/blob/main/error.png?raw=true')}/>
-    </div>
+      <div className="flex bg-gray-50 pt-2 pb-2 rounded relative overflow-x-scroll no-scrollbar">
+        <div className="">
+          <button className='btn-white text-2xl' onClick={doNothing}>
+            ❤️
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-white text-2xl' onClick={() => refine("Retro")}>
+            😂
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-white text-2xl' onClick={() => refine("Sports")}>
+            😊
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-white text-2xl' onClick={() => refine("Fun")}>
+            🫶
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-white text-2xl' onClick={() => refine("Art")}>
+            👍
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-white text-2xl' onClick={() => refine("Classic")}>
+            🔥
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-white text-2xl' onClick={() => refine("Classic")}>
+            😜
+          </button>
+        </div>
+      </div>
+    </>
   )
 }

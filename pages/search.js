@@ -58,17 +58,19 @@ function Search() {
   const CustomSearchBox = connectSearchBox(SearchBox);
 
   return user ? (
-    <div className="w-11/12 md:w-1/2 mx-auto">
+    <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
       <div className="mx-auto justify-center text-center items-center">
-        <h3 className="font-bold mt-16 text-4xl">
-          Search
-        </h3>
-        <div className="relative mt-4">
-        <InstantSearch 
-        searchClient={searchClient} 
-        indexName="TBA">
-          <CustomSearchBox />
-        </InstantSearch>
+        <div className='w-full bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
+          <h1 className="font-bold text-4xl pb-2 text-center w-full">
+            Search
+          </h1>
+        </div>
+        <div className="relative w-11/12 mx-auto mt-4">
+          <InstantSearch 
+          searchClient={searchClient} 
+          indexName="TBA">
+            <CustomSearchBox />
+          </InstantSearch>
         </div>
       </div>
     </div>

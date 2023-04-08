@@ -51,9 +51,9 @@ function Wallet() {
           </div>
           <div className='mt-72'>
           {reqGift.length == 0 ? (
-            <>
-              No Gifts
-            </>
+            <div className='text-center pt-16'>
+              <h1 className='text-3xl'>No Gifts!</h1>
+            </div>
           ) : reqGift.length === 1 ? (
             <>
               <div className="flex relative overflow-x-scroll no-scrollbar pb-4">
