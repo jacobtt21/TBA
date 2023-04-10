@@ -60,7 +60,7 @@ function Search() {
   return user ? (
     <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
       <div className="mx-auto justify-center text-center items-center">
-        <div className='w-full bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
+        <div className='w-full bg-white fixed opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
           <h1 className="font-bold text-4xl pb-2 text-center w-full">
             Search
           </h1>
