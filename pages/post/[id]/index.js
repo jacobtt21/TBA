@@ -39,7 +39,7 @@ function WishPage() {
       leaveFrom="-translate-x-96"
       leaveTo="-translate-x-0"
     >
-      <div className='bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-more'>
+      <div className='bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero'>
         <nav className="w-full h-20 sticky bg-white opacity-90 left-0 top-0 flex justify-center items-center border-b border-stone-700">
           <button className="btn-white absolute mt-8 left-0 text-3xl" onClick={() => router.back()}>
             <IoChevronBack />

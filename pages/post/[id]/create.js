@@ -318,7 +318,7 @@ function GiftPage() {
       leaveTo="-translate-x-0"
     >
       <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
-        <nav className="w-full h-20 bg-white left-0 top-0 flex justify-center items-center border-b border-stone-700">
+        <nav className="w-full h-20 bg-white bg-opacity-90 left-0 top-0 flex justify-center items-center">
           <button className="btn-white absolute mt-8 left-0 text-3xl" onClick={backPhase}>
             <IoChevronBack />
           </button>
@@ -331,7 +331,7 @@ function GiftPage() {
         <div className='w-full font-bold flex justify-center text-2xl -mt-10 pb-4'>
           <h1>Create A Wish</h1>
         </div>
-        <div className='w-full sticky pb-4 pt-2 top-0 z-20 left-0 top-0 flex justify-center items-center' onClick={phase === 1 ? genImage : doNothing}>
+        <div className='w-full sticky shadow bg-opacity-90 bg-white pb-4 pt-2 -mt-2 border-b border-stone-700 top-0 z-20 left-0 top-0 flex justify-center items-center' onClick={phase === 1 ? genImage : doNothing}>
           {bdayCard && !genImageLoading ? (
             <img src={bdayCard} className='mx-auto mt-8 sticky shadow rounded-lg w-4/5 h-48 object-fill'/>
           ) : genImageLoading ? (

@@ -17,6 +17,7 @@ function Profile() {
   const [profilePic, setProfilePic] = useState('')
   const [friendNotification, setFriendNotification] = useState(false)
   const [errorOccured, setErrorOccured] = useState(false)
+  const [loadChange, SetLoadChange] = useState(false)
 
   const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
@@ -41,6 +42,8 @@ function Profile() {
       setReqUser(JSON.parse(data["user_info"]))
       setProfilePic(JSON.parse(data["user_info"])["profilePic"])
 
+      console.log(reqUser)
+
       const notificationData = new FormData
       notificationData.append("cid", '{"$oid":"'+user.profile.userID+'"}')
       const resNotify = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/notify_friend', {
@@ -56,6 +59,7 @@ function Profile() {
   }
 
   const changeProfilePic = async () => {
+    SetLoadChange(true)
     try {
       const image = await Camera.getPhoto({
         quality: 90,
@@ -75,9 +79,9 @@ function Profile() {
         objectID: user.username
       })
       setProfilePic(data["profilePic"])
+      SetLoadChange(false)
     } catch (e) {
-      setReqUser(false)
-      setInterval(setErrorOccured(true), 5000);
+      SetLoadChange(false)
     }
   }
 
@@ -97,8 +101,8 @@ function Profile() {
   }
 
   return user && reqUser ? (
-    <div className="w-11/12 md:w-1/2 mx-auto">
-      <div className="container mx-auto mt-16 justify-center">
+    <div className='bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero'>
+      <div className="container w-11/12 mx-auto mt-16 justify-center">
         <h1 className="font-bold text-4xl mt-4 w-full left-0">
           {user.profile.fname} {user.profile.lname}
         </h1>
@@ -106,7 +110,7 @@ function Profile() {
           @{user.username}
         </h2>
         <div className='relative w-44 h-44 mt-4 mx-auto'>
-          <img className='w-44 h-44 border rounded-full' src={profilePic} onClick={changeProfilePic} />
+          <img className={loadChange ? 'w-44 h-44 border rounded-full animate-pulse' : 'w-44 h-44 border rounded-full'} src={profilePic} onClick={changeProfilePic} />
           <span className='absolute px-2 py-2 -mt-12 ml-2 bg-yellow-400 rounded-full text-4xl' onClick={changeProfilePic}><IoCameraReverseOutline /></span>
         </div>
         {friendNotification && (
@@ -122,44 +126,65 @@ function Profile() {
             </ul>
           </nav>
         )}
-        <h2 className="text-2xl w-full mt-8 left-0">
-          Personal Info
-        </h2>
-        <div className="bg-gray-100 p-4 left-0 mt-2 rounded-lg">
-          <h2 className="w-full left-0">
-            Birthday:
-          </h2>
-          <h2 className="w-full left-0">
-            {reqUser.month}/{reqUser.day}/{reqUser.year}
+        <div className="bg-gray-100 p-4 mt-4 left-0 rounded-lg">
+          <h2 className="text-2xl w-full left-0">
+            Personal Information
           </h2>
           <h2 className="w-full mt-2 left-0">
-            Polygon Wallet:
+            Birthday:
           </h2>
-          <h2 className="w-full left-0">
-            {reqUser.wallet.substring(0, 8)}...{reqUser.wallet.substring(30, 38)}
+          <h2 className="w-full ml-4 left-0">
+            {reqUser.month}/{reqUser.day}/{reqUser.year}
           </h2>
           <h2 className="w-full mt-2 left-0">
             Phone Number:
           </h2>
-          <h2 className="w-full left-0">
+          <h2 className="w-full ml-4 left-0">
             (+1) {user.profile.phoneNumber}
-          </h2>
-        </div>
-        <h2 className="text-2xl w-full mt-10 left-0">
-          Account Info
-        </h2>
-        <div className="bg-gray-100 p-4 left-0 mt-2 rounded-lg">
-          <h2 className="w-full left-0">
-            Member Since:
-          </h2>
-          <h2 className="w-full left-0">
-            {user.creationDate}
           </h2>
           <h2 className="w-full mt-2 left-0">
             User ID:
           </h2>
-          <h2 className="w-full left-0">
+          <h2 className="w-full ml-4 left-0">
             {user.profile.userID}
+          </h2>
+          <h2 className="w-full mt-2 left-0">
+            Member Since:
+          </h2>
+          <h2 className="w-full ml-4 left-0">
+            {user.creationDate}
+          </h2>
+        </div>
+        <div className="bg-gray-100 p-4 mt-4 left-0 rounded-lg">
+          <h2 className="text-2xl w-full left-0">
+            Account Information
+          </h2>
+          <h2 className="w-full mt-2 left-0">
+            Legal
+          </h2>
+          <h2 className="w-full ml-4 mt-2 left-0">
+            Terms of Service
+          </h2>
+          <h2 className="w-full ml-4 left-0">
+            Privacy Policy
+          </h2>
+          <h2 className="w-full mt-2 left-0">
+            Support
+          </h2>
+          <h2 className="w-full ml-4 mt-2 left-0">
+            The Birthday App Support
+          </h2>
+          <h2 className="w-full ml-4 left-0">
+            Oustro Support
+          </h2>
+          <h2 className="w-full ml-4 mt-2 left-0">
+            Helpful Documents
+          </h2>
+          <h2 className="w-full mt-2 left-0">
+            Rate The Birthday App
+          </h2>
+          <h2 className="w-full mt-2 left-0">
+            Send Feedback
           </h2>
         </div>
         <nav className="container mx-auto mt-8 mb-32 flex justify-center">

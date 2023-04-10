@@ -42,7 +42,7 @@ function Wallet() {
   }
   
   return user && reqUser && reqGift ? (
-    <div className='bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-more'>
+    <div className='bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero'>
       <div className="container mx-auto w-11/12 mt-16 justify-center mb-32">
           <div className='w-full fixed bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
             <h1 className="font-bold text-4xl pb-2 text-center w-full">Wallet</h1>
