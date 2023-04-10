@@ -13,7 +13,8 @@ module.exports = {
         bold: ['Poppins']
       },
       backgroundImage: {
-        'hero': "url('https://raw.githubusercontent.com/Oustro/OustroImages/e274c7beaf4c3ec8b41df9f5421caeae06a63947/bg-more.svg')"      },
+        'hero': "url('https://raw.githubusercontent.com/Oustro/OustroImages/acd2f860bae927df1d5a54e218b5dfdd755d2868/cards%20(1).svg')"      
+      },
     },
   },
   variants: {

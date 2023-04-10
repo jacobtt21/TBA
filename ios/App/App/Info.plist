@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>TBA</string>
+	<string>The Birthday App</string>
   <key>NSCameraUsageDescription</key>
 	<string>Test</string>
   <key>NSPhotoLibraryAddUsageDescription</key>
