@@ -4,7 +4,7 @@ import Skeleton from '../cards/Skeleton';
 
 export default function FriendList({ list, loading }) {
   return (
-    <div className="w-4/5 md:w-1/2 mx-auto">
+    <div className="w-11/12 md:w-1/2 mx-auto">
       {loading ? (
         Array(20).fill(0).map((_, i) => {
           return (

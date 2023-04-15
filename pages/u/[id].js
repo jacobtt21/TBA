@@ -110,13 +110,13 @@ function UserPage() {
       leaveFrom="-translate-x-96"
       leaveTo="-translate-x-0"
     >
-      <nav className="w-full h-20 mt-0 bg-white left-0 p-1 top-4 items-left border-b border-stone-700">
-        <button className="btn-white mt-8 text-3xl" onClick={() => router.back()}>
-          <IoChevronBack />
-        </button>
-      </nav>
-      <div className="w-11/12 md:w-1/2 mx-auto">
-        <div className="container mx-auto mt- justify-center">
+      <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
+        <nav className="w-full h-20 fixed bg-white opacity-90 left-0 top-0 flex justify-center items-center border-b border-stone-700">
+          <button className="btn-white absolute mt-8 left-0 text-3xl" onClick={() => router.back()}>
+            <IoChevronBack />
+          </button>
+        </nav>
+        <div className="container w-11/12 mb-32 mx-auto mt-24 justify-center">
           <Countdown user={reqUser} />
           <div className='container flex text-left mt-8'>
             <div className='w-16 h-16 mr-4'>
@@ -131,8 +131,7 @@ function UserPage() {
               </h2>
             </div>
           </div>
-        </div>
-        <div>
+          <div>
           {friendStatus === 0 ? (
             <div>
               <nav className="container mx-auto mt-4 flex justify-center">
@@ -214,6 +213,7 @@ function UserPage() {
               </ul>
             </nav>
           )}
+        </div>
         </div>
       </div>
     </Transition>

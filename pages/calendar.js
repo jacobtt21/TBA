@@ -84,13 +84,11 @@ function Calendar() {
   return user && currYear ? (
     <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
       <div className="mx-auto justify-center text-center items-center">
-        <div className='w-full bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
-          <h1 className="font-bold text-4xl pb-2 text-center w-full">
-            Calendar
-          </h1>
+        <div className='w-full fixed bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
+          <h1 className="font-bold text-4xl pb-2 text-center w-full">{currYear} Calendar</h1>
         </div>
-        <div className="relative w-11/12 mx-auto mt-4">
-          <div id="cal-heatmap" className='pb-40 h-full justify-center'></div>
+        <div className="relative w-11/12 text-center items-center flex mt-32 mx-auto">
+          <div id="cal-heatmap" className='pb-40 h-full mx-auto justify-center'></div>
         </div>
       </div>
     </div>

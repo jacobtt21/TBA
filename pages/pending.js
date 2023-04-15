@@ -30,16 +30,18 @@ function Pending() {
   }
 
   return user && pending ? (
-    <div className="w-full">
-      <div className="mx-auto justify-center text-center items-center">
-        <h3 className="font-bold mt-16 text-2xl">
+    <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
+    <div className="mx-auto justify-center text-center items-center">
+      <div className='w-full bg-white fixed opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
+        <h1 className="font-bold text-2xl pb-2 text-center w-full">
           Pending Friend Requests
-        </h3>
+        </h1>
       </div>
-      <div className="mt-4 w-full">
+      <div className="mt-32 w-full">
         <FriendList list={pending} loading={loading}/>
       </div>
     </div>
+  </div>
   ) : (
     <div className="w-full">
       <div className="mx-auto justify-center text-center items-center">

@@ -9,6 +9,8 @@ export default function Card({ gift }) {
     getWishInfo()
   }, [])
 
+  console.log(gift)
+
   const getWishInfo = async () => {
     const currentUserData = new FormData
     currentUserData.append("cid", '{"$oid":"'+gift[0]["sender"]["$oid"]+'"}')
@@ -25,11 +27,18 @@ export default function Card({ gift }) {
   };
 
   const doNothing = async () => {
-    console.log("nothing")
+    console.log("Hi there!")
   };
 
-  const addReaction = async () => {
-    console.log("nothing")
+  const addReaction = async (num) => {
+    const reactionData = new FormData
+    reactionData.append("cid", '{"$oid":"'+gift[0]["_id"]["$oid"]+'"}')
+    reactionData.append("reaction", num)
+    const resReaction = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/add_reaction', {
+      method: "POST",
+      body: reactionData
+    })
+
   }
 
   return reqUser && (
@@ -54,38 +63,38 @@ export default function Card({ gift }) {
       </div>
       <div className="flex bg-gray-50 pt-2 pb-2 rounded relative overflow-x-scroll no-scrollbar">
         <div className="">
-          <button className='btn-white text-2xl' onClick={doNothing}>
+          <button className='btn-white text-2xl' onClick={() => addReaction(1)}>
             ❤️
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => refine("Retro")}>
+          <button className='btn-white text-2xl' onClick={() => addReaction(2)}>
             😂
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => refine("Sports")}>
+          <button className='btn-white text-2xl' onClick={() => addReaction(3)}>
             😊
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => refine("Fun")}>
+          <button className='btn-white text-2xl' onClick={() => addReaction(4)}>
+            😜
+          </button>
+        </div>
+        <div className="pl-2">
+          <button className='btn-white text-2xl' onClick={() => addReaction(5)}>
             🫶
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => refine("Art")}>
+          <button className='btn-white text-2xl' onClick={() => addReaction(6)}>
             👍
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => refine("Classic")}>
+          <button className='btn-white text-2xl' onClick={() => addReaction(7)}>
             🔥
-          </button>
-        </div>
-        <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => refine("Classic")}>
-            😜
           </button>
         </div>
       </div>

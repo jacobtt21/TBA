@@ -65,7 +65,7 @@ function Search() {
             Search
           </h1>
         </div>
-        <div className="relative w-11/12 mx-auto mt-4">
+        <div className="relative w-11/12 mx-auto mt-32">
           <InstantSearch 
           searchClient={searchClient} 
           indexName="TBA">

@@ -23,18 +23,15 @@ export default function FriendCard({ FriendID }) {
   return reqUser ? (
     <div>
       <Link href={{pathname: '/u/[id]', query: { id: reqUser.username }}}>
-        <div className='container mt-4 flow-root items-center bg-gray-200 py-2 px-4 rounded-lg'>
-          <div className='float-left'>
-            <h2 className="text-2xl">
-              @{reqUser.username}
-            </h2>
-          </div>
-          <div className='float-right'>
-            <h2 className="text-3xl">
-              <IoChevronForward />
-            </h2>
-          </div>
+      <div className='container bg-gray-100 rounded-lg flex text-left px-4 py-4'>
+        <div className='w-12 h-12 align-middle mr-2'>
+          <img className='w-12 h-12 rounded-full border' src={reqUser.profilePic} />
         </div>
+        <div>
+          <h1 className='font-bold'>{reqUser.fname} {reqUser.lname}</h1>
+          <h2 className='text-sm'>@{reqUser.username}</h2>
+        </div>
+      </div>
       </Link>
     </div>
   ) : (
