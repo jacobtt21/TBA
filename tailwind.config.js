@@ -8,10 +8,6 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Poppins', ...defaultTheme.fontFamily.sans],
-        bold: ['Poppins']
-      },
       backgroundImage: {
         'hero': "url('https://raw.githubusercontent.com/Oustro/OustroImages/acd2f860bae927df1d5a54e218b5dfdd755d2868/cards%20(1).svg')"      
       },
