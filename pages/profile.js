@@ -190,7 +190,7 @@ function Profile() {
         <nav className="container mx-auto mt-8 mb-32 flex justify-center">
           <ul className="flex justify-end items-center p-1">
             <li>
-              <button className="btn-yellow mx-2" onClick={logOut}>
+              <button className="btn-white text-2xl mx-2" onClick={logOut}>
                 Log Out
               </button>
             </li>

@@ -5,6 +5,8 @@ import { IoAlertCircleOutline } from "react-icons/io5";
 export default function WishCard({ PostID }) {
   const [reqUser, setReqUser] = useState()
   const [src, setSrc] = useState(PostID.card);
+  const [reactionNum, setReactionNum] = useState(parseInt(PostID["reaction"]))
+
 
   useEffect(() => {
     getWishInfo()
@@ -38,6 +40,35 @@ export default function WishCard({ PostID }) {
         )}
       </div>
       <img className="w-full shadow h-48" src={src} onError={() => setSrc('https://github.com/Oustro/OustroImages/blob/main/error.png?raw=true')}/>
+      {reactionNum === 1 ? (
+        <div className='pt-4 pl-4 pb-4'>
+          ❤️
+        </div>
+      ) : reactionNum === 2 ? (
+        <div className='pt-4 pl-4 pb-4'>
+          😂
+        </div>
+      ) : reactionNum === 3 ? (
+        <div className='pt-4 pl-4 pb-4'>
+          😊
+        </div> 
+      ) : reactionNum === 4 ? (
+        <div className='pt-4 pl-4 pb-4'>
+          😜
+        </div>
+      ) : reactionNum === 5 ? (
+        <div className='pt-4 pl-4 pb-4'>
+          🫶
+        </div>  
+      ) : reactionNum === 6 ? (
+        <div className='pt-4 pl-4 pb-4'>
+          👍
+        </div>
+      ) : (
+        <div className='pt-4 pl-4 pb-4'>
+          🔥
+        </div>
+      )}
     </div>
   ) : (
     <>

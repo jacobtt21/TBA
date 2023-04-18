@@ -4,12 +4,11 @@ import { Browser } from '@capacitor/browser';
 export default function Card({ gift }) {
   const [src, setSrc] = useState(gift[0]["card"]);
   const [reqUser, setReqUser] = useState('')
+  const [reactionNum, setReactionNum] = useState(parseInt(gift[0]["reaction"]))
 
   useEffect(() => {
     getWishInfo()
   }, [])
-
-  console.log(gift)
 
   const getWishInfo = async () => {
     const currentUserData = new FormData
@@ -31,14 +30,15 @@ export default function Card({ gift }) {
   };
 
   const addReaction = async (num) => {
+    setReactionNum(num)
     const reactionData = new FormData
-    reactionData.append("cid", '{"$oid":"'+gift[0]["_id"]["$oid"]+'"}')
+    reactionData.append("wid", '{"$oid":"'+gift[0]["_id"]["$oid"]+'"}')
     reactionData.append("reaction", num)
     const resReaction = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/add_reaction', {
       method: "POST",
       body: reactionData
     })
-
+    const dataReaction = await resReaction.json()
   }
 
   return reqUser && (
@@ -63,37 +63,37 @@ export default function Card({ gift }) {
       </div>
       <div className="flex bg-gray-50 pt-2 pb-2 rounded relative overflow-x-scroll no-scrollbar">
         <div className="">
-          <button className='btn-white text-2xl' onClick={() => addReaction(1)}>
+          <button className={reactionNum === 1 ? 'btn-yellow text-2xl' : 'btn-white text-2xl'} onClick={() => addReaction(1)}>
             ❤️
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => addReaction(2)}>
+          <button className={reactionNum === 2 ? 'btn-yellow text-2xl' : 'btn-white text-2xl'} onClick={() => addReaction(2)}>
             😂
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => addReaction(3)}>
+          <button className={reactionNum === 3 ? 'btn-yellow text-2xl' : 'btn-white text-2xl'} onClick={() => addReaction(3)}>
             😊
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => addReaction(4)}>
+          <button className={reactionNum === 4 ? 'btn-yellow text-2xl' : 'btn-white text-2xl'} onClick={() => addReaction(4)}>
             😜
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => addReaction(5)}>
+          <button className={reactionNum === 5 ? 'btn-yellow text-2xl' : 'btn-white text-2xl'} onClick={() => addReaction(5)}>
             🫶
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => addReaction(6)}>
+          <button className={reactionNum === 6 ? 'btn-yellow text-2xl' : 'btn-white text-2xl'} onClick={() => addReaction(6)}>
             👍
           </button>
         </div>
         <div className="pl-2">
-          <button className='btn-white text-2xl' onClick={() => addReaction(7)}>
+          <button className={reactionNum === 7 ? 'btn-yellow text-2xl' : 'btn-white text-2xl'} onClick={() => addReaction(7)}>
             🔥
           </button>
         </div>

@@ -22,9 +22,16 @@ export default function Grid({ feed, loading }) {
           );
         })
       ) : (
-        <h3 className="text-center mt-16 text-2xl">
-          Add some friends to generate a feed!
-        </h3> 
+        <div className=''>
+          <h3 className="text-center mt-16 text-2xl">
+            A birthday is right around the corner!
+          </h3> 
+          <img
+          src="https://raw.githubusercontent.com/Oustro/OustroImages/937173d3970c7fa3cba5b775b8beeb7e6d7ef239/TBAlogo.svg"
+          className="w-64 mx-auto mt-12 text-center"
+          alt="..."
+          />
+        </div>
       )}
     </div>
   )
