@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Grid from '../components/cards/Grid';
 import Confetti from 'react-dom-confetti';
 import Loading from './loading';
+import { IoInformationCircleOutline } from "react-icons/io5";
+
 
 function Index() {
   const [user] = useContext(UserContext);
@@ -11,6 +13,7 @@ function Index() {
   const [loading, setLoading] = useState(true)
   const [confetti, setConfetti] = useState(false);
   const [errorOccured, setErrorOccured] = useState(false)
+  const [communication, setCommunication] = useState([])
   const [reqUser, setReqUser] = useState()
 
   useEffect(() => {
@@ -24,6 +27,11 @@ function Index() {
   const getUserInfo = async () => {
     try {
       setLoading(true)
+      const commRes = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_directives', {
+        method: "GET"
+      })
+      const resData = await commRes.json()
+      setCommunication(JSON.parse(resData["directive"])[0])
       const currentUserData = new FormData
       currentUserData.append("uname", user.username)
       const res = await fetch(process.env.NEXT_PUBLIC_SERVER_URL+'/get_username_info', {
@@ -79,9 +87,20 @@ function Index() {
               The Birthday App
             </h1>
           </div>
-          <div className="w-full flex mt-28 mb-28 justify-center items-center">
-            <Grid feed={feed} loading={loading} />
-          </div>
+          {communication["show"] ? (
+            <>
+              <div className='mt-28 text-md flex items-center z-20 bg-yellow-400 w-full pb-2 pt-2 pl-4 fixed'>
+                <IoInformationCircleOutline />&nbsp;{communication["directive"]}
+              </div>
+              <div className="w-full flex mt-40 mb-28 justify-center items-center">
+              <Grid feed={feed} loading={loading} />
+              </div>
+            </>
+          ) : (
+            <div className="w-full flex mt-28 mb-28 justify-center items-center">
+              <Grid feed={feed} loading={loading} />
+            </div>
+          )}
         </div>
       ) : (
         <>
