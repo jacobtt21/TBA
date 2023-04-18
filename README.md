@@ -15,7 +15,7 @@
 `yarn static`
 
 5. To build it to the iphone/andriod sim -
-`npx cap run [ios/andriod]` (Currently only iphone)
+`npx cap run ios` (Currently only iphone)
 
 6. To run it on web - 
 `yarn dev`
