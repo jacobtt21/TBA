@@ -64,9 +64,12 @@ export default function WishCard({ PostID }) {
         <div className='pt-4 pl-4 pb-4'>
           👍
         </div>
-      ) : (
+      ) : reactionNum === 7 ? (
         <div className='pt-4 pl-4 pb-4'>
           🔥
+        </div>
+      ) : (
+        <div>
         </div>
       )}
     </div>

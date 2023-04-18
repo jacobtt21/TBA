@@ -8,6 +8,8 @@ import { IoChevronForward, IoCameraReverseOutline} from "react-icons/io5";
 import Loading from './loading';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import algoliasearch from 'algoliasearch';
+import { Browser } from '@capacitor/browser';
+
 
 
 function Profile() {
@@ -23,6 +25,18 @@ function Profile() {
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
     process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ADMIN_KEY,
   );
+
+  const openLink = async (num) => {
+    if (num === 1) {
+      await Browser.open({ url: "https://thebirthday.app/legal/" });
+    }
+    else if (num === 2) {
+      await Browser.open({ url: "https://thebirthday.app/contact/" });
+    }
+    else if (num === 3) {
+      await Browser.open({ url: "https://thebirthday.app/help/" });
+    }
+  };
 
   const index = searchClient.initIndex('TBA');
   
@@ -162,29 +176,20 @@ function Profile() {
           <h2 className="w-full mt-2 left-0">
             Legal
           </h2>
-          <h2 className="w-full ml-4 mt-2 left-0">
+          <h2 className="w-full ml-4 mt-2 left-0" onClick={() => openLink(1)}>
             Terms of Service
           </h2>
-          <h2 className="w-full ml-4 left-0">
+          <h2 className="w-full ml-4 left-0" onClick={() => openLink(1)}>
             Privacy Policy
           </h2>
           <h2 className="w-full mt-2 left-0">
             Support
           </h2>
-          <h2 className="w-full ml-4 mt-2 left-0">
-            The Birthday App Support
+          <h2 className="w-full ml-4 mt-2 left-0" onClick={() => openLink(2)}>
+            Contact
           </h2>
-          <h2 className="w-full ml-4 left-0">
-            Oustro Support
-          </h2>
-          <h2 className="w-full ml-4 mt-2 left-0">
+          <h2 className="w-full ml-4 mt-2 left-0" onClick={() => openLink(3)}>
             Helpful Documents
-          </h2>
-          <h2 className="w-full mt-2 left-0">
-            Rate The Birthday App
-          </h2>
-          <h2 className="w-full mt-2 left-0">
-            Send Feedback
           </h2>
         </div>
         <nav className="container mx-auto mt-8 mb-32 flex justify-center">
