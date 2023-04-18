@@ -1,4 +1,4 @@
-# Birthday App by Oustro
+# The Birthday App by Oustro
 
 
 ## how to install and run
