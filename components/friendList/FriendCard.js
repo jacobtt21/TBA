@@ -25,7 +25,7 @@ export default function FriendCard({ FriendID }) {
       <Link href={{pathname: '/u/[id]', query: { id: reqUser.username }}}>
       <div className='container bg-gray-100 rounded-lg flex text-left px-4 py-4'>
         <div className='w-12 h-12 align-middle mr-2'>
-          <img className='w-12 h-12 rounded-full border' src={reqUser.profilePic} />
+          <img className='w-12 h-12 object-fit rounded-full border' src={reqUser.profilePic} />
         </div>
         <div>
           <h1 className='font-bold'>{reqUser.fname} {reqUser.lname}</h1>

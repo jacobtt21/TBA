@@ -120,7 +120,7 @@ function UserPage() {
           <Countdown user={reqUser} />
           <div className='container flex text-left mt-8'>
             <div className='w-16 h-16 mr-4'>
-              <img className='w-16 h-16 rounded-full border' src={reqUser.profilePic} />
+              <img className='w-16 h-16 object-fit rounded-full border' src={reqUser.profilePic} />
             </div>
             <div>
               <h1 className="font-bold text-4xl w-full left-0">

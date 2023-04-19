@@ -16,7 +16,7 @@ function Search() {
     <Link href={user[0].username === hit.objectID ? "/profile" : {pathname: '/u/[id]', query: { id: hit.objectID }}}>
       <div className='container flex text-left py-4 px-4'>
         <div className='w-12 h-12 align-middle mr-4'>
-          <img className='w-12 h-12 rounded-full border' src={hit.profilePic} />
+          <img className='w-12 h-12 object-fit rounded-full border' src={hit.profilePic} />
         </div>
         <div>
           <h1>@{hit.objectID} {user[0].username === hit.objectID && ("(me)")}</h1>
