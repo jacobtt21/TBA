@@ -60,7 +60,7 @@ function SignUp() {
 
     // checking lengths of the inputs
     if (month.length !== 2 || day.length !== 2 || year.length !== 4) {
-      setError('Please input a month like 12, day like 06, and month like 2001')
+      setError('Please input a month like 12, day like 06, and year like 2001')
       return
     }
 
@@ -283,6 +283,28 @@ function SignUp() {
     }
   }
 
+  const setMonthField = (e) => {
+    setMonth(e.target.value)
+    const nextfield = document.querySelector(
+      `input[id=day]`
+    );
+    if (e.target.value.length == 2) {
+      nextfield.focus();
+    }
+    console.log(month)
+  }
+
+  const setDayField = (e) => {
+    setDay(e.target.value)
+    const nextfield = document.querySelector(
+      `input[id=year]`
+    );
+    if (e.target.value.length == 2) {
+      nextfield.focus();
+    }
+    console.log(month)
+  }
+
   return (
     <div className="bg-hero h-screen p-8">
       <div className='mx-auto flex justify-center'>
@@ -369,7 +391,7 @@ function SignUp() {
               placeholder="MM"
               value={month}
               disabled={loading}
-              onChange={(e) => setMonth(e.target.value)}
+              onChange={setMonthField}
             />
             <p className='text-2xl'>/</p>
             <input
@@ -381,7 +403,7 @@ function SignUp() {
               placeholder="DD"
               value={day}
               disabled={loading}
-              onChange={(e) => setDay(e.target.value)}
+              onChange={setDayField}
             />
             <p className='text-2xl'>/</p>
             <input
