@@ -22,15 +22,17 @@ function Calendar() {
       dates.push(JSON.parse(data["friends"][i]))
     }
     
+    const bd = new Date();
     const d = new Date();
+    d.setFullYear(d.getFullYear(), d.getMonth() + 12);
     let year = d.getFullYear();
     setCurrYear(year)
     const cal = new CalHeatmap();
     cal.paint({ 
       verticalOrientation: true,
       date: { 
-        start: new Date(year.toString()+'-01-01'),
-        max: new Date(year.toString()+'-12-31')
+        start: bd,
+        max: d
       },
       domain: {
         type: 'month',
