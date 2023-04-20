@@ -87,7 +87,30 @@ function Calendar() {
     <div className="bg-scroll bg-contain fixed overflow-auto h-screen w-full no-scrollbar bg-hero">
       <div className="mx-auto justify-center text-center items-center">
         <div className='w-full fixed bg-white opacity-90 pt-16 top-0 z-20 shadow left-0 top-0 justify-center items-center'>
-          <h1 className="font-bold text-4xl pb-2 text-center w-full">{currYear} Calendar</h1>
+          <h1 className="font-bold text-3xl pb-2 text-center w-full">{currYear - 1} - {currYear} Calendar</h1>
+        </div>
+        <div className='flex bg-yellow-400 justify-center fixed mx-auto space-x-[9.20%] w-full z-20 -mt-6'>
+          <div>
+            Su
+          </div>
+          <div>
+            M
+          </div>
+          <div>
+            T
+          </div>
+          <div>
+            W
+          </div>
+          <div>
+            Th
+          </div>
+          <div>
+            F
+          </div>
+          <div>
+            S
+          </div>
         </div>
         <div className="relative w-11/12 text-center items-center flex mt-32 mx-auto">
           <div id="cal-heatmap" className='pb-40 h-full mx-auto justify-center'></div>
