@@ -6,12 +6,6 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>Birthday App</string>
-  <key>NSCameraUsageDescription</key>
-	<string>Test</string>
-  <key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Test</string>
-  <key>NSPhotoLibraryUsageDescription</key>
-	<string>Test</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,8 +22,14 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Test</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Test</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Test</string>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string></string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
