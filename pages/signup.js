@@ -91,11 +91,25 @@ function SignUp() {
         return
       }
     }
-    // making sure that year is less than current year
-    if (parseInt(year) >= parseInt(currYear)) {
+
+    // making sure greater than 13
+    if (parseInt(year) > parseInt(currYear) - 13) {
       setError('You seem to be too young to use The Birthday App')
       return
     }
+    else if (parseInt(year) === parseInt(currYear) - 13) {
+      if (parseInt(month) > parseInt(currDate.getMonth()) + 1) {
+        setError('You seem to be too young to use The Birthday App')
+        return
+      }
+      else if (parseInt(month) === parseInt(currDate.getMonth()) + 1) {
+        console.log(parseInt(currDate.getDate()))
+        if (parseInt(day) > parseInt(currDate.getDate())) {
+          setError('You seem to be too young to use The Birthday App')
+          return
+        }
+      }
+    } 
 
     setBdayCard(false)
     setError()
@@ -171,6 +185,12 @@ function SignUp() {
       });
       if (res.status === 200) {
         const userFromMagic = await magic.user.getMetadata()
+        const user = await userbase.signUp({
+          username,
+          password,
+          profile: { 'fname': fname, 'lname': lname, 'phoneNumber': phoneNumber, 'userID': (JSON.parse(data["user_id"])["$oid"]).toString()},
+          rememberMe: 'local',
+        })
         const userData = new FormData
         userData.append("uname", username)
         userData.append("fname", fname)
@@ -185,12 +205,6 @@ function SignUp() {
           body: userData
         })
         const data = await res.json();
-        const user = await userbase.signUp({
-          username,
-          password,
-          profile: { 'fname': fname, 'lname': lname, 'phoneNumber': phoneNumber, 'userID': (JSON.parse(data["user_id"])["$oid"]).toString()},
-          rememberMe: 'local',
-        })
         await index.saveObject({
           objectID: username,
           fname: fname,
@@ -261,11 +275,24 @@ function SignUp() {
       }
     }
 
-    // making sure that year is less than current year
-    if (parseInt(year) >= parseInt(currYear)) {
+    // making sure greater than 13
+    if (parseInt(year) > parseInt(currYear) - 13) {
       setError('You seem to be too young to use The Birthday App')
       return
     }
+    else if (parseInt(year) === parseInt(currYear) - 13) {
+      if (parseInt(month) > parseInt(currDate.getMonth()) + 1) {
+        setError('You seem to be too young to use The Birthday App')
+        return
+      }
+      else if (parseInt(month) === parseInt(currDate.getMonth()) + 1) {
+        console.log(parseInt(currDate.getDate()))
+        if (parseInt(day) > parseInt(currDate.getDate())) {
+          setError('You seem to be too young to use The Birthday App')
+          return
+        }
+      }
+    } 
 
     // make sure phone number not associated with another account and is valid
     if (phoneNumber.length !== 10) {
